@@ -310,3 +310,10 @@ lst
 'x' in ['x','y','z']
 
 # Great Job!
+
+
+#TUPLE UNPACKING
+for (a,b) in list
+   print a
+   
+   //without changing the data extracting out values from a tuple
