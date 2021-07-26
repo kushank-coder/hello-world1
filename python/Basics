@@ -210,7 +210,7 @@ i = 1
 while i < 5:
     print('i is: {}'.format(i))
     i = i+1
-
+#NOTE : We never ever use brackets in defining function or while and for loops
 ## range()
 
 range(5)
