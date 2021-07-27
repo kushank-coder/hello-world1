@@ -60,6 +60,8 @@ Return evenly spaced values within a given interval.
 np.arange(0,10)
 
 np.arange(0,11,2)
+### append elements in a numpy
+np.append(arr,3)        ##will add 3 in the end of the array arr
 
 ### zeros and ones
 
