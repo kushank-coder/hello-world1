@@ -1,12 +1,7 @@
 ___
-
-<a href='http://www.pieriandata.com'> <img src='../Pierian_Data_Logo.png' /></a>
-___
 # Python Crash Course
 
 Please note, this is not meant to be a comprehensive overview of Python or programming in general, if you have no programming experience, you should probably take my other course: [Complete Python Bootcamp](https://www.udemy.com/complete-python-bootcamp/?couponCode=PY20) instead.
-
-**This notebook is just a code reference for the videos, no written explanations here**
 
 This notebook will just go through the basic topics in order:
 
@@ -19,9 +14,8 @@ This notebook will just go through the basic topics in order:
     * Booleans
     * Tuples 
     * Sets
-    
-    # there are other data types like arrays, series ,dataframes (majorly these objects are a derivation from other libraries like numpy , pandas)
- # there are other data types also but they are specific to particular libraries
+     # there are other data types like arrays, series ,dataframes (majorly these objects are a derivation from other libraries like numpy , pandas)
+ 
 * Comparison Operators
 * if, elif, else Statements
 * for Loops
