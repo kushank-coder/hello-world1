@@ -14,11 +14,13 @@ This notebook will just go through the basic topics in order:
     * Numbers
     * Strings
     * Printing
-    * Lists
-    * Dictionaries
+    * Lists    
+    * Dictionaries     (These are basically just the key value pairs remember only thing that dictionary does is it changes the index for accessing items you need to use Keys)
     * Booleans
     * Tuples 
     * Sets
+    
+    # there are other data types like arrays, series ,dataframes (majorly these objects are a derivation from other libraries like numpy , pandas)
  # there are other data types also but they are specific to particular libraries
 * Comparison Operators
 * if, elif, else Statements
@@ -117,7 +119,7 @@ nest[3][2]
 
 nest[3][2][0]
 
-### Dictionaries
+### Dictionaries                   
 
 d = {'key1':'item1','key2':'item2'}
 
