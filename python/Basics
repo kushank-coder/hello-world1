@@ -123,11 +123,11 @@ t[0]
 
 t[0] = 'NEW'                                                          #NOTE : this will give an error (tuples are immutable)
 
-### Sets
-
+### Sets                                                              # Sets give unique elements ...any list, tuple and maybe np array also can be converted into a set (which will have unique values)
+                                                                      # Just use set(tuple) or set(list) etc.
 {1,2,3}
 
-{1,2,3,1,2,1,2,3,3,3,3,2,2,2,1,1,2}
+{1,2,3,1,2,1,2,3,3,3,3,2,2,2,1,1,2}                               
 
 ## Comparison Operators
 
