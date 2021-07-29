@@ -89,9 +89,9 @@ print('My number is: {}, and my name is: {}'.format(num,name))
 
 my_list = ['a','b','c']                                          #Note: In dataframes dataframe[1][2] is basically the 2nd column and 3nd row (because indices in python start from 0)
 
-my_list.append('d')
+my_list.append('d')                 
 
-my_list
+my_list                                                          # Note : we can use len function which counts the no. of elements in a list, tuple , set etc
 
 nest = [1,2,3,[4,5,['target']]]
 
