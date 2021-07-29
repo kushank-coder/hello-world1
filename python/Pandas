@@ -1,7 +1,4 @@
-___
 
-<a href='http://www.pieriandata.com'> <img src='../Pierian_Data_Logo.png' /></a>
-___
 # Series
 
 The first main data type we will learn about for pandas is the Series data type. Let's import Pandas and explore the Series object.
@@ -36,9 +33,9 @@ pd.Series(arr)
 
 pd.Series(arr,labels)
 
-** Dictionary**
+** Dictionary**            
 
-pd.Series(d)
+pd.Series(d)                       #Dictionary gets easily connverted into series. 
 
 ### Data in a Series
 
