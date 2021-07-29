@@ -177,8 +177,8 @@ df[df['W']>0][['Y','X']]
 For two conditions you can use | and & with parenthesis:
 
 df[(df['W']>0) & (df['Y'] > 1)]                               #Note : If we use "and" operator it only takes 2 booleans only not a series of them ....whereas with "&" operator even a series of boleans can be compared
-
-## More Index Details
+                                                                      same is true with "or" operator as well we need to use | for comparing series of booleans        
+  ## More Index Details
 
 Let's discuss some more features of indexing, including resetting the index or setting it something else. We'll also talk about index hierarchy!
 
