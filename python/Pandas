@@ -86,11 +86,6 @@ Let's stop here for now and move on to DataFrames, which will expand on the conc
 
 
 
-___
-
-<a href='http://www.pieriandata.com'> <img src='../Pierian_Data_Logo.png' /></a>
-___
-
 # DataFrames
 
 DataFrames are the workhorse of pandas and are directly inspired by the R programming language. We can think of a DataFrame as a bunch of Series objects put together to share the same index. Let's use pandas to explore this topic!
@@ -166,7 +161,7 @@ df.loc[['A','B'],['W','Y']]
 
 An important feature of pandas is conditional selection using bracket notation, very similar to numpy:
 
-Note : for conditional selection there is NO USE OF  ".iloc"  .we need to use iloc to slice the columns but conditional selection can be done directly and it filters the series of row values first. 
+## Note : for conditional selection there is NO USE OF  ".iloc"  .we need to use iloc to slice the columns but conditional selection can be done directly and it filters the series of row values first. 
 df
 
 df>0
@@ -181,7 +176,7 @@ df[df['W']>0][['Y','X']]
 
 For two conditions you can use | and & with parenthesis:
 
-df[(df['W']>0) & (df['Y'] > 1)]
+df[(df['W']>0) & (df['Y'] > 1)]                               #Note : If we use "and" operator it only takes 2 booleans only not a series of them 
 
 ## More Index Details
 
