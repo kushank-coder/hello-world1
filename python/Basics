@@ -85,23 +85,11 @@ print('My number is: {}, and my name is: {}'.format(num,name))
 
 [1,2,3]
 
-['hi',1,[1,2]]
+['hi',1,[1,2]]                                                   #Note: this is an example of nested lists (Note: my_list[2][1] = 1 but this type of syntax is completely different in data frames
 
-my_list = ['a','b','c']
+my_list = ['a','b','c']                                          #Note: In dataframes dataframe[1][2] is basically the 2nd column and 3nd row (because indices in python start from 0)
 
 my_list.append('d')
-
-my_list
-
-my_list[0]
-
-my_list[1]
-
-my_list[1:]
-
-my_list[:1]
-
-my_list[0] = 'NEW'
 
 my_list
 
@@ -133,7 +121,7 @@ t = (1,2,3)
 
 t[0]
 
-t[0] = 'NEW'
+t[0] = 'NEW'                                                          #NOTE : this will give an error (tuples are immutable)
 
 ### Sets
 
@@ -165,22 +153,6 @@ t[0] = 'NEW'
 
 ## if,elif, else Statements
 
-if 1 < 2:
-    print('Yep!')
-
-if 1 < 2:
-    print('yep!')
-
-if 1 < 2:
-    print('first')
-else:
-    print('last')
-
-if 1 > 2:
-    print('first')
-else:
-    print('last')
-
 if 1 == 2:
     print('first')
 elif 3 == 3:
@@ -194,20 +166,15 @@ seq = [1,2,3,4,5]
 
 for item in seq:
     print(item)
-
-for item in seq:
-    print('Yep')
-
-for jelly in seq:
-    print(jelly+jelly)
-
+    
 ## while Loops
 
 i = 1
 while i < 5:
     print('i is: {}'.format(i))
     i = i+1
-#NOTE : We never ever use brackets in defining function or while ,for,if loops
+    
+#NOTE : We never ever use brackets in defining function or while ,for and if loops
 ## range()
 
 range(5)
@@ -257,12 +224,13 @@ def times2(var):
     return var*2
 
 times2(2)
-# lambda function omits "def" the function name ie "times2" here and the return clause.. lambda expression is just a form of representing a quick function
+#NOTE: lambda function omits "def" the function name ie "times2" here and the return clause.. lambda expression is just a form of representing a quick function
 lambda var: var*2
 
 ## map and filter
 
 seq = [1,2,3,4,5]
+#NOTE : Map function takes a list and a function in its arguments and returns the output as per the function.
 
 map(times2,seq)
 
