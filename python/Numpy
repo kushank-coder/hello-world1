@@ -12,7 +12,7 @@ Numpy has many built-in functions and capabilities. We won't cover them all but 
 # Numpy Arrays
 
 NumPy arrays are the main way we will use Numpy throughout the course. Numpy arrays essentially come in two flavors: vectors and matrices. Vectors are strictly 1-d arrays and matrices are 2-d (but you should note a matrix can still have only one row or one column)
-We canm create more dimentions matrices but are generally not utilized for more than 2 d matrices.
+#Note : We can create more dimentions matrices but are generally not utilized for more than 2 d matrices.
 
 Let's begin our introduction by exploring how to create NumPy arrays.
 
@@ -26,6 +26,8 @@ my_list = [1,2,3]
 my_list
 
 np.array(my_list)
+
+Note : 2 numpy objects of similar dimention only can be added or multiplied
 
 my_matrix = [[1,2,3],[4,5,6],[7,8,9]]
 my_matrix
@@ -43,7 +45,7 @@ Return evenly spaced values within a given interval.
 np.arange(0,10)
 
 np.arange(0,11,2)
-### append elements in a numpy
+### NOTE: append elements in a numpy
 np.append(arr,3)        ##will add 3 in the end of the array arr
 
 ### zeros and ones
