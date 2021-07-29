@@ -103,6 +103,8 @@ np.random.seed(101)
 ## there is only one way to manually make a dataframe ie pd.DataFrame(data,indexes,column names)
 ##other ways are we can import from csv in dataframe
 
+##we always need to use inplace = True  for actually bringing any change in the dataframe
+
 
 df = pd.DataFrame(randn(5,4),index='A B C D E'.split(),columns='W X Y Z'.split())
 
