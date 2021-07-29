@@ -1,10 +1,6 @@
 # NumPy 
 Numpy library majorly creates array of any dimension which has "same" type of each element. either all are string or all are no.s....Numpy is famous for its calculations so generally we use number in a numpy
 
-## Using NumPy
-
-Once you've installed NumPy you can import it as a library:
-
 import numpy as np
 
 Numpy has many built-in functions and capabilities. We won't cover them all but instead we will focus on some of the most important aspects of Numpy: vectors,arrays,matrices, and number generation. Let's start by discussing arrays.
@@ -12,7 +8,7 @@ Numpy has many built-in functions and capabilities. We won't cover them all but 
 # Numpy Arrays
 
 NumPy arrays are the main way we will use Numpy throughout the course. Numpy arrays essentially come in two flavors: vectors and matrices. Vectors are strictly 1-d arrays and matrices are 2-d (but you should note a matrix can still have only one row or one column)
-#Note : We can create more dimentions matrices but are generally not utilized for more than 2 d matrices.
+#Note : We can create more dimensions matrices but are generally not utilized for more than 2 d matrices.
 
 Let's begin our introduction by exploring how to create NumPy arrays.
 
