@@ -60,8 +60,7 @@ ser2 = pd.Series([1,2,5,4],index = ['USA', 'Germany','Italy', 'Japan'])
 
 ser2
 
-ser1['USA']
-
+ser1['USA']                                                      #NOTE: In series we can directly access the indices as compared to dataframes where we neede .loc or .iloc for referring to the index in dataframes the by default square bracket is for column
 Operations are then also done based off of index:
 
 ser1 + ser2
