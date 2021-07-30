@@ -97,6 +97,7 @@ np.random.seed(101)
 
 ## NOTE: there is only one way to manually make a dataframe ie pd.DataFrame(data,indexes,column names)
 ##       other ways are we can import from csv in dataframe
+NOTE : even dictionaries can be used to create dataframes in pandas ..the point is key in dictionary forms the column names and index is by default 0 1 etc.
 
 ## NOTE: we always need to use inplace = True  for actually bringing any change in the dataframe
 
