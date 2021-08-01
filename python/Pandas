@@ -23,13 +23,11 @@ pd.Series(arr)
 
 pd.Series(arr,labels)
 
-** Dictionary**            
+#Dictionary gets easily converted into series.         
 
-pd.Series(d)                       #Dictionary gets easily connverted into series. 
+pd.Series(dictionary_name)                       
 
 ### Data in a Series
-
-A pandas Series can hold a variety of object types:
 
 pd.Series(data=labels)
 
@@ -51,9 +49,6 @@ ser2 = pd.Series([1,2,5,4],index = ['USA', 'Germany','Italy', 'Japan'])
 ser2
 
 ser1['USA']                                                      #NOTE: In series we can directly access the indices as compared to dataframes where we neede .loc or .iloc for referring to the index in dataframes the by default square bracket is for column
-Operations are then also done based off of index:
-
-ser1 + ser2
 
 
 #Converts a Series data to dictionary data type
@@ -77,9 +72,6 @@ ser1 + ser2
 # DataFrames
 
 DataFrames are the workhorse of pandas and are directly inspired by the R programming language. We can think of a DataFrame as a bunch of Series objects put together to share the same index. Let's use pandas to explore this topic!
-
-import pandas as pd
-import numpy as np
 
 from numpy.random import randn
 np.random.seed(101)
