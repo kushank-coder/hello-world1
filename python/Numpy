@@ -256,5 +256,3 @@ arr[arr>2]
 
 x = 2
 arr[arr>x]
-
-# Great Job!
