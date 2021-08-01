@@ -117,3 +117,7 @@ df['col2'].value_counts()
  # using operations computing another column 
  
  df['col1'].apply(times2)                                                       #times 2 is the required function  
+ 
+ # sorting
+ df.sort_values(by='col2')                                                        #inplace=False by default....for sorting the data you need inplace =True
+ 
