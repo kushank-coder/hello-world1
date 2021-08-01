@@ -12,15 +12,9 @@ d = {'a':10,'b':20,'c':30}
 
 pd.Series(data=my_list)
 
-pd.Series(data=my_list,index=labels)
+# Converting NumPy Arrays into series
 
-pd.Series(my_list,labels)
-
-** NumPy Arrays **
-
-pd.Series(arr)
-
-pd.Series(arr,labels)
+pd.Series(numpy_array)
 
 #Dictionary gets easily converted into series.         
 
@@ -36,16 +30,6 @@ pd.Series([sum,print,len])
 ## Using an Index
 
 The key to using a Series is understanding its index. Pandas makes use of these index names or numbers by allowing for fast look ups of information (works like a hash table or dictionary).
-
-Let's see some examples of how to grab information from a Series. Let us create two sereis, ser1 and ser2:
-
-ser1 = pd.Series([1,2,3,4],index = ['USA', 'Germany','USSR', 'Japan'])                                   
-
-ser1
-
-ser2 = pd.Series([1,2,5,4],index = ['USA', 'Germany','Italy', 'Japan'])                                   
-
-ser2
 
 ser1['USA']                                                      #NOTE: In series we can directly access the indices as compared to dataframes where we neede .loc or .iloc for referring to the index in dataframes the by default square bracket is for column
 
@@ -70,8 +54,6 @@ ser1['USA']                                                      #NOTE: In serie
 
 # DataFrames
 
-DataFrames are the workhorse of pandas and are directly inspired by the R programming language. We can think of a DataFrame as a bunch of Series objects put together to share the same index. Let's use pandas to explore this topic!
-
 from numpy.random import randn
 np.random.seed(101)
 
@@ -80,23 +62,6 @@ np.random.seed(101)
 NOTE : even dictionaries can be used to create dataframes in pandas ..the point is key in dictionary forms the column names and index is by default 0 1 etc.
 
 ## NOTE: we always need to use inplace = True  for actually bringing any change in the dataframe
-
-
-df = pd.DataFrame(randn(5,4),index='A B C D E'.split(),columns='W X Y Z'.split())
-
-df
-
-## Selection and Indexing
-
-Let's learn the various methods to grab data from a DataFrame
-
-df['W']
-
-# Pass a list of column names
-df[['W','Z']]
-
-# SQL Syntax (NOT RECOMMENDED!)
-df.W
 
 DataFrame Columns are just Series
 
