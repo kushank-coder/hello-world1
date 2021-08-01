@@ -3,11 +3,6 @@
 
 You can convert a list,numpy array, or dictionary to a Series:
 
-labels = ['a','b','c']
-my_list = [10,20,30]
-arr = np.array([10,20,30])
-d = {'a':10,'b':20,'c':30}
-
 ** Using Lists**
 
 pd.Series(data=my_list)
@@ -27,26 +22,10 @@ pd.Series(data=labels)
 # Even functions (although unlikely that you will use this)
 pd.Series([sum,print,len])
 
-## Using an Index
-
-The key to using a Series is understanding its index. Pandas makes use of these index names or numbers by allowing for fast look ups of information (works like a hash table or dictionary).
-
-ser1['USA']                                                      #NOTE: In series we can directly access the indices as compared to dataframes where we neede .loc or .iloc for referring to the index in dataframes the by default square bracket is for column
-
+## Series can be easily accessible by the index (NO use of .loc required)
 
 #Converts a Series data to dictionary data type
   s.to_dict()                                                     
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -63,44 +42,25 @@ NOTE : even dictionaries can be used to create dataframes in pandas ..the point 
 
 ## NOTE: we always need to use inplace = True  for actually bringing any change in the dataframe
 
-DataFrame Columns are just Series
-
+# type of data object
 type(df['W'])
-
-**Creating a new column:**
-
-df['new'] = df['W'] + df['Y']
-
-df
 
 ** Removing Columns**
 
 df.drop('new',axis=1)
 
 # Not inplace unless specified!
-df
 
-df.drop('new',axis=1,inplace=True)
+df.drop('new',axis=1,inplace=True)                                            #inplace= True is must to actually edit the data frame "df"
 
-df
 
-Can also drop rows this way:
-
-df.drop('E',axis=0)
-
-** Selecting Rows**
+#Accessing the rows and columns of data frame
 
 df.loc['A']
 
 Or select based off of position instead of label 
 
 df.iloc[2]
-
-** Selecting subset of rows and columns **
-
-df.loc['B','Y']
-
-df.loc[['A','B'],['W','Y']]
 
 ### Conditional Selection
 
@@ -109,15 +69,9 @@ An important feature of pandas is conditional selection using bracket notation, 
 ## Note : for conditional selection there is NO USE OF  ".iloc"  .we need to use iloc to slice the columns but conditional selection can be done directly and it filters the series of row values first. 
 df
 
-df>0
-
 df[df>0]
 
 df[df['W']>0]
-
-df[df['W']>0]['Y']
-
-df[df['W']>0][['Y','X']]
 
 For two conditions you can use | and & with parenthesis:
 
@@ -151,4 +105,7 @@ df.fillna(value='FILL VALUE')
 #Group by
   df.groupby('Company')                 #"Company" is the name of the column
 
+# Joins
+
+pd.merge(df1,df2,how="inner",on = key)
 
