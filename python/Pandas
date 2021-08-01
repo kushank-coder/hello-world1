@@ -167,34 +167,6 @@ df
 # Reset to default 0,1...n index
 df.reset_index()
 
-newind = 'CA NY WY OR CO'.split()
-
-df['States'] = newind
-
-df
-
-df.set_index('States')
-
-df
-
-df.set_index('States',inplace=True)
-
-df
-
-## Multi-Index and Index Hierarchy
-
-Let us go over how to work with Multi-Index, first we'll create a quick example of what a Multi-Indexed DataFrame would look like:
-
-# Index Levels
-outside = ['G1','G1','G1','G2','G2','G2']
-inside = [1,2,3,1,2,3]
-hier_index = list(zip(outside,inside))
-hier_index = pd.MultiIndex.from_tuples(hier_index)
-
-hier_index
-
-df = pd.DataFrame(np.random.randn(6,2),index=hier_index,columns=['A','B'])
-df
 
 # Missing Data
 d = np.nan
@@ -206,14 +178,12 @@ df = pd.DataFrame({'A':[1,2,np.nan],
 #Dropping rows or columns from a dataframe
 
 df.dropna()
-
-df.dropna(axis=1)
-
-df.dropna(thresh=2)
-
 df.fillna(value='FILL VALUE')
 
-df['A'].fillna(value=df['A'].mean())
+#Appending data frame 
+  pd.concat([df,y])
 
-# Great Job!
+#Group by
+  df.groupby('Company')                 #"Company" is the name of the column
+
 
