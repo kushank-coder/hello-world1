@@ -107,5 +107,5 @@ df.fillna(value='FILL VALUE')
 
 # Joins
 
-pd.merge(df1,df2,how="inner",on = key)
-
+pd.merge(df1,df2, left_on='lkey', right_on='rkey', suffixes=('_left', '_right')))             #suffixes removes the extra column-name name 
+ 
