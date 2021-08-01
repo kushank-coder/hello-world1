@@ -103,9 +103,17 @@ df.fillna(value='FILL VALUE')
   pd.concat([df,y])
 
 #Group by
-  df.groupby('Company')                 #"Company" is the name of the column
+  df.groupby('Company')                 #"Company" is the name of the column by which we group by
 
 # Joins
-
 pd.merge(df1,df2,on = [lkey,rkey], suffixes=('_left', '_right')))             #suffixes removes the extra column-name name 
+
+#unique method
+df['col2'].unique()                                                            #gives distinct elements
+
+# proc freq
+df['col2'].value_counts()
  
+ # using operations computing another column 
+ 
+ df['col1'].apply(times2)                                                       #times 2 is the required function  
