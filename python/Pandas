@@ -196,24 +196,24 @@ hier_index
 df = pd.DataFrame(np.random.randn(6,2),index=hier_index,columns=['A','B'])
 df
 
-Now let's show how to index this! For index hierarchy we use df.loc[], if this was on the columns axis, you would just use normal bracket notation df[]. Calling one level of the index returns the sub-dataframe:
+# Missing Data
+d = np.nan
 
-df.loc['G1']
+df = pd.DataFrame({'A':[1,2,np.nan],
+                  'B':[5,np.nan,np.nan],
+                  'C':[1,2,3]})
 
-df.loc['G1'].loc[1]
+#Dropping rows or columns from a dataframe
 
-df.index.names
+df.dropna()
 
-df.index.names = ['Group','Num']
+df.dropna(axis=1)
 
-df
+df.dropna(thresh=2)
 
-df.xs('G1')
+df.fillna(value='FILL VALUE')
 
-df.xs(['G1',1])
-
-df.xs(1,level='Num')
+df['A'].fillna(value=df['A'].mean())
 
 # Great Job!
-
 
