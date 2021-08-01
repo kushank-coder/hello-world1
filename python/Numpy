@@ -281,7 +281,7 @@ Indexing a 2d matrix can be a bit confusing at first, especially when you start 
 
 ## Selection
 
-Let's briefly go over how to use brackets for selection based off of comparison operators.
+#Let's briefly go over how to use brackets for selection based off of comparison operators.
 
 arr = np.arange(1,11)
 arr
