@@ -1,5 +1,4 @@
 #Pandas are equivalent to excel
-# Series
 ### Creating a Series
 
 You can convert a list,numpy array, or dictionary to a Series:
@@ -52,7 +51,7 @@ ser1['USA']                                                      #NOTE: In serie
 
 
 #Converts a Series data to dictionary data type
-  s.to_dict                                                       
+  s.to_dict()                                                     
 
 
 
