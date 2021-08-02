@@ -139,3 +139,6 @@ pd.read_excel('Excel_Sample.xlsx',sheetname='Sheet1')
 df.to_excel('Excel_Sample.xlsx',sheet_name='Sheet1')
 
 
+#proc contents
+df.info()
+
