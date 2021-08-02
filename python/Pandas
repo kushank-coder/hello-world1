@@ -126,3 +126,16 @@ df['col2'].value_counts()
 df.pivot_table(values='D',index=['A', 'B'],columns=['C'],fill_value =0)                      #index is the rows required, columns is the required columns, 
                                                                                               #fill_value for the combinations not present in the data fill_value will replace with a dummy value
  
+# reading csv
+df = pd.read_csv('example')
+
+# writing to csv 
+df.to_csv('example',index=False)
+
+# reading excel
+pd.read_excel('Excel_Sample.xlsx',sheetname='Sheet1')
+
+# writing to excel
+df.to_excel('Excel_Sample.xlsx',sheet_name='Sheet1')
+
+
