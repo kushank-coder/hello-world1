@@ -115,7 +115,7 @@ df['col2'].unique()                                                            #
 df['col2'].value_counts()
  
  # using operations computing another column 
- 
+                                                                                #the column on which the operation is to be done is col1 .it is mentioned in the syntax
  df['col1'].apply(times2)                                                       #times 2 is the required function  
  
  # sorting
