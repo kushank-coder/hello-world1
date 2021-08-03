@@ -93,6 +93,9 @@ d = np.nan
 df = pd.DataFrame({'A':[1,2,np.nan],
                   'B':[5,np.nan,np.nan],
                   'C':[1,2,3]})
+                  
+#Identifying Missing Values in Column
+df.isnull().sum()                                        #will provide the missing values in any column
 
 #Dropping rows or columns from a dataframe
 
