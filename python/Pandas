@@ -153,3 +153,7 @@ df.info()
 df.sort_values(by='col2',inplace=True)                                                                  //This step will sort the data
 vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])                             //This will delete duplucate entries.
 
+#Proc SQL Queries
+
+from pandasql import sqldf 
+mysql = lambda q: sqldf(q, globals())
