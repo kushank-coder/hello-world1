@@ -157,3 +157,9 @@ vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])     
 
 from pandasql import sqldf 
 mysql = lambda q: sqldf(q, globals())
+query = '''
+SELECT Customer_Region, sum(Churn) as churn,sum(Customer_Count) as count,100*sum(churn)/sum(customer_count) as churn_rate
+FROM df
+group by 1;
+'''
+mysql(query)
