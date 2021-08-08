@@ -162,4 +162,4 @@ SELECT Customer_Region, sum(Churn) as churn,sum(Customer_Count) as count,100*sum
 FROM df
 group by 1;
 '''
-mysql(query)
+mysql(query)                                                                                          #Note: the pandassql does integer division in the query so first multiply / divide by scalar.  
