@@ -23,10 +23,6 @@ plt.plot(x, y, 'r--') # More on color options later
 plt.subplot(1,2,2)
 plt.plot(y, x, 'g*-');
 
-___
-# Matplotlib Object Oriented Method
-Now that we've seen the basics, let's break it all down with a more formal introduction of Matplotlib's Object Oriented API. This means we will instantiate figure objects and then call methods or attributes from that object.
-
 ## Introduction to the Object Oriented Method
 
 The main idea in using the more formal Object Oriented method is to create figure objects and then just call methods or attributes off of that object. This approach is nicer when dealing with a canvas that has multiple plots on it. 
