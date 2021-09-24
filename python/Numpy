@@ -239,3 +239,9 @@ arr_length = arr2d.shape[1]
 
 #For assigning null
 d= np.nan
+
+#matrix multiplaction
+np.dot(A,B)
+
+#ELEMENT WISE multiplication
+A*B
