@@ -244,4 +244,5 @@ d= np.nan
 np.dot(A,B)
 
 #ELEMENT WISE multiplication
-A*B
+A*B               # for A*B A and B matrix should be of same dimension then only elementwise multiplication will be done
+
