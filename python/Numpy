@@ -10,6 +10,8 @@ Numpy has many built-in functions and capabilities. We won't cover them all but 
 NumPy arrays are the main way we will use Numpy throughout the course. Numpy arrays essentially come in two flavors: vectors and matrices. Vectors are strictly 1-d arrays and matrices are 2-d (but you should note a matrix can still have only one row or one column)
 #Note : We can create more dimensions matrices but are generally not utilized for more than 2 d matrices.
 
+When 1 d arrays are subtracted from 2d arrays it automatically copies the 1 d elements wrt 2d arrays (ie copies along the row)
+
 Let's begin our introduction by exploring how to create NumPy arrays.
 
 ## Creating NumPy Arrays
