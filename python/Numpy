@@ -116,7 +116,7 @@ ranarr.min()
 
 ranarr.argmin()
 
-## Shape
+## Shape    ##Gives the dimensions of the matrix in a tuple format
 
 Shape is an attribute that arrays have (not a method):
 
