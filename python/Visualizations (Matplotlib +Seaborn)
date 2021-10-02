@@ -285,3 +285,9 @@ plt.boxplot(data,vert=True,patch_artist=True);
 
 #Plotting decision boundary along with input data
 utils.plotDecisionBoundary(plotData, theta, X, y)
+
+# Plotting 2D positive and negative examples in classification problem
+pos=y==1
+neg = y ==0
+pyplot.plot(X[pos, 0], X[pos, 1], 'k*', lw=2, ms=10)
+pyplot.plot(X[neg, 0], X[neg, 1], 'ko', mfc='y', ms=8, mec='k', mew=1)
