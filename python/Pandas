@@ -109,6 +109,7 @@ df.fillna(value='FILL VALUE')
 
 #Group by
   df.groupby('Company')                 #"Company" is the name of the column by which we group by
+                                        # use Aggregate function over and above this (like sum(), mean() etc)
 
 # Joins
 pd.merge(df1,df2,on = [lkey,rkey], suffixes=('_left', '_right')))             #suffixes removes the extra column-name name 
