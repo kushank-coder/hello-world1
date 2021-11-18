@@ -151,7 +151,7 @@ pd.read_excel('Excel_Sample.xlsx',sheetname='Sheet1')
 df.to_excel('Excel_Sample.xlsx',sheet_name='Sheet1')
 
 #reading from html links                                                                    
-df = pd.read_html('http://www.fdic.gov/bank/individual/failed/banklist.html')                 #Extracting data from websites (internet)
+df = pd.read_html('http://www.fdic.gov/bank/individual/failed/banklist.html')                 #Extracting data from websites (internet)    #there could be multiple data frames (initially df would be a list extract from list the dataframe
 
 #proc contents
 df.info()
