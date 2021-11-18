@@ -142,7 +142,7 @@ df.pivot_table(Churn_data,index=['Customer Region'],values =["Customer Count","N
 df = pd.read_csv('example')
 
 # writing to csv 
-df.to_csv('example',index=False)
+df.to_csv('example',index=False)                                                               #here index should equal to False (otherwise indexes will come as a column in csv
 
 # reading excel
 pd.read_excel('Excel_Sample.xlsx',sheetname='Sheet1')
