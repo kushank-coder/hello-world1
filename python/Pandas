@@ -150,6 +150,8 @@ pd.read_excel('Excel_Sample.xlsx',sheetname='Sheet1')
 # writing to excel
 df.to_excel('Excel_Sample.xlsx',sheet_name='Sheet1')
 
+#reading from html links                                                                    
+df = pd.read_html('http://www.fdic.gov/bank/individual/failed/banklist.html')                 #Extracting data from websites (internet)
 
 #proc contents
 df.info()
