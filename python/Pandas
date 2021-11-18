@@ -153,8 +153,8 @@ df.to_excel('Excel_Sample.xlsx',sheet_name='Sheet1')
 df.info()
 
 #proc sort data = data1 nodupkey;
-df.sort_values(by='col2',inplace=True)                                                                  //This step will sort the data
-vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])                             //This will delete duplucate entries.
+df.sort_values(by='col2',inplace=True)                                                                  #This step will sort the data
+vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])                             #This will delete duplucate entries.
 
 #Proc SQL Queries
 
