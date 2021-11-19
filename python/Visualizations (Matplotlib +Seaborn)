@@ -89,8 +89,49 @@ ax.plot(x, x+3, color="#FF8C00")        # RGB hex code
 #Plotting decision boundary along with input data
 utils.plotDecisionBoundary(plotData, theta, X, y)
 
-# Plotting 2D positive and negative examples in classification problem
+# Plotting 2D positive and negative examples in classification problem (Andrew ng exercises)
 pos=y==1
 neg = y ==0
 pyplot.plot(X[pos, 0], X[pos, 1], 'k*', lw=2, ms=10)
 pyplot.plot(X[neg, 0], X[neg, 1], 'ko', mfc='y', ms=8, mec='k', mew=1)
+
+
+#Histogram 
+sns.distplot(tips['total_bill'],kde=False,bins=30)           #single variable    #kde is basically a density plot of the variable
+
+#Joint plot 
+sns.jointplot(x='total_bill',y='tip',data=tips,kind='scatter')   #kind = "kde" will give the density plot
+
+#Joint plot for all the variables #will combine all the columns pairwise 
+sns.pairplot(tips)
+
+#Barplot
+import numpy as np
+sns.barplot(x='sex',y='total_bill',data=tips,estimator=np.sum)
+
+#Count plot
+sns.countplot(x='sex',data=tips)
+
+#Box Plot
+sns.boxplot(x="day", y="total_bill", hue="smoker",data=tips, palette="coolwarm")
+
+#Violin Plot
+sns.violinplot(x="day", y="total_bill", data=tips,hue='sex',split=True,palette='Set1')
+
+
+#Heat map 
+sns.heatmap(data = tips.corr(),cmap='coolwarm',annot=True)        #annot gives values    #ONE NECESSITY the data must be a matrix (can be created by pivot_table)
+pvflights = flights.pivot_table(values='passengers',index='month',columns='year')
+sns.heatmap(pvflights)
+
+#cluster map
+sns.clustermap(pvflights,cmap='coolwarm',standard_scale=1)
+
+
+
+
+
+
+
+
+
