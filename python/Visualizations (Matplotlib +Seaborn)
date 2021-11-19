@@ -30,16 +30,14 @@ The main idea in using the more formal Object Oriented method is to create figur
 To begin we create a figure instance. Then we can add axes to that figure:
 
 # Create Figure (empty canvas)
-fig = plt.figure()
-
-# Add set of axes to figure
-axes = fig.add_axes([0.1, 0.1, 0.8, 0.8]) # left, bottom, width, height (range 0 to 1)
+1) fig = plt.figure()
+2) axes = fig.add_axes([0.1, 0.1, 0.8, 0.8]) # left, bottom, width, height (range 0 to 1) # Add set of axes to figure
+3)axes.plot(x, y, 'b')
+4)axes.set_xlabel('Set X Label') # Notice the use of set_ to begin methods
+5) axes.set_ylabel('Set y Label')
+6)axes.set_title('Set Title')    #1st canvas space...then axes then plot in those set of segments of axes
 
 # Plot on that set of axes
-axes.plot(x, y, 'b')
-axes.set_xlabel('Set X Label') # Notice the use of set_ to begin methods
-axes.set_ylabel('Set y Label')
-axes.set_title('Set Title')
 
 Code is a little more complicated, but the advantage is that we now have full control of where the plot axes are placed, and we can easily add more than one axis to the figure:
 
