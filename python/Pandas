@@ -124,7 +124,7 @@ df['col2'].value_counts()
                                                                                 #the column on which the operation is to be done is col1 .it is mentioned in the syntax
  df['col1'].apply(times2)                                                       #times 2 is the required function  
  
- df['col1'].apply(lambda x: x^2)                                                 #Dynamic calculation of the column for quick application
+ df['col1'].apply(lambda x: x^2)                                                 #Dynamic calculation of the column for quick application  x (each col1 entry) is input and output is x^2 
  
  # sorting
  df.sort_values(by='col2')                                                        #inplace=False by default....for sorting the data you need inplace =True
