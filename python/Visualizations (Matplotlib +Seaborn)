@@ -114,6 +114,8 @@ sns.countplot(x='sex',data=tips)
 
 #Box Plot
 sns.boxplot(x="day", y="total_bill", hue="smoker",data=tips, palette="coolwarm")
+sns.despine()                                                                           #will remove ticks # visual effect 
+
 
 #Violin Plot
 sns.violinplot(x="day", y="total_bill", data=tips,hue='sex',split=True,palette='Set1')
@@ -127,6 +129,10 @@ sns.heatmap(pvflights)
 #cluster map
 sns.clustermap(pvflights,cmap='coolwarm',standard_scale=1)
 
+
+#Multi grid graphs (histogram etc)
+g = sns.FacetGrid(tips, col="time",  row="smoker")                             #will create space for the grids
+g = g.map(plt.hist, "total_bill")                                              #plt.hist (is histogram) we could use other graphs as well like box plot , count plot etc
 
 
 
