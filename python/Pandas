@@ -167,7 +167,7 @@ df.sort_values(by='col2',inplace=True)                                          
 vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])                             #This will delete duplucate entries.
 
 # getting dummies values for categorical_values
-pd.get_dummies(train['Sex'],drop_first=True)
+pd.get_dummies(train['Sex'],drop_first=True)                                                            #used in modelling  
 
 
 #Proc SQL Queries
