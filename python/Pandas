@@ -166,6 +166,10 @@ df.info()
 df.sort_values(by='col2',inplace=True)                                                                  #This step will sort the data
 vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])                             #This will delete duplucate entries.
 
+# getting dummies values for categorical_values
+pd.get_dummies(train['Sex'],drop_first=True)
+
+
 #Proc SQL Queries
 
 from pandasql import sqldf 
