@@ -170,6 +170,12 @@ vs2=vs.drop_duplicates(subset=["COLUMN NAMES On which to find duplicates"])     
 pd.get_dummies(train['Sex'],drop_first=True)                                                            #used in modelling  
 
 
+#Selecting null values
+data.isnull()
+
+#Selecting specific columns 
+data[["Pclass","Cabin"]]                                                                            #simply use double brackets 
+
 #Proc SQL Queries
 
 from pandasql import sqldf 
