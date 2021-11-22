@@ -13,6 +13,21 @@ scaled_data = scaler.transform(df)
 from sklearn.decomposition import PCA
 pca = PCA(n_components=2)                   #always try to have explained variance to be greater than 95% atleast
 
+#####
+Plotting positive and negative examples
+            Steps: from matplotlib import pyplot
+                    dummy = X[["Age_v2","Fare"]]                  # CHANGE Select 2 columns to show decision boundary
+                    dummy_v2 = dummy.to_numpy()
+                      fig = pyplot.figure()
+                      pos = y == 1
+                      neg = y == 0
+                      pyplot.plot(dummy_v2[pos, 0], dummy_v2[pos, 1], 'k*', lw=2, ms=10)
+                      pyplot.plot(dummy_v2[neg, 0], dummy_v2[neg, 1], 'ko', mfc='y', ms=8, mec='k', mew=1)
+                      pyplot.xlabel('Age_v2')                        # CHANGE Name of 1st column
+                      pyplot.ylabel('Fare')                          # CHANGE Name of 2nd column
+                      pyplot.legend(['Survived', 'Not Survived'])
+                       pass
+
 
 # precision, recall and F1 score
 from sklearn.metrics import classification_report
