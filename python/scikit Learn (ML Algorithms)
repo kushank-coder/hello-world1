@@ -9,6 +9,10 @@ scaler = StandardScaler()
 scaler.fit(df)
 scaled_data = scaler.transform(df)
 
+#Principal Components Analysis
+from sklearn.decomposition import PCA
+pca = PCA(n_components=2)                   #always try to have explained variance to be greater than 95% atleast
+
 
 # precision, recall and F1 score
 from sklearn.metrics import classification_report
@@ -28,3 +32,5 @@ lm.fit(X_train,y_train)
 #Logistic Regression
 logmodel = LogisticRegression()
 logmodel.fit(X_train,y_train)
+
+
