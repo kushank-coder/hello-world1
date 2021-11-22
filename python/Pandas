@@ -176,6 +176,9 @@ data.isnull()
 #Selecting specific columns 
 data[["Pclass","Cabin"]]                                                                            #simply use double brackets 
 
+# renaming columns in the dataframe
+data_v2.rename(columns = {'Q':'Q_v1',"S":"S_v1"}, inplace = True)
+
 #Proc SQL Queries
 
 from pandasql import sqldf 
