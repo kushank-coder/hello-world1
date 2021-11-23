@@ -45,7 +45,9 @@ lm.fit(X_train,y_train)
 
 
 #Logistic Regression
-logmodel = LogisticRegression()
+logmodel = LogisticRegression()                    #Change C (opposite of regularization) and maxiter to increase the iterations
 logmodel.fit(X_train,y_train)
 
+            Training accuracy
+            logmodel.score(X_train, y_train)
 
