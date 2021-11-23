@@ -28,6 +28,30 @@ Plotting positive and negative examples
                       pyplot.legend(['Survived', 'Not Survived'])
                        pass
 
+#Learning Curve
+            from sklearn.model_selection import learning_curve
+            train_sizes, train_scores, test_scores = learning_curve(LogisticRegression(fit_intercept=True,max_iter=400,C = 1000), X_train, y_train, cv=10, scoring='accuracy', n_jobs=-1, train_sizes=np.linspace(0.01, 1.0, 50))
+
+            train_miss_Classification = 1- train_scores
+            test_miss_Classification = 1- test_scores
+
+            train_mean = np.mean(train_miss_Classification, axis=1)
+            train_std = np.std(train_miss_Classification, axis=1)
+            test_mean = np.mean(test_miss_Classification, axis=1)
+            test_std = np.std(test_miss_Classification, axis=1)
+            #
+            # Plot the learning curve
+            #
+            plt.plot(train_sizes, train_mean, color='blue', marker='o', markersize=5, label='Train Error')
+            plt.fill_between(train_sizes, train_mean + train_std, train_mean - train_std, alpha=0.15, color='blue')
+            plt.plot(train_sizes, test_mean, color='green', marker='+', markersize=5, linestyle='--', label='CValidation error')
+            plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, alpha=0.15, color='green')
+            plt.title('Learning Curve')
+            plt.xlabel('Training Data Size')
+            plt.ylabel('Miss Classification Error')
+            plt.grid()
+            plt.legend(loc='lower right')
+            plt.show()
 
 # precision, recall and F1 score
 from sklearn.metrics import classification_report
