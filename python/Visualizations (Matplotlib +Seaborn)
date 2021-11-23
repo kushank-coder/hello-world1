@@ -97,7 +97,7 @@ pyplot.plot(X[neg, 0], X[neg, 1], 'ko', mfc='y', ms=8, mec='k', mew=1)
 
 
 #Histogram 
-sns.distplot(tips['total_bill'],kde=False,bins=30)           #single variable    #kde is basically a density plot of the variable
+sns.displot(tips['total_bill'],kde=False,bins=30)           #single variable    #kde is basically a density plot of the variable
 
 #Joint plot 
 sns.jointplot(x='total_bill',y='tip',data=tips,kind='scatter')   #kind = "kde" will give the density plot
