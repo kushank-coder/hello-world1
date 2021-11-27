@@ -75,3 +75,41 @@ logmodel.fit(X_train,y_train)
             Training accuracy
             logmodel.score(X_train, y_train)
 
+
+# Neural Network
+
+                                                 - Always convert the matrices of X and y into numpy arrays before inputting in the keras or tensorflow
+
+                                  Step1)
+                                    from tensorflow.keras.models import Sequential
+                                    from tensorflow.keras.layers import Dense, Activation
+
+                                    model = Sequential()
+
+                                    model.add(Dense(2))
+                                    model.add(Dense(2))
+                                    model.add(Dense(2))
+
+                                    Note: Choosing an optimizer and loss Keep in mind what kind of problem you are trying to solve:
+
+                                          # For a multi-class classification problem
+                                            model.compile(optimizer='rmsprop',
+                                                              loss='categorical_crossentropy',
+                                                                                                metrics=['accuracy'])
+                
+                                          # For a binary classification problem
+                                                model.compile(optimizer='rmsprop',
+                                                                        loss='binary_crossentropy',
+                                                                                                metrics=['accuracy'])
+
+                                         # For a mean squared error regression problem
+                                            model.compile(optimizer='rmsprop',
+                                                                         loss='mse')
+                                    Step 2)
+                                    model.fit(X_train,y_train,epochs=250)
+                                    model.history.history     #just for getting the history as a dataframe
+                                    
+                                    Step 3) Evaluation
+                                    training_score = model.evaluate(X_train,y_train,verbose=0)
+                                    test_score = model.evaluate(X_test,y_test,verbose=0)
+
