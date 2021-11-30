@@ -52,6 +52,42 @@ Plotting positive and negative examples
             plt.grid()
             plt.legend(loc='lower right')
             plt.show()
+            
+            
+            
+      2ND METHOD (Very helpful in keras neural network 
+      
+            # store the initial random weights
+            initial_weights = model.get_weights()
+            from sklearn.model_selection import train_test_split
+            X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3)
+            train_sizes = (len(X_train) * np.linspace(0.1, 0.999, 100)).astype(int)
+          
+            train_scores = []
+            test_scores = []
+
+            for train_size in train_sizes:
+                X_train_frac, _, y_train_frac, _ = \
+                train_test_split(X_train, y_train, train_size=train_size)
+    
+                # at each iteration reset the weights of the model
+                # to the initial random weights
+                  model.set_weights(initial_weights)
+    
+                        h = model.fit(X_train_frac, y_train_frac,
+                                    verbose=0,
+                                    epochs=300,
+                                    callbacks=[EarlyStopping(monitor='loss', patience=1)])
+
+                        r = model.evaluate(X_train_frac, y_train_frac, verbose=0)
+                        train_scores.append(r[-1])
+    
+                        e = model.evaluate(X_test, y_test, verbose=0)
+                        test_scores.append(e[-1])
+    
+                        plt.plot(train_sizes, 1-np.array(train_scores), 'o-', label="Training score")
+                        plt.plot(train_sizes, 1-np.array(test_scores), 'o-', label="Test score")
+                        plt.legend(loc="best")
 
 # precision, recall and F1 score
 from sklearn.metrics import classification_report
