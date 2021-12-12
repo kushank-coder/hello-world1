@@ -1,0 +1,114 @@
+1>import data
+	Xt<-read.table("Xt.csv",sep =',',header = true)			#it can be text or a csv
+
+2> str(Yt)							#proc contents    
+
+3> remove NA values from the time series
+	r<-untrended[!is.na(untrended)]
+
+
+4>empty vector
+	x <- numeric(10)		
+
+5>plotting a graph
+	i) ts.plot(Yt,main="Time series Yt",ylab="Value",xlab="axis",xlim = c(1,200), ylim = c(1,300),col="blue")
+		
+			a) adding points on time series
+				i) points(Yt,col="red",cex=0.7)
+			
+	ii) plot(Yt,main="Simulated data",col="red",type = 'l')			#for plotting the lines
+
+	iii) layout for graphs
+		a) par(mfrow=c(2,1))		      #2 rows and 1 column 
+		b) matrix way
+				m<-matrix(2,2,data=c(1,2,1,3),byrow = TRUE)	
+				layout(m)            #(1 TOP graph, 2nd in the left corner, 3rd graph in the right corner)
+
+	iv) superimposing lines in the plot
+		lines(time,yt,type="l",col="red")	#giving only y values also plots the predictions				
+6>Time-series 
+	o) Convert into Time series
+		Yt <- ts(Xt,start=c(2000,1), frequency=12)    #frequency =12 means monthly data....basically it implies 1 saal mein kitni entries hain, start = c(2000,1) is basically 1 Jan,2000
+
+	i) Theoretical simulation
+		Yt <- arima.sim(n=100,list(ar=c(0.5,-0.1),ma=0.2),sd=3) 
+
+	ii) Integrated series  (opposite of differencing)
+		Yt <- 80+ cumsum(xt)                  #cumsum (gives the cumulative of a vector)
+		Yt <- ts(Yt)
+
+	iii) Sample ACF and Sample PACF
+		acf(Yt,lag.max=60,main="Time series Xt",ylab="Sample ACF")				#just not a plot also can get acf and pacf values with lag
+		pacf(ts.Xt,lag.max=60,main="Time series Xt",ylab="Sample PACF")				#lag.max =5 basically tells ki kitni bars aaengi (kitni x axis pe points aaenge)		
+
+	iv) Theoretical ACF and PACF (values + plot) 
+		modelacf<-ARMAacf(ar=c(0.5,-0.1),ma=0.2,lag.max=12,pacf=TRUE)				#put pacf = FALSE for calculating theoretical acf ....
+													#pacf is from lag=1, and acf is from lag=2
+		barplot(modelacf,main="ACF of ARMA(2,1)",col="red",xlab="Lag",ylab = "123")
+		barplot(modelpacf,main="PACF of ARMA(2,1)",col="blue",xlab="Lag",names.arg = c("write the elements of x axis"))			#in general barplot can be used to plot a vector series
+
+	v) Filtering by date
+		i<-which(round(time(ldeaths),3) == round(1978+1/12,3))  #round is necessary for removing rounding off errors
+		ldeaths[i]						#basically calculating the index no and then filtering as usual
+
+	
+	vii) Choosing d (integration level)
+		 var(data)                                       	#must decrease till one point and then increase (the point of min variance is the required integration level
+
+	viii) seasonality 
+		-spectrum(ldeaths,main="Periodogram",xlab="frequency",sub="")			#maximum freq(f) value of a spectrum, then seasonality = 1/f	
+	        -plot(decompose(ldeaths,type="additive"))					#separates the trend, seasonality and randomness
+		-plot(stl(ldeaths,s.window="periodic"),main="Components of time series: ldeaths") #again separates trend ,seasonality etc.
+	
+	ix) checking stationarity
+		1) ts.plot(data)
+		2) acf(data)				#if exponential decay then ok otherwise difference the series
+		3) pacf(data)	
+		4) PP.test(testing.stationarity)  	 #Phillips perron test (#stationarity test)	
+							#basically checks for H  = there is a unit root (1-B)
+
+	
+	x)  Fitting a model
+		1) arima(data,order=c(0,0,3))           #arima generally excludes intercept when the process is integrated
+		2) ar(data)				#fits only AR models (not MA or ARMA)			
+
+	xi) Testing fit
+		1) residuals (plot residual , its acf and pacf and should be random)
+		2) tsdiag				#applied on the model (not on residuals)     #pvalues ie last graph is wrong
+		3) LjungBox test		
+			Box.test(e,lag=5,type="Ljung",fitdf=3)			#fitdf (p+q) ie sum order of AR part and MA part    #lag means how many correlation coefficients are to be used
+										#Box.test is applied on residuals
+	xii) Predicting future
+		1) p<-predict(model,n.ahead=20)                         	#predicts future 20 values note the model should be stationary if its integrated 1st difference anf then model stationary then use cumSum
+		2) HW<-HoltWinters(series,alpha=0.7,beta=FALSE,gamma=FALSE)	#exponential smoothing		  #we can also omit alpha in which case the function will automatically fit the appropriate alpha	
+
+
+
+7>integrate(d3pareto,0,q)$value							#integrate the function d3pareto from 0 to q
+
+8> nlm(neglogL,0.7)			#.7 is sample value ....
+
+9> plot(x,f(x),type="l",main="Density function for LogN(0,0.25)")
+plot(mu,20,110,xlab="Age (x)",ylab="mu(x)",main="mu(x) for AM92")
+
+10> quantile of sample values
+	quantile(Losses,seq(0,0.5,by=0.1))
+
+
+11>maxima<-aggregate(Claim~Year:Month,data,max)
+
+12) pmin
+	y <- pmin(x,M)
+	z <- pmax(0,x-M)
+
+
+13)
+Survival formulaes
+for KM (product limit estimate)
+SKM=cumprod(1-dj/nj)
+
+
+for plotting step function #(type = "s")
+plot(c(0,tj),c(1,SKM),type="s",xlim=c(0,25),ylim=c(0.5,1),
+main="Kaplan-Meier estimator of S(t)",
+xlab="Time t",ylab="Survival probability")
