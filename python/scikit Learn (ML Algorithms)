@@ -1,4 +1,4 @@
-86543#Train test split of data
+#Train test split of data
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=101)
@@ -148,4 +148,39 @@ logmodel.fit(X_train,y_train)
                                     Step 3) Evaluation
                                     training_score = model.evaluate(X_train,y_train,verbose=0)
                                     test_score = model.evaluate(X_test,y_test,verbose=0)
+
+
+
+
+# Decision Trees
+from sklearn.tree import DecisionTreeClassifier
+dtree = DecisionTreeClassifier()
+dtree.fit(X_train,y_train)
+
+
+            #Visualization of decision trees
+           from IPython.display import Image  
+            from sklearn.externals.six import StringIO  
+            from sklearn.tree import export_graphviz
+            import pydot 
+
+            features = list(df.columns[1:])
+            features
+
+           dot_data = StringIO()  
+            export_graphviz(dtree, out_file=dot_data,feature_names=features,filled=True,rounded=True)
+
+            graph = pydot.graph_from_dot_data(dot_data.getvalue())  
+            Image(graph[0].create_png())  
+
+
+
+#Random Forest Classifier
+
+from sklearn.ensemble import RandomForestClassifier
+rfc = RandomForestClassifier(n_estimators=100)
+rfc.fit(X_train, y_train)
+
+
+
 
