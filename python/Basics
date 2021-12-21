@@ -48,6 +48,8 @@ ____
 
 (2 + 3) * (5 + 5)
 
+2//4               #this gives 0 as // gives the quotient
+
 ### Variable Assignment
 
 # Can not start with number or special characters
