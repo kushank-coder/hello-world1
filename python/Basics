@@ -15,7 +15,7 @@ This notebook will just go through the basic topics in order:
     * Dictionaries     (These are basically just the key value pairs remember only thing that dictionary does is it changes the index for accessing items you need to use Keys)
     * Booleans
     * Tuples 
-    * Sets
+    * Sets           #sets have no order so they cant be accessed by the slicing notation
      # there are other data types like arrays, series ,dataframes (majorly these objects are a derivation from other libraries like numpy , pandas)
  
 * Comparison Operators
