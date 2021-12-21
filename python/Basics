@@ -22,7 +22,7 @@ This notebook will just go through the basic topics in order:
 * if, elif, else Statements
 * for Loops
 * while Loops
-* range()
+* range()                                    #range takes range(start,stop,step)   ie range starts from start ends before stop and moves iterably              
 * list comprehension
 * functions
 * lambda expressions
@@ -289,3 +289,19 @@ for (a,b) in list
    
 #For assigning null
 d= np.nan
+
+
+#Decorators (not very clear)
+
+Decorators can be used to improve the functionality of our existing function. Majorly used to calculate the time it takes to run the function 
+decorator improves the functionality of an existing function.
+
+
+      def decorator(function):
+         print ("inside decorator")
+         function()
+ 
+      @decorator
+      def print_value():
+         print ("check")
+
