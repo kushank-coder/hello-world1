@@ -113,6 +113,10 @@ d
 
 d['key1']
 
+d.keys()    # gives the list of keys of the dictionary
+d.values()  # gives values in the dictionary
+d.items()   # it gives the key value pairs 
+
 ### Booleans
 
 True
