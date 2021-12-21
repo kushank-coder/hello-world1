@@ -305,3 +305,6 @@ decorator improves the functionality of an existing function.
       def print_value():
          print ("check")
 
+
+# def __init__(self):    # this function is automatically called whenever we make an object of the class these functions get run without even calling them
+                          # it is used to define the attributes of the class
