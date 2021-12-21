@@ -255,3 +255,11 @@ A*B               # for A*B A and B matrix should be of same dimension then only
 arr = np.array(range(5))
 outfile = "my_arr.npy"
 np.save(outfile,arr=arr)
+
+
+#Load arrays from npy file
+loaded_Arr = np.load(file=outfile)
+
+
+
+
