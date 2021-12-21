@@ -249,3 +249,9 @@ np.dot(A,B)
 A*B               # for A*B A and B matrix should be of same dimension then only elementwise multiplication will be done
 
 #Note: Transpose of an 1D array is same as the array itself ..rows or columns concept dont work in 1 d arrays
+
+
+#saving a numpy array
+arr = np.array(range(5))
+outfile = "my_arr.npy"
+np.save(outfile,arr=arr)
