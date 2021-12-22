@@ -106,8 +106,11 @@ sns.lineplot(x = "total_bill", y="tip",data = tips)      #plots the line graph
 
 sns.catplot(x = "day", y="total_bill",data = tips,jitter = True)
 
-#Histogram 
+#Histogram
 sns.displot(tips['total_bill'],kde=False,bins=30)           #single variable    #kde is basically a density plot of the variable
+
+#better figure plot
+plt.figure(figsize = (9,5),dpi=200)                          #nice bada plot aata hai
 
 #Joint plot 
 sns.jointplot(x='total_bill',y='tip',data=tips,kind='scatter')   #kind = "kde" will give the density plot
