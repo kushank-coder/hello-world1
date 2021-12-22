@@ -95,6 +95,16 @@ neg = y ==0
 pyplot.plot(X[pos, 0], X[pos, 1], 'k*', lw=2, ms=10)
 pyplot.plot(X[neg, 0], X[neg, 1], 'ko', mfc='y', ms=8, mec='k', mew=1)
 
+#scatter plot
+sns.relplot(x = "total_bill", y="tip",data = tips,color = "b",hue="smoker",style="smoker")   #style gives the plot shape
+
+#line plot
+sns.lineplot(x = "total_bill", y="tip",data = tips)      #plots the line graph
+
+
+# Category data plots
+
+sns.catplot(x = "day", y="total_bill",data = tips,jitter = True)
 
 #Histogram 
 sns.displot(tips['total_bill'],kde=False,bins=30)           #single variable    #kde is basically a density plot of the variable
