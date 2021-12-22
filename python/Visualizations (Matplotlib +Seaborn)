@@ -128,6 +128,7 @@ sns.countplot(x='sex',data=tips)
 #Box Plot
 sns.boxplot(x="day", y="total_bill", hue="smoker",data=tips, palette="coolwarm")
 sns.despine()                                                                           #will remove ticks # visual effect 
+                                                                                        #box plot can be used for bivariate analysis specifically with a categorical and continous distribution
 
 
 #Violin Plot
