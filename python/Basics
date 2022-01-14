@@ -93,7 +93,11 @@ print('My number is: {}, and my name is: {}'.format(num,name))
 
 my_list = ['a','b','c']                                          #Note: In dataframes dataframe[1][2] is basically the 2nd column and 3nd row (because indices in python start from 0)
 
-my_list.append('d')                 
+#Adding elements to list
+      1) my_list.append('d')                                     #adds the element at the end
+      2) my_list.insert(2,"Kushank")                              #final list will have Kushank in the 2nd position (ie 3rd entry)
+      3) my_list.extend(list2)                                    #will take union of the 2 lists
+
 
 my_list                                                          # Note : we can use len function which counts the no. of elements in a list, tuple , set etc
 
