@@ -86,6 +86,7 @@ print('My number is: {one}, and my name is: {two}'.format(one=num,two=name))
 print('My number is: {}, and my name is: {}'.format(num,name))
 
 ### Lists
+#   A list is a data structure in Python that is a mutable(changeable), ordered sequence of elements and list can contain heterogenous data type
 
 [1,2,3]
 
@@ -95,8 +96,14 @@ my_list = ['a','b','c']                                          #Note: In dataf
 
 #Adding elements to list
       1) my_list.append('d')                                     #adds the element at the end
-      2) my_list.insert(2,"Kushank")                              #final list will have Kushank in the 2nd position (ie 3rd entry)
+      2) my_list.insert(2,"Kushank")                              #final list will have Kushank in the 2nd index (ie 3rd entry)
       3) my_list.extend(list2)                                    #will take union of the 2 lists
+      
+ #Deleting elements from list
+      1)my_list.pop()                                             #will remove the last element
+      2)del my_list[7]                                            # remove the entry in index 7 of list   ie 8th entry
+      
+ #my_list.count()                                                 # counts the element in the list
 
 
 my_list                                                          # Note : we can use len function which counts the no. of elements in a list, tuple , set etc
@@ -111,7 +118,7 @@ nest[3][2][0]
 
 ### Dictionaries                   
 
-d = {'key1':'item1','key2':'item2'}
+d = {'key1':'item1',key2:'item2'}
 
 d
 
@@ -121,6 +128,10 @@ d.keys()    # gives the list of keys of the dictionary
 d.values()  # gives values in the dictionary
 d.items()   # it gives the key value pairs 
 
+#  Deleting elements in dictionaries
+del d["key1"]                                             #deletes the value at key 1
+
+
 ### Booleans
 
 True
@@ -128,6 +139,9 @@ True
 False
 
 ### Tuples 
+#tuples are always defined by the presence of comma (if no comma then no tuple will be made)
+
+a = (1)                                                  #this will be just a no and not a tuple
 
 t = (1,2,3)
 
@@ -135,11 +149,22 @@ t[0]
 
 t[0] = 'NEW'                                                          #NOTE : this will give an error (tuples are immutable)
 
-### Sets                                                              # Sets give unique elements ...any list, tuple and maybe np array also can be converted into a set (which will have unique values)
+### Sets   
+
+    #A Set is an unordered sequence of elements , mutable, and has no duplicate elements. 
+    # Sets give unique elements ...any list, tuple and maybe np array also can be converted into a set (which will have unique values)
                                                                       # Just use set(tuple) or set(list) etc.
 {1,2,3}
 
-{1,2,3,1,2,1,2,3,3,3,3,2,2,2,1,1,2}                               
+{1,2,3,1,2,1,2,3,3,3,3,2,2,2,1,1,2}     
+
+     #accessing elements of set
+     for element in a:
+         print(element)                                              #we will get all the elements of the set by this method
+   	
+      #Removing elements from Sets
+      
+      a.remove(element3)                                             #removes element from the set
 
 ## Comparison Operators
 
