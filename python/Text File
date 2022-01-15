@@ -1,0 +1,33 @@
+1) Opening and Reading a txt file
+    
+     link=open('/content/dummy.txt','r')             # r = read mode (we can use w (write), r(read) or a(append)) #file is opened here (  dummy is not data)
+     data = link.read()                              #all the data is stored in the data (the complete txt file) # file is read here
+     print(link.name)                                 #gives the name with path
+     print(link.mode)                                #tells the mode in which the file 
+
+     print(link.closed)                              #checks whether a file has been closed or not 
+
+2) Closing a text file
+ 
+    dummy.close()                                      #it is always important to close the file which is openend so that the resources used in opening that file could be freed (system)
+    
+    
+3) Alternative method of reading a file 
+with open('/content/demo.txt','r') as link:           #this works like a loop outside the loop the file automatically closes (we need not write another statement to close it
+  print(link.read())
+  print(link.name)
+  print(link.mode)
+  print(link.closed)
+print(link.closed)
+
+
+4) Writing in a text files
+  with open('/content/demo.txt','a') as link:
+    link.writelines(["\nhello\n","world"])                          #writes in the original file
+    link.write("hello world")
+    
+    
+ 5) 
+ with open('/content/demo.txt','a') as link:
+  with open('/content/demo2.txt','r') as link2:                   #this codde will read from demo2 and write in the file demo "loop" is a kind of syntax file open and close ke liye 
+    link.writelines(link2.read())
