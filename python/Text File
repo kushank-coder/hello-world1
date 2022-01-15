@@ -9,20 +9,26 @@
 
 2) Closing a text file
  
-    dummy.close()                                      #it is always important to close the file which is openend so that the resources used in opening that file could be freed (system)
+    link.close()                                      #it is always important to close the file which is openend so that the resources used in opening that file could be freed (system)
     
     
 3) Alternative method of reading a file 
-with open('/content/demo.txt','r') as link:           #this works like a loop outside the loop the file automatically closes (we need not write another statement to close it
-  print(link.read())
-  print(link.name)
-  print(link.mode)
-  print(link.closed)
-print(link.closed)
+    with open('/content/demo.txt','r') as link:           #this works like a loop outside the loop the file automatically closes (we need not write another statement to close it
+        print(link.read())
+        print(link.name)
+        print(link.mode)
+        print(link.closed)
+    print(link.closed)
 
 
-4) Writing in a text files
-  with open('/content/demo.txt','a') as link:
+4) Storing each line in a list of the file
+    with open('/content/demo.txt','r') as file:
+        print(file.readlines())                                           #readlines reads line by line and stores the different lines as a different element in the list
+
+
+
+Writing in a text files
+  with open('/content/demo.txt','a') as link:                         #'a' will write to the end of the original file
     link.writelines(["\nhello\n","world"])                          #writes in the original file
     link.write("hello world")
     
