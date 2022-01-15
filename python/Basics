@@ -96,12 +96,12 @@ my_list = ['a','b','c']                                          #Note: In dataf
 
 #Adding elements to list
       1) my_list.append('d')                                     #adds the element at the end
-      2) my_list.insert(2,"Kushank")                              #final list will have Kushank in the 2nd index (ie 3rd entry)
+      2) my_list.insert(2,"Kushank")                              #final list will have Kushank in the index=2 (ie 3rd entry)
       3) my_list.extend(list2)                                    #will take union of the 2 lists
       
  #Deleting elements from list
       1)my_list.pop()                                             #will remove the last element
-      2)del my_list[7]                                            # remove the entry in index 7 of list   ie 8th entry
+      2)del my_list[7]                                            # remove the entry in index =7 of list   ie 8th entry
       
  #my_list.count()                                                 # counts the element in the list
 
