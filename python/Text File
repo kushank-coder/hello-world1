@@ -37,3 +37,8 @@ Writing in a text files
  with open('/content/demo.txt','a') as link:
   with open('/content/demo2.txt','r') as link2:                   #this codde will read from demo2 and write in the file demo "loop" is a kind of syntax file open and close ke liye 
     link.writelines(link2.read())
+
+6) read write in image files
+
+with open('/content/FX0A5459.JPG','rb') as file:                  # similar to read and write a text file just mode is 'rb'
+  data = file.readlines()
