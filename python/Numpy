@@ -7,8 +7,8 @@ Numpy has many built-in functions and capabilities. We won't cover them all but 
 
 # Numpy Arrays
 
-NumPy arrays are the main way we will use Numpy throughout the course. Numpy arrays essentially come in two flavors: vectors and matrices. Vectors are strictly 1-d arrays and matrices are 2-d (but you should note a matrix can still have only one row or one column)
-#Note : We can create more dimensions matrices but are generally not utilized for more than 2 d matrices.
+Numpy arrays essentially come in two flavors: vectors and matrices. Vectors are strictly 1-d arrays and matrices are 2-d 
+#Note : We can create more dimensions matrices.
 
 When 1 d arrays are subtracted from 2d arrays it automatically copies the 1 d elements wrt 2d arrays (ie copies along the row)
 
@@ -42,7 +42,8 @@ Return evenly spaced values within a given interval.
 
 np.arange(0,10)
 
-np.arange(0,11,2)
+np.arange(0,11,2)                                                                 #here 2 is the gap.  in np.arange we give the gap between 2 consecutive entries but in np.linspace we give no of elements that are required and not the gap
+
 ### NOTE: append elements in a numpy
 np.append(arr,3)        ##will add 3 in the end of the array arr
 
@@ -72,6 +73,7 @@ Creates an identity matrix
 np.eye(4)
 
 ## Random 
+np.random.random(10)                                                     # an array of 10 elements with values between 0 and 1 will be generated
 
 Numpy also has lots of ways to create random number arrays:
 
@@ -201,7 +203,7 @@ arr_copy
 
 The general format is **arr_2d[row][col]** or **arr_2d[row,col]**. I recommend usually using the comma notation for clarity.
 
-arr_2d = np.array(([5,10,15],[20,25,30],[35,40,45]))
+arr_2d = np.array(([5,10,15],[20,25,30],[35,40,45]),dtype = 'int64')
 
 #Show
 arr_2d
