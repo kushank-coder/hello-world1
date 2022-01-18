@@ -54,7 +54,11 @@ df.drop('new',axis=1)
 
 df.drop('new',axis=1,inplace=True)                                            #inplace= True is must to actually edit the data frame "df"
 
+# Slicing directly in pandas
+df[:2]                                                                      #will return first 2 rows of the dataframe (ie 1st 2 entries)
+
 #deleting any row in the dataframe
+
 df.drop(df[df["1st"]=="K"].index,inplace= True)                             #we just 1st need to slice and then use .index to easily any row or conditioned row from dataframe
 
 
