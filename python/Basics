@@ -109,6 +109,10 @@ my_list = ['a','b','c']                                          #Note: In dataf
 
 list(filter(list_function,lst))                                    # applies the list_function on the lst and returns a subset of the previous list
 
+
+#list comprehension
+[2*x for x in data]                                         # will return 2* the elements in list (we could use additional if clauses as well also)
+
 my_list                                                          # Note : we can use len function which counts the no. of elements in a list, tuple , set etc
 
 nest = [1,2,3,[4,5,['target']]]
