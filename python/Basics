@@ -105,6 +105,9 @@ my_list = ['a','b','c']                                          #Note: In dataf
       
  #my_list.count()                                                 # counts the element in the list
 
+# filter function in list
+
+list(filter(list_function,lst))                                    # applies the list_function on the lst and returns a subset of the previous list
 
 my_list                                                          # Note : we can use len function which counts the no. of elements in a list, tuple , set etc
 
