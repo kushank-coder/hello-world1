@@ -127,8 +127,13 @@ sns.jointplot(x='total_bill',y='tip',data=tips,kind='scatter')   #kind = "kde" w
 sns.pairplot(tips)
 
 #Barplot
-import numpy as np
-sns.barplot(x='sex',y='total_bill',data=tips,estimator=np.sum)
+i)  import numpy as np
+    sns.barplot(x='sex',y='total_bill',data=tips,estimator=np.sum)
+
+ii)  plt.bar(x, height, tick_label = tick_label, width = 0.8, color = ['red', 'blue'])                    #matplot version of bar chart
+          tick_label = list of names on X axis                                                           # labels for bars
+
+
 
 #Count plot
 sns.countplot(x='sex',data=tips)
