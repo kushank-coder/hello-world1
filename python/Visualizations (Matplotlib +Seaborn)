@@ -126,6 +126,18 @@ sns.jointplot(x='total_bill',y='tip',data=tips,kind='scatter')   #kind = "kde" w
 #Joint plot for all the variables #will combine all the columns pairwise 
 sns.pairplot(tips)
 
+
+#pie charts
+     labels = ["A", "B", "C", "D"]
+     colors = ["blue", "green", "red", "yellow"]
+     explode = [0.1, 0, 0, 0] #used for protrude the slice out of graph (it will slightly separate the category from others)
+     sizes = [3, 4, 6, 2]
+
+plt.pie(sizes, colors = colors, labels=labels, autopct="%.2f%%",explode= explode,counterclock = False)
+
+plt.axis("equal")
+plt.show()
+
 #Barplot
 i)  import numpy as np
     sns.barplot(x='sex',y='total_bill',data=tips,estimator=np.sum)
