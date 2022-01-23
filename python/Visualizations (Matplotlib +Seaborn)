@@ -4,10 +4,18 @@ import matplotlib.pyplot as plt
 #add matplotlib inline to show the graphs on jupyter notebook
 %matplotlib inline
 
-plt.plot(x, y, 'r') # 'r' is the color red
+
+#scatter plot
+plt.scatter(x, y, label= "stars", color= "m", marker= "*", s=100)                    #s = size of marker   # Highlighting points as a scatter plot                                                                      #will highlight the actual points on the graph
+
+plt.plot(x, y, 'r') # 'r' is the color red                                         #we always need x and y coordinates to plot ...plt.plot joins the points with a line
 plt.xlabel('X Axis Title Here')
 plt.ylabel('Y Axis Title Here')
 plt.title('String Title Here')
+
+plt.grid()                                                                           #makes grid in the graph
+
+plt.legend()                                                                         #helps distinguish the different sets of lines
 plt.show()
 
 ## Creating Multiplots on Same Canvas
