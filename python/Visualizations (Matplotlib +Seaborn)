@@ -45,6 +45,21 @@ axes.set_title('Set Title')    #1st canvas space...then axes then plot in those 
 ## subplots()
 
 The plt.subplots() object will act as a more automatic axis manager.
+# create a figure
+fig = plt.figure()
+
+# define subplots and their positions in figure
+plt1 = fig.add_subplot(221)
+plt2 = fig.add_subplot(222)
+plt3 = fig.add_subplot(223)
+plt4 = fig.add_subplot(224)
+
+
+#simple plot by using plt1 , plt2, plt3 ...so on 
+
+
+
+
 
 # Use similar to plt.figure() except use tuple unpacking to grab fig and axes
 fig, axes = plt.subplots()
