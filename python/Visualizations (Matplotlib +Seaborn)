@@ -160,6 +160,8 @@ i)  import numpy as np
 ii)  plt.bar(x, height, tick_label = tick_label, width = 0.8, color = ['red', 'blue'])                    #matplot version of bar chart
           tick_label = list of names on X axis                                                           # labels for bars
 
+iii) For a only single column
+     -data[“column”].value_counts().plot.bar       #for plotting barplot on a particular column
 
 
 #Count plot
