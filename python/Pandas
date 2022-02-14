@@ -29,9 +29,6 @@ pd.Series([sum,print,len])
   s.to_dict()                                                     
 
 
-#add rows in an existing dataframe
-df.loc[len(df.index)] = [check2,i]                     #adds a row at the end of the dataframe
-
 
 # DataFrames
 
@@ -197,3 +194,7 @@ FROM df
 group by 1;
 '''
 mysql(query)                                                                                          #Note: the pandassql does integer division in the query so first multiply / divide by scalar.  
+
+
+#add rows in an existing dataframe
+df.loc[len(df.index)] = [check2,i]                     #adds a row at the end of the dataframe
