@@ -132,7 +132,7 @@ df['col2'].value_counts()
  df['col1'].apply(lambda x: x^2)                                                 #Dynamic calculation of the column for quick application  x (each col1 entry) is input and output is x^2 
  
  # sorting
- df.sort_values(by='col2')                                                        #inplace=False by default....for sorting the data you need inplace =True
+ df1.sort_values(by = ['frequency', 'index'], ascending = [False, True])                                                        #inplace=False by default....for sorting the data you need inplace =True
  
  #converting categorical values to dummies
  pd.get_dummies(train['col1'],drop_first=True)                                    #col1 is basically the column which we want to convert into 0 or 1 ie create dummies for them
