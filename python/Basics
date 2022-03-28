@@ -350,3 +350,10 @@ decorator improves the functionality of an existing function.
 
 # def __init__(self):    # this function is automatically called whenever we make an object of the class these functions get run without even calling them
                           # it is used to define the attributes of the class
+
+
+# datetime objects with conversions in the string
+
+date_obj = datetime.strptime(string, '%b %d %Y %I:%M%p')
+syntax on the below site
+https://www.w3schools.com/python/python_datetime.asp
