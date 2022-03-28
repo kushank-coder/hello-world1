@@ -123,6 +123,8 @@ nest[3][2]
 
 nest[3][2][0]
 
+#joining individual elements
+''.join(list1)                                                #join the elements of the list
 ### Dictionaries                   
 
 d = {'key1':'item1',key2:'item2'}
