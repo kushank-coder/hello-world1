@@ -184,6 +184,10 @@ data[["Pclass","Cabin"]]                                                        
 # renaming columns in the dataframe
 data_v2.rename(columns = {'Q':'Q_v1',"S":"S_v1"}, inplace = True)
 
+#counting distinct elements in a column in dataframe
+ratings['movieId'].nunique()                                                                      #will tell distinct counts in the dataframe ratings
+
+
 #Proc SQL Queries
 
 from pandasql import sqldf 
