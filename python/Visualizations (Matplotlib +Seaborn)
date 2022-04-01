@@ -191,6 +191,9 @@ g = sns.FacetGrid(tips, col="time",  row="smoker")                             #
 g = g.map(plt.hist, "total_bill")                                              #plt.hist (is histogram) we could use other graphs as well like box plot , count plot etc
 
 
+# proc freq barplot
+df_tips['sex'].value_counts().plot(kind='bar')
+
 
 
 
