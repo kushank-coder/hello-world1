@@ -202,3 +202,15 @@ mysql(query)                                                                    
 
 #add rows in an existing dataframe
 df.loc[len(df.index)] = [check2,i]                     #adds a row at the end of the dataframe
+
+
+#Save a dataframe  (pickle)
+
+import pickle
+with open('links_Meta.pickle', 'wb') as f:
+    pickle.dump(links, f)
+
+#extract from pickle data
+import pickle
+with open('links_Meta.pickle', 'rb') as f:
+    mynewlist = pickle.load(f)
