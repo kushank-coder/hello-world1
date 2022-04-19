@@ -191,7 +191,9 @@ ratings['movieId'].nunique()                                                    
 movies["genres"].str.split('|', expand=True)                                                      #splits 1 column into mutiple columns based on the delimiter  
 
 
+#substring a column in  pandas
 
+dataframe["column1"].str[1:3]                                                                      #this substring slices from 2nd letter and 3rd letter
 
 
 
