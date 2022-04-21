@@ -192,7 +192,8 @@ g = g.map(plt.hist, "total_bill")                                              #
 
 
 # proc freq barplot
-df_tips['sex'].value_counts().plot(kind='bar')
+df_tips['sex'].value_counts(normalize=True).plot(kind='bar')
+
 
 
 #pie plot from proc freq
