@@ -195,6 +195,12 @@ g = g.map(plt.hist, "total_bill")                                              #
 df_tips['sex'].value_counts().plot(kind='bar')
 
 
+#pie plot from proc freq
+labels = ["MALE", "FEMALE"]
+plt.pie(users["gender"].value_counts(), colors = ['#66b3ff','#99ff99'], autopct="%.2f%%",labels=labels)
+plt.legend()
+plt.axis("equal")
+plt.show()
 
 
 
