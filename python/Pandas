@@ -143,14 +143,11 @@ df['col2'].value_counts()
  #pivot table
 
 data = df.groupby0("column_to_be_kept_in_rows")
-pivot = data.agg({'userId': pd.Series.nunique , "rating": ["sum","count"]})      #using .agg function solves this problem
- 
-df.groupby(["id", "pushid"]).agg({"sess_length": ["sum", "mean", "count"]})          
-                                                                                              #index is the rows required, columns is the required columns, 
-                                                                                              #fill_value for the combinations not present in the data fill_value will replace with a dummy value
-                                                                                               #margins = True (actually gives column totals and row totals
-    table = pd.pivot_table(df,index=['Sex','Pclass'],aggfunc={'Age':np.mean,'Survived':np.sum})
-df.pivot_table(Churn_data,index=['Customer Region'],values =["Customer Count","Number of users added "] ,aggfunc={"Customer Count":[np.sum , np.mean],"Number of users added ":np.sum})
+pivot = data.agg({'userId': pd.Series.nunique , "rating": ["sum","count"]})      #using .agg function solves this problem....we can apply 
+                                                                                #different and multiple functions to each of the column ..even select less 
+
+
+
 
 # reading csv
 df = pd.read_csv('example')
