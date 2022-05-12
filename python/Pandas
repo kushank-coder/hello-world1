@@ -142,7 +142,7 @@ df['col2'].value_counts()
  
  #pivot table
 
-data = df.groupby0("column_to_be_kept_in_rows")
+data = df.groupby("column_to_be_kept_in_rows")
 pivot = data.agg({'userId': pd.Series.nunique , "rating": ["sum","count"]})      #using .agg function solves this problem....we can apply 
                                                                                 #different and multiple functions to each of the column ..even select less 
 
