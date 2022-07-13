@@ -213,7 +213,8 @@ mysql(query)                                                                    
 
 
 #add rows in an existing dataframe
-df.loc[len(df.index)] = [check2,i]                     #adds a row at the end of the dataframe
+metric_df=pd.DataFrame(columns=["userID","metric"])
+df.loc[len(df.index)] = [check2,i]                     #adds a row at the end of the dataframe / empty dataframe can also be made
 
 
 #Save a dataframe  (pickle)
