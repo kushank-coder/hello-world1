@@ -1,0 +1,1794 @@
+*/*Specifying a working directory*/
+/*libname (name) "Location Path";*/
+libname kunaal "F:\SAS INSTALLATION\SAS Library\Training";
+libname local "F:\SAS INSTALLATION\SAS Library\local";
+options compress=yes;
+run;
+
+/*creating a dataset named emp in path referred by kunaal*/
+data kunaal.emp;
+input id name$ age;
+cards;
+101 aaa 28
+102 bbb 56
+103 ccc 78
+;
+run;
+
+/*formatting variables*/
+data KUNAAL.emp;
+length city$ 15.;
+input id name$ age doj salary city$;
+informat doj ddmmyy10. salary comma6.;
+format doj ddmmyy10. salary comma6.;
+cards;
+101 aaa 28 12/09/1999 10,000 delhi
+102 bbb 56 23/09/1996 12,000 bangalore
+103 ccc 78 19/10/1995 25,000 mumbai
+;
+run;
+
+/*getting the details of a dataset*/
+proc contents data=kunaal.emp;
+run;
+proc contents data=kunaal.emp position short;
+run;
+proc contents data=kunaal.emp varnum;
+run;
+proc contents data=kunaal._all_;
+run;
+
+/*creating copy of a dataset, a data set named cars present in local is copied to kunaal and named as cars*/
+data kunaal.cars;
+set local.cars;
+run;
+
+/*copying multiple dataset at a time*/
+/*specific data sets*/
+proc copy in=local out=kunaal;
+select cars candy_sales_summary candy_products candy_customers auction;
+run;
+
+/*all data sets*/
+proc datasets library=local;
+copy out=kunaal;
+run;
+
+/*creating a basic report*/
+options date number;
+title "Hello"
+proc print data=kunaal.emp;
+run;
+proc print data=kunaal.emp;
+var id name doj;
+run;
+
+/*changing a variable name*/
+data kunaal.emp2;
+set kunaal.emp;                                                                       -----
+rename id=empid;
+run;                                                                                BOTH DOES SIMILAR WORK
+
+/*assigning label*/                                                                 ------
+data kunaal.emp3;
+set kunaal.emp;
+label doj="date of joining";
+run;
+proc print data=kunaal.emp3 label;
+run;
+
+/*selecting set of variables*/
+data kunaal.candy1;
+set local.candy_sales_summary(keep=name region category subcategory);
+run;
+data kunaal.candy1;
+set local.candy_sales_summary(drop=name region category subcategory);
+run;
+
+/*selecting observations*/
+data kunaal.candy2;
+set local.candy_sales_summary (firstobs=5 obs=75);
+run;
+
+/*conditionally selecting observations*/
+/*where condition*/
+data kunaal.cars2;
+set local.cars;
+where type="Compact";							/*  THIS GIVES ONLY COLUMN(TYPE) WISE REPETITION OF ELEMENTS
+run;
+data kunaal.candy4;
+set local.candy_sales_summary;
+where category="Candy" and units>5000;
+run;
+data kunaal.candy5;
+set local.candy_sales_summary;
+where subcategory="Sweet" or subcategory="Fruit";
+run;
+data kunaal.candy6;
+set local.candy_sales_summary;
+where category="Nuts" and (subcategory="Sweet" or subcategory="Fruit");
+run;
+
+/*If conditions*/
+data kunaal.candy7;
+set local.candy_sales_summary;
+if subcategory="Soft" then delete;
+run;
+
+data cars1 cars2 cars3;
+set local.cars;											// ek file ko 3 hisso mein tod diya
+if type="Compact" then output cars1;
+else if type="Small" then output cars2;
+else if type="Sporty" then output cars3;
+run;
+
+data cars;
+set local.cars;
+length capacity$ 10.;
+if gastank<15 then capacity="Low";
+else if gastank>=15 and gastank<20 then capacity="Medium";
+else capacity="High";
+run;
+
+/*sorting the dataset*/
+proc sort data=kunaal.emp out=kunaal.emp_sort;
+by id;
+run;							///// the file is automatically sorted out without printing
+proc sort data=kunaal.emp out=kunaal.emp_sort;
+by descending id;
+run;
+
+proc sort data=local.candy_sales_summary out=kunaal.candy_sales_summary;
+by category subcategory retail_price units;
+run;
+
+data kunaal.mybaseball;
+set local.baseball(keep=division league no_outs);
+run;
+
+PROC sort data = kunaal.mybaseball;
+by league division descending no_outs;
+run;
+
+/*whenever you write a by statement in proc step u should*/
+/*sort the data first*/
+/*sub total to be displayed*/
+proc print data=kunaal.candy_sales_summary;
+var category subcategory retail_price units;
+by subcategory;
+sum retail_price units;
+run;
+
+proc sort data = local.cars out = hello;
+by type;
+run;
+proc print data=local.cars;
+var type weight;                       /*             selects the categories you want to see*/
+by type;
+sum weight;
+run;
+
+/*Appending data sets*/
+data emp1;
+input id name$ age loc;
+cards;
+101 abs 34 hyd
+103 xyz 56 del
+105 pqr 66 ban						/* pehle emp1 ko print karega and then emp2 ko*/
+107 ttt 78 del
+;
+run;
+
+data emp2;
+input id name$ age sal;
+cards;
+102 mno 45 50000
+103 bbb 56 60000
+105 xyp 50 40000
+107 wer 45 30000
+;
+run;
+
+data emp3;
+set emp1 emp2;
+run;
+
+/*Merging data sets*/
+/*For merging there are two conditions to be satisfied by the datasets*/
+/*1.There should be atleast one common variable*/
+/*2.The datasets should be sorted by the common variable*/
+data emp1;
+input id name$ age;
+cards;
+101 a 34
+103 b 55
+105 c 34
+;
+run;
+data emp2;			
+input id salary city$;
+cards;
+101 1000 x
+104 2000 y
+105 2377 z
+106 5667 m
+;
+run;
+data emp3;
+merge emp1 emp2;
+by id;
+run;
+
+proc print data=emp3;
+run;
+
+/*Types of merges           condition*/
+/*1. Inner merge            no condition*/
+/*2. Exact Merge            if x=1 and y=1*/
+/*3. Right inner merge      if y=1*/
+/*4. Left inner merge       if x=1*/
+/*5. Right outer merge      if x=0 and y=1*/
+/*6. Left outer merge       if x=1 and y=0*/
+/*7. Outer merge            if x=0 or y=0*/
+
+data emp4;
+merge emp1(in=x) emp2(in=y);
+by id ;
+if x=1;
+run;
+
+proc print data=emp3;
+run;
+
+proc freq data=kunaal.candy_sales_summary;
+tables category ;
+/*where category = "Nuts";*/
+run;
+
+proc freq data=local.candy_sales_summary;
+tables category subcategory/nopercent nocum out = x;
+run;
+
+/*cross tab frequency*/
+proc freq data=kunaal.candy_sales_summary;
+tables category* subcategory/out = x ;
+run;
+proc freq data=local.candy_sales_summary;
+tables category* subcategory/nopercent norow nocol;
+run;
+proc means data=kunaal.candy_sales_summary;
+var retail_price units;
+run;
+
+/*PUTTING ALL THE OUTPUT IN ONE TABLE*/
+proc sort data = kunaal.candy_sales_summary;
+by subcategory;
+run; 
+
+proc means data=kunaal.candy_sales_summary mean std sum;
+var retail_price units;
+by subcategory;
+/*where subcategory = "Gum";*/
+output out=kunaal.candy_means mean=mretail munits std=sretail sunits;
+run;												/*BY SE KAI SAAARI TABLES BANTI HAI AND CLASS SE 
+													1 HI TABLE MEIN SAARA KAAM HO JAATA HAI /*
+proc means data=kunaal.candy_sales_summary mean std;
+var retail_price units;
+class category;
+output out=kunaal.candy_means mean=mretail munits std=sretail sunits;
+run;
+
+/*For exporting reports into external file*/
+ods pdf body="F:\SAS INSTALLATION\ods\report.pdf";
+ods html body="F:\SAS INSTALLATION\ods\report.html";
+
+proc means data=local.candy_sales_summary;
+var retail_price units;
+run;
+
+/*ods html close;*/
+ods _all_ close;
+
+/*importing external files into SAS*/
+proc import datafile="F:\SAS All Course Material_ATI\SAS BASE & MACROS\SAS Files\clinical.csv" out=kunaal.aaaaaa            /* REMEMBER ";" DOESN'T COME*/
+dbms=csv replace;
+run;
+
+/*For exporting sas data into external files*/
+proc export data=kunaal.accounts outfile="F:\Training\emp_new.csv"
+dbms=csv replace;
+run;
+
+proc export data=kunaal.emp outfile="F:\SAS INSTALLATION\ods\emp_new.xls"
+dbms=excel2000 replace;
+run;
+
+data local.hospital;
+input PROTOCOL$ INV PAT VISIT VSDT SBP DBP PULSE WEIGHT;
+informat vsdt date7.;
+format vsdt date7.;
+cards;
+DRG2005 227 27001 1 6Jan04 122 80 65 119.1
+DRG2005 227 27001 2 13Jan04 118 82 60 119.1
+DRG2005 227 27001 3 16Jan04 120 72 66 119.1
+DRG2005 227 27001 4 3Feb04 114 82 60 119.1
+DRG2005 227 27001 9 4May04 104 70 60 119.1
+DRG2005 227 27001 10 10May04 118 76 66 119.1
+DRG2005 227 27001 11 1Jun04 113 81 62 119.1
+DRG2005 227 27001 12 29Jun04 122 76 66 119.1
+DRG2005 227 27001 13 27Jul04 110 76 72 119.1
+DRG2005 227 27001 14 23Aug04 124 82 60 119.1
+DRG2005 227 27001 15 28Sep04 116 76 66 119.1
+DRG2005 227 27002 1 26Jan04 136 86 72 110.4
+DRG2005 227 27002 2 2Feb04 136 80 84 110.4
+DRG2005 227 27002 3 5Feb04 136 84 84 110.4
+DRG2005 227 27002 4 19Feb04 138 76 82 110.4
+DRG2005 227 27002 9 5Apr04 112 80 72 110.4
+;
+run;
+
+proc transpose data = local.hospital;						/* JUST GIVES THE TRANSPOSE AND DOESNOT STORE IT*/
+run;
+
+proc transpose data = local.hospital
+label = Desc
+name = var
+prefix = val
+out = hello;
+run;
+
+proc transpose data = local.hospital
+label = Desc
+name = var										////1ST COLUMN PROTOCOL HAI AND 2ND PAT AND 3RD INV
+prefix = val
+out = hello;
+by protocol pat inv;
+run;
+
+/*Functions*/
+
+/*input*/
+data kunaal.emp_1;
+input id name$ doj$;
+cards;
+101 aaa 11/09/98
+102 bbb 12/09/97
+;
+run;										/////INPUT FUNCTION KE LIYE EK COLUMN ADD HOTA HAI
+data kunaal.emp_2;
+set kunaal.emp_1;
+date=input(doj,ddmmyy8.);
+run;
+
+/*put returns number as a character string*/
+data kunaal.emp_3;
+set kunaal.emp_1;
+empid=put(id,3.);
+run;												////empid ek naya column banega kisi aur column se
+proc contents data=kunaal.emp_2;
+run;
+
+/*substr*/
+data candy_substr;
+set local.candy_customers;
+new_region=substr(region,1,3);
+run;												/////pehle vale column ko edit karna ho
+proc contents data = candy_substr;
+run;
+
+data candy_substr1;
+set local.candy_customers;
+substr(region,1,3)='XYZ';
+run;`												//// sub string should be initially assigned
+
+/*scan*/
+data candy_scan;
+set local.candy_customers;
+fname=scan(name,1,' ');
+mname=scan(name,2,' ');
+lname=scan(name,3,' ');
+run;
+
+data candy_scan1;
+set local.candy_customers;
+if scan(name,3,' ') = "" then lname=scan(name,2,' ');
+/*fname=scan(name,1,' ');*/									//// scan function finds the things in each level entry
+/*mname=scan(name,2,' ');*/
+/*lname=scan(name,3,' ');*/
+run;
+
+/*trim*/
+data candy_trim;										/// last gap cut ho jaata hai
+set candy_scan;
+New_name=trim(fname)||' '||trim(mname)||' '||lname;
+run;
+
+/*catx*/
+data candy_catx;
+set candy_scan;
+new_name=catx(' ',fname,mname,lname);							//// it is used for joining
+run;
+
+/*translate*/
+data kunaal.candy_translate;
+set local.candy_customers;
+new_name=translate(region,'XYZ','Cen');
+run;
+
+/*tranwrd*/
+data kunaal.candy_tranwrd;
+set local.candy_customers;
+region1=tranwrd(region,'East','Northeast');						/// east ko northeast bana deta hai
+run;
+									
+/*index*/
+data kunaal.candy_index;									//// you provide a numeric in this
+set local.candy_customers;
+index=index(region,'East');
+proc print;
+run;
+
+/*date*/
+data repayment1;
+set local.repayment;
+date=datepart(month);
+format date ddmmyy8.;								
+kunaal=day(date);
+month1=month(date);
+year1=year(date);
+date1=mdy(month1,kunaal,year1);
+current_date=today();
+run;
+
+data hello;
+     x='20jan94'd;
+     y=qtr(x);
+     put y=;
+	 proc print;
+	 run;
+
+data candyintck;
+set local.candy_sales_history;
+/*format hhh date9.;*/
+hhh = intck("day",today(),date);
+proc print;
+run;
+
+data candyintnx;
+set local.candy_sales_history;
+format ddd date9. date date9.;
+ddd = intnx("month",date,5,'m');
+proc print;
+run;
+
+data candy10;
+set local.candy_sales_summary;
+category1=upcase(category);
+category2=lowcase(category);
+run;
+
+data candy_upcase;
+set local.candy_sales_summary;
+where upcase(category)="NUTS";
+run;
+
+data repayment2;
+set repayment1;
+diff1=datdif(date,today(),"act/act");
+diff2=yrdif(date,today(),"act/act");
+run;
+
+data repayment3;
+set repayment1;
+amt=int(amt);
+amt1=round(amt,.1);
+run;
+
+data students1;
+set students;
+total=sum(s1,s2,s3,s4);
+run;
+
+/*Reading Raw data from external files*/
+filename files "F:\SAS All Course Material_ATI\SAS BASE & MACROS\files_kunaal";
+run;
+
+data kunaal.test2;
+infile files("test2.txt");
+input fname$ 1-7 lname$ 9-14 dep$ 16-20 month 22-23 yr 25-26;
+proc print;
+run;
+
+data kunaal.test2;
+infile files("test2.txt");
+input @1 fname$ 7. @9 lname$ 6. @16 dep$ 5. @22 month 2. @25 yr 2.;
+run;
+data kunaal.test2;
+infile files("test2.txt");
+input fname$ 7. +1 lname$ 6. +1 dep$ 5. +1 month 2. +1 yr 2.;
+run;
+data kunaal.test3;
+infile files("test3.txt");
+input @1 fname$ 7. @9 lname$ 5. @16 jobtitle 3. @20 salary comma9.;
+proc print;
+run;
+
+/*pad option is used if the values in the last column are of varying length*/
+data kunaal.test3_1;
+infile files("test3_1.txt")pad;
+input @1 fname$ 7. @9 lname$ 5. @16 jobtitle 3. @20 salary comma9.;
+run;
+
+/*reading free format raw data*/
+data kunaal.test4;
+infile files("test4.txt");
+input gender$ age v1-v4;
+run;
+
+data kunaal.test5;
+infile files("test5.txt")dlm=",";
+input gender$ age month id sal year;
+run;
+
+/*missover is used if there are any missing values found at the end of the record*/
+data kunaal.test6_1;
+infile files("test6_1.txt")missover;
+input empid id month year sal ansal;
+run;
+
+data boats;
+infile files("Boats.txt")dsd dlm = " " ;
+input v1$ v2$ v3$ v4$ v5$ v6;
+if v6 = . then do;
+v6 = v5;
+v5 = ""; 
+end;
+run;
+
+/*dsd is used if ther any missing values in the middle of the record*/
+libname kushu "/ACTUARY1/ACTUARIAL/WORK/iit_practice/kushank";
+libname kushu1 "/ACTUARY1/ACTUARIAL/WORK/iit_practice/kushank/k1";
+options compress=yes;
+run;
+data kushu.emp;
+length city$ 15.;
+input id name$ age doj salary city$;
+informat doj ddmmyy10. salary comma6.;
+format doj ddmmyy10. salary comma6.;
+cards;
+101 aaa 28 12/09/1999 10,000 delhi
+102 bbb 56 23/09/1996 12,000 bangalore
+103 ccc 78 19/10/1995 25,000 mumbai
+;
+run;
+options date number;
+title "Hello"
+run;
+proc print data=kushu.emp;
+var id name doj;
+run;
+ data emp1;
+input id name$ age;
+cards;
+101 a 34
+103 b 55
+105 c 34
+;
+run;
+data emp2;			
+input id salary city$;
+cards;
+101 1000 x
+104 2000 y
+105 2000 z
+106 5667 m
+; 
+proc freq data=emp2;
+tables salary/nopercent nocum nofreq out = x;
+run;
+proc freq data=kushu.emp;
+tables id* salary/nopercent norow nocol;
+run;
+proc sort data = kushu.emp;
+by id;
+run; 
+proc print data=kushu.emp;
+run;
+proc means data=kushu.emp mean std;
+var id salary;
+by id;
+output out=kushu.emp mean=id std=salary;
+run;
+data kushu.hospital;
+input PROTOCOL$ INV PAT VISIT VSDT SBP DBP PULSE WEIGHT;
+informat vsdt date7.;
+format vsdt date7.;
+cards;
+DRG2005 227 27001 1 6Jan04 122 80 65 119.1
+DRG2005 227 27001 2 13Jan04 118 82 60 119.1
+DRG2005 227 27001 3 16Jan04 120 72 66 119.1
+DRG2005 227 27001 4 3Feb04 114 82 60 119.1
+DRG2005 227 27001 9 4May04 104 70 60 119.1
+DRG2005 227 27001 10 10May04 118 76 66 119.1
+DRG2005 227 27001 11 1Jun04 113 81 62 119.1
+DRG2005 227 27001 12 29Jun04 122 76 66 119.1
+DRG2005 227 27001 13 27Jul04 110 76 72 119.1
+DRG2005 227 27001 14 23Aug04 124 82 60 119.1
+DRG2005 227 27001 15 28Sep04 116 76 66 119.1
+DRG2005 227 27002 1 26Jan04 136 86 72 110.4
+DRG2005 227 27002 2 2Feb04 136 80 84 110.4
+DRG2005 227 27002 3 5Feb04 136 84 84 110.4
+DRG2005 227 27002 4 19Feb04 138 76 82 110.4
+DRG2005 227 27002 9 5Apr04 112 80 72 110.4
+;
+run;
+proc print data=kushu.hospital;
+run;
+data kushu.transpose;
+set kushu.hospital;
+proc transpose data = kushu.hospital;
+run;
+proc transpose data = kushu.hospital
+label = Desc
+name = var
+prefix = val
+out = hello;
+proc print;
+run;
+proc transpose data = kushu.hospital
+label = Desc
+name = var
+prefix = val
+out = hello;
+by protocol pat inv;
+proc print;
+run;
+proc print data=kushu.hospital;
+run;
+data kushu.emp_1;
+input id name$ doj region$ amt;
+informat doj ddmmyy8.;
+format doj ddmmyy8.;
+cards;
+101 aaa_111 11/09/98 Delhi 100.45
+102 bbb_111 12/09/97 Mumbai 44.57
+;
+proc print;
+run;
+data kushu.emp_2;
+set kushu.emp_1;
+date=input(doj,ddmmyy8.);
+proc print;
+run;
+data kushu.candy_substr;
+set kushu.emp_1;
+substr(region,2,3)='XYZ';
+proc print;
+run; 
+proc print data= kushu.candy_substr;
+set kushu.emp_1;
+fname=scan(name,0,'_');
+mname=scan(name,1,'_');
+lname=scan(name,2,'_');
+proc print;
+run;  
+/*trim*/
+data candy_trim;
+set kushu.emp_1;
+New_name=trim('kushank ')||' '||trim('kumar ')||('bansal');
+proc print;
+run;
+/*catx*/
+data candy_catx;
+set kushu.emp_1;
+new_name=catx(' ','kushank','bansal');
+proc print;
+run;
+data kushu.candy_tranwrd;
+set kushu.emp_1;
+region1=tranwrd(region,'Delhi','Mumbai');
+proc print;
+run;
+data kushu.candy_index;
+set kushu.emp_1;
+index=index(region,'Delhi');
+proc print; 
+run;
+data kushu.date; 
+set kushu.emp_1;
+date=datepart(doj); 
+format date ddmmyy8.;								
+kunaal=day(doj); 
+month1=month(doj);														
+year1=year(doj);
+date1=mdy(month1,kunaal,year1);
+current_date=today();
+proc print;
+run; 
+data kushu.hello;
+     x='20nov94'd;
+     y=qtr(x);									/* qtr gives the quartert of the year*/
+     y=put(y,3.);								/* put function changes no. into character*/
+	 proc print;
+	 run;
+data kushu.candyintck;
+set kushu.emp_1; 
+/*format hhh date9.;*/
+hhh = intck("day",today(),doj);					/* diff frm today's date*/
+proc print;
+run;
+data kushu.candyintnx;
+set kushu.emp_1;
+informat doj date9.;
+format doj date9.;			/* written format mein replace ho gaya*/
+ddd = intnx("month",doj,5,'m');     /*  isse to 1960 ke date se aage kitne din beet chujke hain*/
+proc print;
+run;
+data kushu.candy10;
+set kushu.emp_1;
+category1=upcase(region);
+category2=lowcase(region);
+proc print data=kushu.candy10;
+run;
+
+data kushu.candy11;									
+set kushu.candy10;
+where upcase(category1)="MUMBAI";						/* write full name*/
+proc print data=kushu.candy11;
+run;
+
+data kushu.date2;
+set kushu.date;
+diff1=datdif(doj,today(),"act/act");
+diff2=yrdif(doj,today(),"act/act");
+proc print;
+run;
+
+data kushu.amt;
+set kushu.emp_1;          /* amt should be present in data*/
+amt=int(amt);
+amt1=round(amt,.01);
+proc print;
+run;
+data kushu.sum;
+set kushu.emp_1;
+total=sum(id,amt);
+proc print;
+run; 
+/*Reading Raw data from external files*/
+filename files "/ACTUARY1/ACTUARIAL/WORK/iit_practice/kushank";
+run;
+
+data kushu.file;
+infile files("file.txt");
+input @1 tabel1 7. @9 table2$ 6. @21 month$ 2.;
+proc print;
+run;
+data kushu.file;
+infile files("file.txt")dlm=",";							/* delimiter dlm*/
+input gender$ age month id ;
+proc print;
+run;   
+data kushu.file;
+infile files("file.txt")missover;							/* even takes into account the miss over values*/
+input gender$ age month id ;									/*miss over can always be used*/
+proc print;
+run;
+data boats;
+infile files("file.txt")dsd dlm = " " ;
+input v1$ v2$ v3$ v4$ v5$ v6;
+if v6 = . then do;
+v6 = v5;
+v5 = ""; 
+end;
+run;
+
+/*& is used to read the embedded space within the same column*/
+data kunaal.test8;
+infile files("test8.txt");
+input city&$  salary:comma.;							/
+run;
+
+data kunaal.test9;
+infile files("test9.txt")pad;
+input fname$ 1-15;
+input dep$ 1-13 jobcode$ 15-19;
+input salary comma10.;
+run;
+
+/* / specifies the pointer to move to the next line*/
+data kunaal.test9;
+infile files("test9.txt")pad;
+input fname$ 1-8 lname$ 10-15/
+dep$ 1-12 jobcode$ 15-19/
+ salary comma10.;
+run;
+
+/* # specifies the line number from which it is being read*/
+data kunaal.test9;
+infile files("test9.txt")pad;
+input #1 fname$ 1-8 lname$ 10-15
+    #2 dep$ 1-12 jobcode$ 15-19
+    #3 salary comma10.;
+run;
+                                            ///////////////////////////////////////////////////////////////////////////
+data test10;
+infile files("test10.txt");
+format date date7.;
+input date date7. num @@;
+run;
+
+data kunaal.test11;
+infile files("test11.txt");
+input a @ ;
+input b:comma. @;
+output;
+input b:comma. @;
+output;
+input b:comma. @;
+output;
+input b:comma. @;
+output;
+run;
+
+/*extrat*/
+data hi;
+infile files("mytest.txt");
+input @1 salary dollar6.;
+if _error_ then description = 'Problems';
+else description = 'No Problems';
+run;
+
+data test;
+set local.cars;
+by country;
+if first.country;
+proc print;
+run;
+
+/*Do Loops*/
+/*only prints with total */
+data kunaal.acctest;
+set kunaal.accounts;
+x = amt * (1 + 0.075)**(yrs);
+run;
+
+data kunaal.accounts1;
+set kunaal.accounts;
+earned=0;
+rate=0.075/12;
+	do month=1 to 12;
+	earned+(amt+earned)*(rate);
+	end;
+run;
+
+/*output prints with every step*/
+data kunaal.accounts1;
+set kunaal.accounts;
+earned=0;
+rate=0.075/12;
+earned=0;
+	do month=1 to 12;
+	earned+(amt+earned)*(rate);
+	output;
+	end;
+proc print;
+run;
+
+data kunaal.accounts;
+set local.accounts;
+/*earned = 0;*/
+/*do year = 1 to yrs;*/
+/*earned = yrs;*/
+/*end;*/
+run;
+
+data kunaal.accounts2;
+set kunaal.accounts;
+earned=0;
+rate=0.075/12;
+	do year= 1 to yrs;
+		do month=1 to 12;
+		earned+(amt+earned)*(rate);
+		end;
+	end;
+proc print;
+run;
+
+data kunaal.accounts3;
+set kunaal.accounts;
+year=0;
+	do until(amt>=50000);
+		do month=1 to 12;
+		earned=(amt*0.07/12);
+		amt+earned;
+		end;
+	year+1;
+	end;
+proc print;
+run;
+
+data accounts4;
+set accounts;
+year=0;
+rate =0.07/12;
+	do while(amt<50000);
+		do month=1 to 12;
+		earned=(amt*rate);
+		amt+earned;
+		end;
+	year+1;
+	end;
+run;
+
+data hi;
+input x amt;
+datalines;
+1 20000
+;
+proc print;
+run;
+
+data hi1;
+set hi;
+do until (amt>9000);
+w = amt;
+amt +500;
+output;
+end;
+proc print;
+run;
+
+data hi1;
+set hi;
+do while (amt<9000);
+w = amt;
+amt +500;
+output;
+end;
+proc print;
+run;
+
+data weight1;
+set local.weight;
+vv = mean(of weight1-weight6);
+run;
+
+data weight1;
+set local.weight;
+	weight1=weight1*2.2046;
+	weight2=weight2*2.2046;
+	weight3=weight3*2.2046;
+	weight4=weight4*2.2046;
+	weight5=weight5*2.2046;
+	weight6=weight6*2.2046;
+	proc print;
+run;
+
+data weight1;
+set local.weight;
+array wt{6} weight1-weight6;
+	do i=1 to 6;
+	wt{i}=wt{i}*2.2046;
+	end;
+run;
+
+data weight2;
+set local.weight;
+array wt{6}weight1-weight6;
+array wtdiff{5};
+	do i=1 to 5;
+	wtdiff{i}=wt{i+1}-wt{i};
+	end;
+run;
+
+data hello;
+input vari;
+datalines;
+56
+;
+run;
+
+data hello1;
+array x{100};
+do i = 0 to 100 by 3;
+x{i} = i;
+end;
+run;
+
+
+proc format ;
+value hello 1 = "Jan" 2 = "";
+run;
+
+proc report data=kunaal.flight split="*";
+column flight capacity deplaned emptyseats emptypercent;
+define flight/group "Flight*Number" left;
+define emptyseats/computed "Empty*Seats";
+define emptypercent/computed "Empty*percent";
+compute emptyseats;
+emptyseats=capacity.sum-deplaned.sum;
+endcomp;
+compute emptypercent;
+emptypercent=capacity.sum/deplaned.sum;
+endcomp;
+run;
+
+proc report data=kunaal.flight ;
+column flight capacity deplaned emptyseats ;
+define flight/group ;
+define emptyseats/computed ;
+compute emptyseats;
+emptyseats=capacity.sum-deplaned.sum;
+endcomp;
+run;
+
+proc report data=LOCAL.CALVES ;
+column FEED SIRE WEIGHTGAIN DIFF ;
+define FEED/group ;
+define DIFF/computed ;
+compute DIFF;
+DIFF=WEIGHTGAIN.sum-SIRE.sum;
+endcomp;
+run;
+
+proc report data=local.weight nofs;
+column weight1 weight4 weight5 (weight4 weight5),mean;
+define weight1 / display;
+define weight2 / display;
+run;
+
+data kunaal.flight1;
+set kunaal.flight;
+run;
+proc sort data = kunaal.flight1;
+by flight;
+run;
+proc means data= kunaal.flight1 sum mean;
+var capacity deplaned ;
+class flight;
+output out= kunaal.flightout sum=csum dsum  mean= cmean dmaen ;
+run;
+        ///////////////////////////////////////////////////////////////////////////////////////
+/*SQL*/
+/*creating a dataset*/    ////// full file is formed
+proc sql;
+create table kunaal.emp
+(name char(8),id num,doj num informat=date9. format=date9.);
+quit;
+
+proc sql;
+insert into kunaal.emp
+set name="ramu",id=101,doj='11jan99'd
+set name="tina",id=102,doj='12jan98'd;          ------------
+quit;
+`						BOTH DOES SAME WORK
+proc sql;
+insert into kunaal.emp
+values("priya",104,'11feb1997'd)          ----------------------// ye apne aap le lega
+values("preeti",105,'13mar1998'd);
+quit;
+
+/*selecting all columns in a table*/
+proc sql;
+select * from local.cars;
+quit;
+
+/*selecting specific columns in a table*/
+proc sql;
+select distinct country,type
+from local.cars;
+quit;
+
+/*eliminating duplicate rows*/
+proc sql;
+create table hello as
+select distinct name,id,doj
+from kunaal.emp;
+quit;
+
+/*calculating values*/
+proc sql;
+select city,(avglow-32)*5/9 format=4.1				// ismein bas output kar sakta hun computer ke paas koi memory nahin hai
+from local.worldtemps;
+quit;
+
+proc sql;
+select city,(avglow-32)*5/9 as Lowcelsius format=4.1
+from local.worldtemps;
+quit;
+
+/*referring to a calculated column by alias*/
+proc sql;
+select city,(avghigh-32)*5/9 as highc format=5.1,			/// comma helps to add a new column by manupulating earlier
+      (avglow-32)*5/9 as lowc format=5.1,
+	  (calculated highc-calculated lowc) as range format=4.1
+from local.worldtemps;
+quit;
+
+/*assigning values conditionally*/
+proc sql;
+select city,country,latitude,
+case
+	when latitude gt 67 then "North Frigid"
+	when 67 ge latitude ge 23 then "North Temperate"
+	when 23 gt latitude gt -23 then "Torrid"				// case ka format thoda alag hota hai
+	when -23 ge latitude ge -67 then "South Temperate"
+	else "South Frigid"
+end as Climatezone
+from local.worldcitycoords;
+quit;
+
+data cars;
+set local.cars;
+length capacity$ 10;								// sql is mainly to perate various functions on a file nort actually 
+										//trying to store the date for storing data you use early methods
+if gastank<15 then capacity="Low";
+else if gastank>=15 and gastank<20 then capacity="Medium";--------
+else capacity="High";
+run;
+						DIFFERENT WAYS OF DOING THE SIMILAR THING(EK MEIN SAVE HOTA HAI EK MEIN BAS OPERATION HOTA HAI)
+							SAVE BHI KAR SAKTE HAIN BALKI ZYADA EFFICIENT HAI SQL
+proc sql;
+select type,country,
+case 
+	when gastank lt 15 then "low"----------------------------							// ek insert into function hi hai 
+											//jisse file mein edit hokar save hota hai
+	when 15 lt gastank lt 20 then "medium"
+	else "high"
+end as capacity
+from local.cars;
+quit;
+
+proc sql;
+select name,continent,
+case continent
+	when "North America" then "continental u.s."
+	when "Oceania" then "pacific islands"
+	else "none"
+end as region
+from local.unitedstates;
+quit;
+
+/*replacing missing values using coalesce*/
+proc sql;
+create table hello as
+select name,coalesce(lowpoint,"not available") as lowpoint
+from local.continents;
+quit;
+
+/*specifying column attributes*/
+proc sql;
+select name label="state",area format=comma10.						//by the help of label we can rename the column itself
+from local.unitedstates;
+quit;
+
+/*sorting by column*/
+proc sql;
+select name,population format=comma10.
+from local.countries
+order  by population;
+quit;
+proc sql;
+select name,type
+from local.features
+order by type desc;
+quit;
+
+/*retrieving rows that satisfy a condition*/
+proc sql;
+select name,population format=comma10.
+from countries
+where continent="Europe";
+quit;
+proc sql;
+select name,population format=comma10.						/// cheezon ko store karna sql ka nature nahin hai it is just process of performing some functions
+from countries
+where continent="Africa" and population gt 20000000
+order by populationn desc;
+quit;
+
+/*select */
+/*from */
+/*where*/
+/*group by */
+/*having */
+/*order by*/									///// main categoricalwork in sql
+
+/*summarizing data*/
+proc sql;
+select city,country,mean(avghigh,avglow) as meantemp
+from local.worldtemps								//// mean --- mean de dega
+where calculated meantemp gt 75
+order by meantemp desc;
+quit;
+
+proc sql;
+create table oil2 as 
+select country,mean(barrels) format=comma18. as totalbarrels,barrels
+from local.oilrsvrs
+; 
+select country,barrels
+from oil2
+where barrels > totalbarrels;
+quit;
+
+proc sql;
+select name,population format=comma14.,
+       (population/sum(population)*100) as percentage format=comma8.2
+from countries
+order by percentage desc;
+quit;
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/*grouping*/
+/*having is used to conditionally select groups*/
+proc sql;
+select location,type,sum(height) as totarea
+from local.features
+group by type
+having totarea>3000;
+quit;
+
+proc sql;
+select distinct country, type, sum(weight) as totweight
+from local.cars
+group by type
+having totweight > 60000;
+quit;
+
+proc sql;
+select country,type,sum(weight) as totarea
+from local.cars
+group by type
+having totarea>50000;
+quit;
+
+/*JOINS*/
+
+/*type                     similar to            Keywords*/
+
+/*1)Inner join             exact merge           inner join*/
+/*2)Right outer join       right inner merge     right join*/
+/*3)Left outer join        left inner merge      left join*/
+/*4)Full outer join        inner merge           full join*/
+
+data facebook1;
+input id name$;
+cards;
+101 aaa
+103 bbb
+104 ccc
+106 ddd
+;
+run;
+data facebook2;
+input id name$;
+cards;
+102 eee
+103 bbb
+104 ccc
+105 hhh
+;
+run;
+
+data facebook3;
+input id name$;
+cards;
+104 eee
+105 bbb
+107 ccc
+108 hhh
+;
+run;
+
+/*inner join   ->   103,104*/
+proc sql;
+select *
+from facebook1 as x full join facebook2 as y					//// full join columns ban gaye extra 
+on x.id=y.id;
+quit;
+
+proc sql;
+select y.id,y.name
+from facebook1 as x right join facebook2 as y					///// same as y
+on x.id=y.id;
+quit;
+
+proc sql;
+select *
+from facebook1 as x full join facebook2 as y full join facebook3 as z  		////// not running
+on x.id=y.id and y.id=z.id;
+quit;
+
+/*Sub-Queries*/
+proc sql;
+select name "state", population format=comma10.
+from unitedstates
+where population gt 
+                   (select population from countries
+				    where name="Austria");
+quit;
+
+proc sql;
+select name "country",population format=comma15.
+from local.countries
+where name in 
+             (select country from local.oilprod);
+quit;
+
+/*creating tables like an existing table */
+proc sql;
+create table emp3
+like emp1;
+quit;
+
+/*copying an existing table*/
+proc sql;
+create table emp3 as
+select *
+from emp1;
+quit;
+
+/*deleting rows*/
+proc sql;
+delete
+from emp1
+where id=101;
+quit;
+
+/*deleting a column*/
+proc sql;
+alter table emp1
+drop age;
+quit;
+
+/* MACROS */
+%macro mprint;
+proc print data = local.cars;
+run;
+%mend;
+%mprint;
+
+%macro mprint (var1);
+proc print data = &var1;
+run;
+%mend;
+%mprint(local.candy_products);
+%mprint(local.candy_sales_summary);
+
+%macro msort(var1,var2);
+Proc sort data = &var1;
+by &var2 ;
+run;
+%mend;
+%msort(kunaal.emp,id);
+%msort(kunaal.emp,name);
+
+%macro mmerge (var1,var2,var3,var4);
+data &var1;
+merge &var2 &var3;
+by &var4;
+run;
+%mend;
+%mmerge(kunaal.emp3,kunaal.emp1,kunaal.emp2,id);
+
+/*calling a macro within another macro*/
+%macro mmerge(var1,var2,var3,var4);
+%msort(&var2,&var4);
+%msort(&var3,&var4);
+data &var1;
+merge &var2 & var3;
+by &var4;
+run;
+%mend;
+
+/*PARAMETERS*/
+/*There are two type of parameters*/
+/*1. Position parameter*/
+/*2. Keyword parameter*/
+
+/*Example for positional parameter*/
+%macro msort(var1,var2);
+proc sort data =  &var1;
+By &var2;
+proc print;
+run;
+%mend;
+%msort(local.cars,weight);
+/*In positional parameters while calling the macro the values */
+/*given will be recognized in the same order or position how the */
+/*parameter are created in macro definition*/
+
+/*Example for keyword parameter*/
+%macro msort(dataset=,byvar=);
+proc sort data =  &dataset;
+By &byvar;
+run;
+%mend;
+%msort(byvar=id,dataset=emp);
+
+/*to create a keyword parameter put a equal sign in front of the parameter name*/
+/*the advantage of using keyword parameter is you can write the values in */
+/*whichever order you want you dont have to be bothered about their position in macro definition.*/
+/*but when you write the values each value should be referenced by the parameter name.*/
+/**/
+
+/*another advantage of keyword parameter is you can give some default or constant value to the parameter */
+/*so that when you are calling the macro you dont have to give any value for it.*/
+/*when you u dont give any value it will take the default ones but u can change if required while calling the*/
+/*macro by giving whatever value u want only for that particular output.*/
+
+%macro msort(var1=,var2=id);
+proc sort data =  &var1;
+By &var2;
+run;
+%let a=10;
+%mend;
+%global &a;
+%put &a;
+
+%msort(var1=emp);
+%msort(var1=emp,var2=age);
+%put &a;
+/*creating a macro variable*/
+/*syntax %let macrovariable=value*/
+%let a=Candy;
+%put &b;
+%let b=local.candy_products;
+proc print data=b;
+where category="&a";
+run;
+/*you can use these macrovariables anywhere-data step,proc step, within another macro*/
+
+/*Based on scope there are 2 types of macrovariables*/
+/*1. Local*/
+/*2. Global*/
+/*Local macrovariable--> any macro variable which is created within the macro definition*/
+/*  is called local macrovaribale and it will be existing only within that macro it cant used outside*/
+/*  the macro.*/
+
+%let a=Candy;
+%put &b;
+%let b=local.candy_products;
+
+proc print data=&b;
+where category="&a";
+run;
+
+
+%macro mprint;
+%let y=Nuts;
+%let X=local.candy_products;
+
+proc sort data = &x;
+by orderid;
+run; 
+
+proc print data=&x;
+where category="&y";
+run;
+
+%mend;
+
+proc print data=&x;
+where category="&y";
+run;
+/*Global macrovariable--> any macrovariable  which is created outside the macro definition is called */
+/*                 global macrovariable and it will be existing for the entire session and can be used anywhere.*/
+
+
+%let x = %eval(34324+20);
+%let x = 10+20;
+%put &x;
+%put _automatic_;
+%put one line of sas.;
+/*%put is used to display the macrovariable vale*/
+%let y=%sysevalf(10.2+10.2);
+%put &y;
+
+/*Call Symput*/
+%let sr_cit = no;
+
+data accounts;
+   set local.accounts;
+   if amt > 4000 then
+   do;
+      call symput ("sr_cit","yes");
+    output;
+   end;
+run;
+%put &sr_cit;
+
+%macro whatstep(info=,mydata=);
+%if &info=print %then
+%do;
+proc print data=&mydata;
+run;
+%end;
+%else %if &info=report %then
+%do;
+proc report data=&mydata;
+run;
+%end;
+%else %if &info=contents %then
+%do;
+proc contents data=&mydata;
+run;
+%end;
+%mend;
+
+%whatstep(info=print,mydata=local.candy_sales_summary);
+%whatstep(info=report,mydata=local.candy_sales_summary);
+
+%include "C:\Documents and Settings\sys\Desktop\day2\macros.sas";
+
+/*MY EXPERIMENT*/
+proc import datafile="F:\SAS All Course Material_ATI\SAS BASE & MACROS\files\flight.csv" out=kunaal.flight
+dbms=csv replace;
+run;
+
+data inc;
+input id name$;
+datalines;
+101 ramu
+102 ram
+;
+
+%include 'MYFILE';
+proc print;
+run;
+
+%let s=SPORTY;
+%let c=COMPACT;
+data kunaal.cars_sporty kunaal.cars_compact kunaal.cars_medium kunaal.cars_small kunaal.cars_large;
+set local.cars;
+if upcase(type)="&s" then output  kunaal.cars_sporty ;
+else if upcase(type)="&c" then output kunaal.cars_compact;
+else if upcase(type)="MEDIUM" then output kunaal.cars_medium;
+else if upcase(type)="SMALL" then output kunaal.cars_small;
+else output kunaal.cars_large;
+run;
+
+proc print data=kunaal.cars_sporty;
+run;
+proc contents data=kunaal.cars_sporty;
+run;
+proc report data=kunaal.cars_sporty;
+run;
+
+data local.world1(drop = city country);
+set local.worldtemps(keep = city{} country avghigh);
+run;
+
+data temp;
+set local.worldtemps;
+length vornv$ 9.;
+if avghigh > 85 then vornv = "Valid";
+else vornv= "Not valid";
+run;
+
+data temp;
+set local.worldtemps;
+length vornv$ 9.;
+if avghigh > 85 then vornv = "Valid";
+else vornv= "Not valid";
+run;
+
+data temp85 tempother;
+set local.worldtemps;
+/*length vornv$ 9.;*/
+if avghigh > 85 then output temp85;
+else output tempother;
+run;
+
+
+data hi ;
+set local.candy_sales_summary(keep= orderid subcategory retail_price units);
+if subcategory="Sweet" then output hi;
+sales = retail_price*units;
+drop = orderid sales;
+run;
+
+
+data rem;
+input id name$ level;
+datalines;
+1 Frank 1
+2 Joan 2
+3 Sui 2
+4 Jose 3
+5 Burt 4
+6 Kelly .
+7 Juan 1
+;
+run;
+
+data expertise;
+set rem;
+if level = . then
+expertise = 'Unknown';
+else if level = 1 then
+expertise = 'Low';
+else if level = 2 or level=3 then
+expertise = 'Medium';
+else
+expertise = 'High';
+run;
+
+title1 'Using Proc REPORT';
+title2 'Simple Report';
+* Simple report;
+proc report data=kunaal. nofs;
+columns region lname fname wt;
+define region / display;
+define lname / display;
+define fname / display;
+define wt / display;
+run;
+
+
+
+
+
+
+
+/* IMPORT ULTIMATE CODE*/
+data   ultimate.PCC_ultimate  ;
+      %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+      infile '/ACTUARY1/ACTUARIAL/WORK/iit_practice/kushank/pa_new/final/PCC14-15/pcc_consolidated_sept/PCC_accumulation_ultimate/PCC_COMPILED.csv' delimiter = ',' MISSOVER DSD lrecl=32767
+firstobs=2 ;
+         informat claim_no_final $100. ;
+         informat CML_POLICY_NO $100. ;
+         informat CML_ENDORSEMENT_NO $100. ;
+         informat CML_PRODUCT_CODE $100.;
+         informat gross_paid_num best32. ;
+         informat net_paid_num best32.;
+         informat CML_DATE_OF_LOSS DATE9. ;
+         informat LOSS_year $20. ;
+         informat PAID_DATE_MDY DATE9. ;
+format claim_no_final $100. ;
+         format CML_POLICY_NO $100. ;
+         format CML_ENDORSEMENT_NO $100. ;
+         format CML_PRODUCT_CODE $100.;
+         format gross_paid_num best32. ;
+         format net_paid_num best32.;
+         format CML_DATE_OF_LOSS DATE9. ;
+         format LOSS_year $20. ;
+         format PAID_DATE_MDY DATE9. ;
+      input
+                  claim_no_final $
+                 CML_POLICY_NO $
+                  CML_ENDORSEMENT_NO $ 
+                  CML_PRODUCT_CODE $
+                  gross_paid_num
+                  net_paid_num 
+                  CML_DATE_OF_LOSS 
+                  LOSS_year $
+                 PAID_DATE_MDY
+      ;
+      if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+      run;
+
+
+
+
+
+/EXPORT ULTIMATE CODE*/
+ods csv body = '/ACTUARY1/ACTUARIAL/WORK/iit_practice/kushank/pa_new/final/PCC14-15/pcc_consolidated_sept/PCC_accumulation_ultimate/PCC_FINAL.csv';
+proc print data =ultimate.PCC_ultimate_1;
+run;
+ods _all_ close; 
+
+
+
+
+/CLUSTERING CODE(+AUTO CLUSTERING)/
+
+/*clustering*/
+PROC IMPORT OUT= Injury_Branch /*sets name in sas*/
+            DATAFILE= "D:\FY 14-15\Rate Indication\TP_CV_14Q2\LDF\Clustering\Injury_Branch Input.csv"  
+            DBMS=CSV REPLACE;
+     GETNAMES=YES;
+     DATAROW=2;
+     GUESSINGROWS=100000; 
+RUN;
+
+PROC CLUSTER DATA=Injury_Branch METHOD=COMPLETE STD
+      PSEUDO RSQUARE OUTTREE=treedata_Injury_Branch;
+  VAR ZERO ONE TWO THREE FOUR;
+  ID BRANCH;
+RUN;
+
+/*Loop 1 for master for clustering*/
+data master;
+set treedata_Injury_Branch (keep=_NAME_ _PARENT_);
+rename _NAME_=master; 
+rename _PARENT_=Cluster;
+FORMAT Nos best32.;
+Nos=substr(_PARENT_,3,4);
+run;
+data master;
+set master;
+where Nos gt 6; /*No of Clusters*/
+run;
+proc sort data=master nodupkey;
+by master;
+run;
+/**/
+
+data Injury_Branch1;
+set Injury_Branch;
+format master1 $100.;
+master1=BRANCH;
+run;
+
+/*Run a loop till we get required number of clusters*/
+data Injury_Branch1;
+set Injury_Branch1;
+rename master1=master;
+run;
+proc sort data=Injury_Branch1;
+by master;
+run;
+data Injury_Branch2 (drop=Nos);
+merge Injury_Branch1 (in=a) master (in=b);
+by master;
+if a;
+run;
+
+data Injury_Branch1 (drop=master cluster);
+set Injury_Branch2;
+format master1 $100.;
+if Cluster in ('') then master1=master;
+else master1=cluster;
+run;
+proc sql;
+select count(distinct master1) as cluster_count
+from Injury_Branch1;
+quit;
+/*Loop Ends*/
+
+PROC EXPORT DATA=Injury_Branch1                                                                                                                
+            OUTFILE= "D:\FY 14-15\Rate Indication\TP_CV_14Q2\LDF\Clustering\Injury_Branch Clustered.csv"                                                                 
+            DBMS=CSV REPLACE;                                                                                                           
+RUN;
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+/* for printing only the columns of a data set*/
+
+proc contents data=claim.temporary5 out=meta (keep=NAME) ; 
+run ;  
+proc print data=meta ; run ; 
+
+
+having = where (you can use summary functions in this also)
+
+SPECIAL FUNCTIONS
+1> FIRST. AND LAST.
+   Data chi.prem_CHI_Final;
+   Set chi.prem_CHI_Final;
+   By Corrected_policy_no;
+   If First.Corrected_policy_no then SI_Revised = POL_TOT_SUM_INSURED_AMT;
+   RETAIN SI_Revised ;
+
+2> find function is also awesome....
+3> textVar2=translate(textVar,' ','&')   = translates & with a SPACE.GREAT
+
+4> for merging we could use
+
+Create table dummy as
+Select a.*,b.*
+From data1 as a left join data2 as b
+On (a.column1=b.column2)
+Quit;
