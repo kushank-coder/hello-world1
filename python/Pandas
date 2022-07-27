@@ -69,6 +69,11 @@ Or select based off of position instead of label
 df.iloc[2]
 #NOTE: the method .iloc or .loc could only be used to access the already data dimensions to add a row we need to use direct columns and not loc procedure
 
+
+
+#checking the DataType of every columns 
+a.dtypes
+
 ### Conditional Selection
 
 An important feature of pandas is conditional selection using bracket notation, very similar to numpy:
