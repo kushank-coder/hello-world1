@@ -1,0 +1,6 @@
+
+
+#Plotting an RNN OR time series data
+plt.figure(figsize=(20,5)).suptitle("Daily", fontsize=20)
+plt.plot(requests.head(24))
+plt.show()
