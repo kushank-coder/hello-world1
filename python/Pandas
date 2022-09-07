@@ -158,7 +158,7 @@ pivot = data.agg({'userId': pd.Series.nunique , "rating": ["sum","count"]})     
 df = pd.read_csv('example')
 
 # EXPORT OR writing to csv   
-df.to_csv('example',index=False)                                                               #here index should equal to False (otherwise indexes will come as a column in csv
+df.to_csv('example.csv',index=False)                                                               #here index should equal to False (otherwise indexes will come as a column in csv
 
 # reading excel
 pd.read_excel('Excel_Sample.xlsx',sheetname='Sheet1')
