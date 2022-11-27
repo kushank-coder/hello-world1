@@ -2,68 +2,36 @@ import networkx as nx
 
 import matplotlib.pyplot as plt
 
-%matplotlib inline
-
- 
+%matplotlib inline 
 
 1)#Build a null graph
 
- 
-
   G = nx.Graph()
-
- 
 
 2)#adding nodes into the graph
 
- 
-
   G.add_nodes_from([1,2,3])
-
- 
 
 3) #adding edges into the graph (in between nodes)
 
- 
-
-  G.add_edges_from([(1,2),(2,3),(1,3)])
-
- 
+   G.add_edges_from([(1,2),(2,3),(1,3)])
 
 4) Drawing the Graph
 
- 
-
-  nx.draw_networkx(G,node_color='green',node_size = 700)
-
- 
+   nx.draw_networkx(G,node_color='green',node_size = 700)
 
 5) #checking whether there is an edge between 2 nodes
 
- 
-
   print(G.has_edge(2,3))
-
- 
 
 6) #Checking degree of the graph
 
- 
-
   print(G.degree())
-
- 
 
 7) #Checing whther the given node is present in the graph
 
- 
-
   G.has_node(4)
 
- 
-
 8) #removing a node
-
- 
 
 G.remove_node(3)
