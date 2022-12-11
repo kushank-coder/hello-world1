@@ -35,3 +35,7 @@ import matplotlib.pyplot as plt
 8) #removing a node
 
 G.remove_node(3)
+
+9) Counting no. of Nodes in a graph
+
+G.number_of_nodes()
