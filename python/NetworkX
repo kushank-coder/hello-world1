@@ -39,3 +39,9 @@ G.remove_node(3)
 9) Counting no. of Nodes in a graph
 
 G.number_of_nodes()
+
+10) saving a graph in pickel
+nx.write_gpickle(G, "test.gpickle")
+
+11) reading a pickle
+nx.read_gpickle("Recommender_graph.gpickle")
