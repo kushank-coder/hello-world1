@@ -45,3 +45,11 @@ nx.write_gpickle(G, "test.gpickle")
 
 11) reading a pickle
 nx.read_gpickle("Recommender_graph.gpickle")
+
+12) removing_Edges from the graph
+
+Train_Graph.remove_edges_from(list(user_movie_test["combined_tuple"]))
+
+13) copy a graph
+import copy
+Train_Graph = copy.deepcopy(Recommender_Graph_v2) 
