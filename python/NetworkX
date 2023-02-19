@@ -53,3 +53,7 @@ Train_Graph.remove_edges_from(list(user_movie_test["combined_tuple"]))
 13) copy a graph
 import copy
 Train_Graph = copy.deepcopy(Recommender_Graph_v2) 
+
+14) sorting a pagerank dictionary in descending order of values
+n=100
+sorted(pr,key =pr.get, reverse=True)[:n] ===> will give top n recommedations
