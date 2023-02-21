@@ -136,6 +136,8 @@ df['col2'].value_counts()
  
  df['col1'].apply(lambda x: x^2)                                                 #Dynamic calculation of the column for quick application  x (each col1 entry) is input and output is x^2 
  
+ train_data_avg_rating["Flag"] = train_data_avg_rating.apply(lambda x: flag(x["rating"], x["avg_rating"]), axis=1)  #applying apply funtion on multiple columns
+ 
  # sorting
  df1.sort_values(by = ['frequency', 'index'], ascending = [False, True])                                                        #inplace=False by default....for sorting the data you need inplace =True
  
