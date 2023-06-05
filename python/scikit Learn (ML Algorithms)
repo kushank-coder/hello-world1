@@ -9,6 +9,11 @@ scaler = StandardScaler()
 scaler.fit(df)
 scaled_data = scaler.transform(df)
 
+#Correlation coefficient
+cor = df.corr()
+plt.figure(figsize = (16,16))
+sns.heatmap(cor,annot=True)                #heatmap can be used to find missing values as well     
+
 #Principal Components Analysis
 from sklearn.decomposition import PCA
 pca = PCA(n_components=2)                   #always try to have explained variance to be greater than 95% atleast
