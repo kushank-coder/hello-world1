@@ -9,7 +9,7 @@ scaler = StandardScaler()
 scaler.fit(df)
 scaled_data = scaler.transform(df)
 
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler   #min-max scaler
 scaler = MinMaxScaler()
 scaler.fit(df)
 scaled_data = scaler.transform(df)
@@ -20,6 +20,20 @@ scaled_data = scaler.transform(df)
 cor = df.corr()
 plt.figure(figsize = (16,16))
 sns.heatmap(cor,annot=True)                #heatmap can be used to find missing values as well     
+
+#Selecting Highly Correlated columns (the below method selects the first of the highly correlated variable and keeps the second
+
+def correlation(dataset, threshold):                                              
+
+    col_corr = set()  # Set of all the names of correlated columns                       # it will remove the first feature that is correlated with anything other feature
+    corr_matrix = dataset.corr()
+    for i in range(len(corr_matrix.columns)):
+        for j in range(i):
+            if abs(corr_matrix.iloc[i, j]) > threshold: # we are interested in absolute coeff value
+                colname = corr_matrix.columns[i]  # getting the name of column
+                col_corr.add(colname)
+    return col_corr
+
 
 #Principal Components Analysis
 from sklearn.decomposition import PCA
