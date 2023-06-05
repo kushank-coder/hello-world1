@@ -107,11 +107,15 @@ print(confusion_matrix(y_test,predictions))
 from sklearn.linear_model import LinearRegression
 lm = LinearRegression()
 lm.fit(X_train,y_train)
+prediction  = lm.predict(X_test)
+r2_score(Y_test,prediction)
 
 #L2 Regularization + Linear Regression
 from sklearn.linear_model import Ridge
 ridg = Ridge(alpha=1.0)                  #can change the regularization parameter (similarly we could use LASSO Regression as well)
 ridg.fit(X, y)
+prediction  = ridg.predict(X_test)
+r2_score(Y_test,prediction)
 
 #Logistic Regression
 logmodel = LogisticRegression()                    #Change C (opposite of regularization) and maxiter to increase the iterations
