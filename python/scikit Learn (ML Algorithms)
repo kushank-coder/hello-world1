@@ -9,6 +9,13 @@ scaler = StandardScaler()
 scaler.fit(df)
 scaled_data = scaler.transform(df)
 
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+scaler.fit(df)
+scaled_data = scaler.transform(df)
+
+
+
 #Correlation coefficient
 cor = df.corr()
 plt.figure(figsize = (16,16))
