@@ -204,6 +204,10 @@ plt.axis("equal")
 plt.show()
 
 
+#checking missing values in a dataset
+sns.heatmap(data.isnull(),yticklabels=False,cbar=False,cmap='viridis')
+
+
 
 
 
