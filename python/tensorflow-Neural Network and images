@@ -91,9 +91,18 @@ results = model.evaluate(X_test, y_test)
 
 
 
-#making directories from code
+#making directories/ folders in python
 import os
 
 os.makedirs(root_path)   # will amke a directory , note last folder name will automatically will be the directory name
 
 os.path.join(root_path,'train')  #this is a string concatenation (note train is not preceded by "/")
+
+
+os.listdir(DIRECTORY) returns a list with the contents of that directory.
+
+os.path.getsize(PATH) returns the size of the file
+
+copyfile(source, destination) copies a file from source to destination
+
+random.sample(list, len(list)) shuffles a list
