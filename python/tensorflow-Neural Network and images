@@ -86,3 +86,14 @@ history = model.fit(
 
 #evaluating the model on test dataset
 results = model.evaluate(X_test, y_test)
+
+
+
+
+
+#making directories from code
+import os
+
+os.makedirs(root_path)   # will amke a directory , note last folder name will automatically will be the directory name
+
+os.path.join(root_path,'train')  #this is a string concatenation (note train is not preceded by "/")
