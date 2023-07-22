@@ -50,6 +50,8 @@ model.predict([10])
 
 # Visualize the image
 plt.imshow(training_images[index])
+plt.imshow(load_img(f"{os.path.join(train_horses_dir, os.listdir(train_horses_dir)[0])}"))      #when we know the directory of image and path of image
+plt.show()
 #one needs to enter the complete array of a particular image to print the image 
 
 
