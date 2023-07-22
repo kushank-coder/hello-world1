@@ -12,7 +12,8 @@ model = tf.keras.Sequential([tf.keras.layers.Dense(units=64, input_shape=[150,15
                               tf.keras.layers.Dense(units=1,activation = 'sigmoid')              ])
 
 #Defining the loss function type and optimizer (which makes the guess gives the direction to next guess)
-model.compile(optimizer='sgd',loss='mean_squared_error')
+model.compile(optimizer='sgd',loss='mean_squared_error')  # for multi class classification use "sparse_categorical_crossentropy"
+
 
 #below is very important to visualize the model, its parameters requirements etc
 model.summary()
