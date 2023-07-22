@@ -2,17 +2,22 @@
 import tensorflow as tf
 import numpy as np
 from tensorflow import keras
-
-print(tf.__version__)
-
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+#the above image generator will directly extract the images from a folder which has sub folders (which forms the labels and the images inside)
 
 
 
 #Defining Structure (one can add multiple layers before the })
-model = tf.keras.Sequential([tf.keras.layers.Dense(units=1, input_shape=[1])])
+model = tf.keras.Sequential([tf.keras.layers.Dense(units=64, input_shape=[150,150,3],activation = 'relu'),
+                              tf.keras.layers.Dense(units=1,activation = 'sigmoid')              ])
 
 #Defining the loss function type and optimizer (which makes the guess gives the direction to next guess)
 model.compile(optimizer='sgd',loss='mean_squared_error')
+
+#below is very important to visualize the model, its parameters requirements etc
+model.summary()
+
+
 
 #callbacks
 class myCallback(tf.keras.callbacks.Callback):
@@ -22,7 +27,9 @@ class myCallback(tf.keras.callbacks.Callback):
             print("\nReached 60% accuracy so cancelling training!")
             self.model.stop_training = True
 
-xs = np.array([-1,0,1,2,3,4], dtype = float)
+
+#Input for the neural network
+xs = np.array([-1,0,1,2,3,4], dtype = float) #the dtype = float and numpy array
 ys = np.array([-3,-1,1,3,5,7], dtype = float)
 
 
@@ -43,40 +50,35 @@ y_train2 = np.array(y_train, dtype = float)
 model.fit(x = X_train2, y =y_train2,epochs=500,callbacks=[callbacks])
 
 
-#tensorflow i believe takes numpy arrays as an input 
+#tensorflow takes numpy arrays as an input 
 #without activation i believe the neural network will behave as a linear regression
 model.predict([10])
 
 
-# Visualize the image
-plt.imshow(training_images[index])
-plt.imshow(load_img(f"{os.path.join(train_horses_dir, os.listdir(train_horses_dir)[0])}"))      #when we know the directory of image and path of image
-plt.show()
+### Visualize the image
 #one needs to enter the complete array of a particular image to print the image 
+plt.imshow(training_images[index])
+
+#when we know the directory of image and path of image
+plt.imshow(load_img(f"{os.path.join(train_horses_dir, os.listdir(train_horses_dir)[0])}"))      
+plt.show()
 
 
-#below is very important to visualize the model, its parameters requirements etc
-MODEL.summary()
 
-
-
-#Convolution + Max Pooling layers
+####Convolution + Max Pooling layers
 
 tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(28, 28, 1)), #3,3 is the filter , 32 filters are being executed, activation 																							over here is generally relu, input shape is important
 tf.keras.layers.MaxPooling2D(2, 2),
 
-#image generator will directly extract the images from a folder which has sub folders (which forms the labels and the images inside)
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # All images will be rescaled by 1./255
-train_datagen = ImageDataGenerator(rescale=1/255)
+train_datagen = ImageDataGenerator(rescale=1/255, rotation_range=0.4,width_shift_range=0.4,height_shift_range=0.4,zoom_range=0.4) #except for rescale other parameters lead to data augmentation
 
 # Flow training images in batches of 128 using train_datagen generator
-train_generator = train_datagen.flow_from_directory(
-        './horse-or-human/',  # This is the source directory for training images
+train_generator = train_datagen.flow_from_directory( './horse-or-human/',  # This is the source directory for training images
         target_size=(300, 300),  # All images will be resized to 300x300 (vimp in real world scenarios)
         batch_size=128, #will define the steps_per_epoch
-        # Since we use binary_crossentropy loss, we need binary labels
+        # Since we use binary_crossentropy loss, we need binary labels otherwise use categorical
         class_mode='binary')
 
 history = model.fit(
@@ -89,7 +91,7 @@ history = model.fit(
 #evaluating the model on test dataset
 results = model.evaluate(X_test, y_test)
 
-#plotting graphs (note before going down use history= model.fit())
+#plotting training accuracy versus validation accuracy graphs (note before going down use history= model.fit())
 #-----------------------------------------------------------
 # Retrieve a list of list results on training and test data
 # sets for each training epoch
@@ -119,7 +121,8 @@ plt.show()
 
 
 
-#making directories/ folders in python
+####making directories/ folders in python
+
 import os
 
 os.makedirs(root_path)   # will amke a directory , note last folder name will automatically will be the directory name
@@ -127,10 +130,10 @@ os.makedirs(root_path)   # will amke a directory , note last folder name will au
 os.path.join(root_path,'train')  #this is a string concatenation (note train is not preceded by "/")
 
 
-os.listdir(DIRECTORY) returns a list with the contents of that directory.
+os.listdir(DIRECTORY) #returns a list with the contents of that directory.
 
-os.path.getsize(PATH) returns the size of the file
+os.path.getsize(PATH) #returns the size of the file
 
-copyfile(source_path, destination_path) copies a file from source to destination
+copyfile(source_path, destination_path) #copies a file from source to destination
 
-random.sample(list, len(list)) shuffles a list
+random.sample(list, len(list)) #shuffles a list of items
