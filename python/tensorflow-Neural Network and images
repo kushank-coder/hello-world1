@@ -120,11 +120,10 @@ plt.plot(epochs, loss, 'r', "Training Loss")
 plt.plot(epochs, val_loss, 'b', "Validation Loss")
 plt.show()
 
-###checking the shape of the image at a particular location
+### checking the shape of the image at a particular location
 import cv2
-# Load the image
+ # Load the image
 image = cv2.imread(r"C:\Users\hp\DATA SCIENCE\Practise Projects\CIFAR Dataset Kaggle\cifar-10\Class_wise_Images\training\airplane\30.png")
-
 print(image.shape)  # this will give the shape of the image the 3rd axis gives the channel ie RGB Channel
 
 ####making directories/ folders in python
