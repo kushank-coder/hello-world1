@@ -137,7 +137,7 @@ os.path.join(root_path,'train')  #this is a string concatenation (note train is 
 
 os.listdir(DIRECTORY) #returns a list with the contents of that directory.
 
-os.path.getsize(PATH) #returns the size of the file
+os.path.getsize(PATH) #returns the size of the file # always use this code to check whether there is any corrupted image in the dataset
 
 copyfile(source_path, destination_path) #copies a file from source to destination
 
