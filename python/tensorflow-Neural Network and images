@@ -130,7 +130,7 @@ print(image.shape)  # this will give the shape of the image the 3rd axis gives t
 
 import os
 
-os.makedirs(root_path)   # will amke a directory , note last folder name will automatically will be the directory name
+os.makedirs(root_path)   # will make a directory , note last folder name will automatically will be the directory name
 
 os.path.join(root_path,'train')  #this is a string concatenation (note train is not preceded by "/")
 
