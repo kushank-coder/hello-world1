@@ -35,3 +35,12 @@ import random                              # pseudo-random number generator
         		tweets_clean.append(word)
         #tweet_cleans is cleaned list of tokens
 
+
+    #Stemming
+    	1) stemmer = PorterStemmer()           # Instantiate stemming class
+    	2) tweets_stem = [] 
+    	3) for word in tweets_clean:
+    			stem_word = stemmer.stem(word)  # stemming word
+    			tweets_stem.append(stem_word)  # append to the list
+ 
+
