@@ -49,6 +49,31 @@ import random                              # pseudo-random number generator
     	   tweets_stem = process_tweet(tweet); #tweets stem is stemmed + stop words removed + punctuation removed
 
 
+    	2) building frequency Matrix (stem,sum(pos freq),sum(neg_freq))
+    	   from utils import process_tweet, build_freqs   
+    	   freqs = build_freqs(tweets, labels) #this will preprocess all tweets + makes pairs of unique (stem,sentiment) and counts its occcurences
+    	   data = []
+
+			# loop through our selected words
+			for word in keys:
+    
+    		# initialize positive and negative counts
+    		pos = 0
+    		neg = 0
+    
+    		# retrieve number of positive counts
+    		if (word, 1) in freqs:
+        		pos = freqs[(word, 1)]
+        
+    		# retrieve number of negative counts
+    		if (word, 0) in freqs:
+        		neg = freqs[(word, 0)]
+        
+    		# append the word counts to the table
+    		data.append([word, pos, neg])
+    
+
+
  
 
 
