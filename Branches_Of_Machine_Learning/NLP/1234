@@ -36,11 +36,19 @@ import random                              # pseudo-random number generator
         #tweet_cleans is cleaned list of tokens
 
 
-    #Stemming
+   #Stemming
     	1) stemmer = PorterStemmer()           # Instantiate stemming class
     	2) tweets_stem = [] 
     	3) for word in tweets_clean:
     			stem_word = stemmer.stem(word)  # stemming word
     			tweets_stem.append(stem_word)  # append to the list
+
+
+    #Shortcut for removing stop words and doing stemming
+    	1) from utils import process_tweet
+    	   tweets_stem = process_tweet(tweet); #tweets stem is stemmed + stop words removed + punctuation removed
+
+
  
+
 
