@@ -25,7 +25,7 @@ import random                              # pseudo-random number generator
 		tokenizer = TweetTokenizer(preserve_case=False, strip_handles=True,reduce_len=True)     # instantiate tokenizer class
     	tweet_tokens = tokenizer.tokenize(tweet2)                                               #tweet_tokens will be tokenized
 
-    4) remove stop words (in english) + remove punctuation
+    	4) remove stop words (in english) + remove punctuation
 
     	stopwords_english = stopwords.words('english') #list of stop words already in a list in english in nltk library
 
