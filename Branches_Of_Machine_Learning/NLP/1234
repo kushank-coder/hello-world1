@@ -40,8 +40,8 @@ import random                              # pseudo-random number generator
     	1) stemmer = PorterStemmer()           # Instantiate stemming class
     	2) tweets_stem = [] 
     	3) for word in tweets_clean:
-    			stem_word = stemmer.stem(word)  # stemming word
-    			tweets_stem.append(stem_word)  # append to the list
+    		stem_word = stemmer.stem(word)  # stemming word
+    		tweets_stem.append(stem_word)  # append to the list
 
 
     #Shortcut for removing stop words and doing stemming
@@ -51,7 +51,7 @@ import random                              # pseudo-random number generator
 
     	2) building frequency Matrix (stem,sum(pos freq),sum(neg_freq))
     	   from utils import process_tweet, build_freqs   
-    	   freqs = build_freqs(tweets, labels) #this will preprocess all tweets + makes pairs of unique (stem,sentiment) and counts its occcurences
+    	   freqs = build_freqs(tweets, labels) #this will preprocess all tweets + makes pairs of unique (stem,sentiment) and counts its occcurences in positive y and negative y and will make a frequency matrix
     	   data = []
 
 			# loop through our selected words
