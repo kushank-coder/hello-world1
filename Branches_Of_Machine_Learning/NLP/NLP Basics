@@ -46,7 +46,7 @@ import random                              # pseudo-random number generator
 
     #Shortcut for removing stop words and doing stemming
     	1) from utils import process_tweet
-    	   tweets_stem = process_tweet(tweet); #tweets stem is stemmed + stop words removed + punctuation removed
+    	   tweets_stem = process_tweet(tweet); #tweets stem is stemmed + stop words removed + punctuation removed + Lower Case
 
 
     	2) building frequency Matrix (stem,sum(pos freq),sum(neg_freq))
