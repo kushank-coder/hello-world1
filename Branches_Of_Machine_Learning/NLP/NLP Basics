@@ -88,7 +88,7 @@ import random                              # pseudo-random number generator
     
     
         for word in word_l: # loop through each word in the list of processed tweets
-            if (freqs.get((word,1.0),-1) !=-1):
+            if (freqs.get((word,1.0),-1) !=-1):   #.get() is a special function used with dictionaries...it outputs -1 if the key is not found instaed of error
                 x[1] += freqs[(word,1.0)]  # increment the word count for the positive label 1
             if (freqs.get((word,0.0),-1) !=-1):
                 x[2] += freqs[(word,0.0)] # increment the word count for the negative label 0
