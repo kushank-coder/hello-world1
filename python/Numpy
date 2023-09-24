@@ -269,3 +269,5 @@ np.delete(each_row, (row_number), axis=0)                              #use axis
  np.linalg.norm(vector)
 
 
+#covariance of a numpy matrix
+np.cov(x)
