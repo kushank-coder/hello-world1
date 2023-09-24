@@ -265,4 +265,7 @@ loaded_Arr = np.load(file=outfile)
 #deleting 1 row or 1 column from the numpy array
 np.delete(each_row, (row_number), axis=0)                              #use axis = 1 for deleting the column
 
+#norm of a vector
+ np.linalg.norm(vector)
+
 
