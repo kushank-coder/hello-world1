@@ -238,3 +238,7 @@ with open('links_Meta.pickle', 'rb') as f:
 
 ##Stratified Sampling by using pandas
 Dataset.groupby('Column_name').apply(lambda x: x.sample(frac=0.20))  #column_name needs to be something by which we need top sample in a stratified
+
+## loop through the rows of the dataframe
+
+for i, row in data.iterrows():    #ie data.iterrows() helps to loop over the rows of the dataframe
