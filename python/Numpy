@@ -271,3 +271,6 @@ np.delete(each_row, (row_number), axis=0)                              #use axis
 
 #covariance of a numpy matrix
 np.cov(x)
+
+#concatenate 2 vectors
+numpy.concatenate(a,b)
