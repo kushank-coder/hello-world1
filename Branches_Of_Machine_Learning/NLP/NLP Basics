@@ -24,6 +24,12 @@ import random                              # pseudo-random number generator
 	3) Tokenize the Input text
 		tokenizer = TweetTokenizer(preserve_case=False, strip_handles=True,reduce_len=True)     # instantiate tokenizer class
     	tweet_tokens = tokenizer.tokenize(tweet2)                                               #tweet_tokens will be tokenized
+
+        OR #CONVERTS A text into a array of tokens #sentence is the piece of text
+        def sent_to_words(sentences):
+            for sentence in sentences:
+                yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))  # deacc=True removes punctuations
+
  
     	4) remove stop words (in english) + remove punctuation
 
@@ -84,7 +90,7 @@ import random                              # pseudo-random number generator
     
     
         for word in word_l: # loop through each word in the list of processed tweets
-            if (freqs.get((word,1.0),-1) !=-1):   #.get() is a special function used with dictionaries...it outputs -1 if the key is not found instaed of error
+            if (freqs.get((word,1.0),-1) !=-1):   #.get() is a special function used with dictionaries...it outputs -1 if the key is not found instead of error
                 x[1] += freqs[(word,1.0)]  # increment the word count for the positive label 1
             if (freqs.get((word,0.0),-1) !=-1):
                 x[2] += freqs[(word,0.0)] # increment the word count for the negative label 0
