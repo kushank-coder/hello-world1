@@ -17,7 +17,7 @@ import random                              # pseudo-random number generator
 		from nltk.stem import PorterStemmer        # module for stemming
 		from nltk.tokenize import TweetTokenizer   # module for tokenizing strings
 
-		#sub function helps to remove/ substitute the hyperlinks or replace some letters/ strings
+		#find and replace (sub means substitute the hyperlinks or replace some letters/ strings)
 		tweet2 = re.sub(r'https?://[^\s\n\r]+', '', tweet2)  #removes hyperlinks
 		tweet2 = re.sub(r'#', '', tweet2)                    #removes hash
 
@@ -45,10 +45,7 @@ import random                              # pseudo-random number generator
 
 
     #Shortcut for removing stop words and doing stemming
-    	1) 
-
-
-    	2) building frequency Matrix (stem,sum(pos freq),sum(neg_freq))
+    	1) building frequency Matrix (stem,sum(pos freq),sum(neg_freq))
     	   from utils import process_tweet, build_freqs   
     	   freqs = build_freqs(tweets, labels) #this will preprocess all tweets + makes pairs of unique (stem,sentiment) and counts its occcurences in positive y and negative y and will make a frequency matrix
     	   data = []
