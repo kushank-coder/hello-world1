@@ -133,6 +133,8 @@ df['col2'].value_counts()
  # using operations computing another column 
                                                                                 #the column on which the operation is to be done is col1 .it is mentioned in the syntax
  df['col1'].apply(times2)                                                       #times 2 is the required function  
+
+ #similar to .apply(), what we can also do is first convert a pandas column into a list and then we can use list comprehension) #alternative method to clean data
  
  df['col1'].apply(lambda x: x^2)                                                 #Dynamic calculation of the column for quick application  x (each col1 entry) is input and output is x^2 
  
