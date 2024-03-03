@@ -34,6 +34,13 @@ import random                              # pseudo-random number generator
             3.1) to get list of tokens omitting or without punctuation use the following
               [token.text for token in doc if not token.is_punct]   
 
+            3.2) Creating token_master from a dataframe column of text
+                    for i, row in X_train.iterrows():
+                        doc = nlp(row["cleaned_text"])
+                        list_of_tokens = [token.text for token in doc if not token.is_punct] #this is valid because this is a bag of words representation
+                        tokens_master.extend(list_of_tokens)
+                        tokens_master = list(set(tokens_master))
+
 
         OR #CONVERTS A text into a array of tokens #sentence is the piece of text
         def sent_to_words(sentences):
