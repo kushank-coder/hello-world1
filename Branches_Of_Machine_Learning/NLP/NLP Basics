@@ -21,6 +21,7 @@ import random                              # pseudo-random number generator
 		tweet2 = re.sub(r'https?://[^\s\n\r]+', '', tweet2)  #removes hyperlinks
 		tweet2 = re.sub(r'#', '', tweet2)                    #removes hash
         text_without_links_v2 = re.sub(r'\.{3,}$', '', text_without_links_v2) # remove trailing multiple dots (generally used by people)....
+        re.sub(r'!+$', '', text)                    # removes trailing exclamation marks
 
 	3) Tokenize the Input text
 		tokenizer = TweetTokenizer(preserve_case=False, strip_handles=True,reduce_len=True)     # instantiate tokenizer class
