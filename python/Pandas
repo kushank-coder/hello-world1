@@ -244,3 +244,7 @@ Dataset.groupby('Column_name').apply(lambda x: x.sample(frac=0.20))  #column_nam
 ## loop through the rows of the dataframe
 
 for i, row in data.iterrows():    #ie data.iterrows() helps to loop over the rows of the dataframe #i is row number and row is the complete   row
+
+
+## to see complete text of the pandas 
+pd.set_option('display.max_colwidth', None)  # this will show everythin the column
