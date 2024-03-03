@@ -24,8 +24,13 @@ import random                              # pseudo-random number generator
         text_without_exclamation_end =  re.sub(r'!+$', '', text_without_dots)                    # removes trailing exclamation marks..
 
 	3) Tokenize the Input text
-		tokenizer = TweetTokenizer(preserve_case=False, strip_handles=True,reduce_len=True)     # instantiate tokenizer class
-    	tweet_tokens = tokenizer.tokenize(tweet2)                                               #tweet_tokens will be tokenized
+            # tokenization should be done by spacy (because it is a model that lets the proper tokenization (split etc does not tokenize that well))
+
+               import spacy
+               nlp = spacy.load("en_core_web_sm")
+               doc = nlp(text)
+               list(doc) --> this will give the individual tokens that are generated
+
 
         OR #CONVERTS A text into a array of tokens #sentence is the piece of text
         def sent_to_words(sentences):
