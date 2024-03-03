@@ -50,6 +50,9 @@ import random                              # pseudo-random number generator
     		tweets_stem.append(stem_word)  # append to the list
 
 
+
+####NOT IMPORTANT Below this
+
     #Shortcut for removing stop words and doing stemming
     	1) building frequency Matrix (stem,sum(pos freq),sum(neg_freq))
     	   from utils import process_tweet, build_freqs   
