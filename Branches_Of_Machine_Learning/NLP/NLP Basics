@@ -31,6 +31,9 @@ import random                              # pseudo-random number generator
                doc = nlp(text)
                list(doc) --> this will give the individual tokens that are generated
 
+            3.1) to get list of tokens omitting or without punctuation use the following
+              [token.text for token in doc if not token.is_punct]   
+
 
         OR #CONVERTS A text into a array of tokens #sentence is the piece of text
         def sent_to_words(sentences):
