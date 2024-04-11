@@ -171,3 +171,15 @@ tf.keras.layers.TextVectorization(
     **kwargs
 )
 
+
+1) tokenizer = tf.keras.preprocessing.text.Tokenizer() # Text tokenization (tokenizer is a class which breaks the text into tokens)
+
+
+#to define the vocabulary for the tokenizer we can concat all the text and apply fit_on_texts method
+
+2) tokenizer.fit_on_texts( pd.concat([document, summary]))   # input into "fit_on_texts" is a pandas series (this will help define the vocabulary of the complete text including document and summary) #this will not return anything
+
+3)sequence = tokenizer.texts_to_sequences(text) #text converted to sequence of integers (based on the vocabulary defined in tokenizer.fit_on_texts)
+
+
+4) vocabulary size = len(tokenizer.word_index) + 1
