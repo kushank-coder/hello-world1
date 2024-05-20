@@ -107,7 +107,7 @@ df = pd.DataFrame({'A':[1,2,np.nan],
                   'C':[1,2,3]})
                   
 #Identifying Missing Values in Column
-df.isnull().sum()                                        #will provide the missing values in any column
+df.isnull().sum()                                        #will provide count of missing values in any column
 
 #Dropping rows or columns from a dataframe
 
@@ -248,3 +248,9 @@ for i, row in data.iterrows():    #ie data.iterrows() helps to loop over the row
 
 ## to see complete text of the pandas 
 pd.set_option('display.max_colwidth', None)  # this will show everythin the column
+
+
+# to remove outliers for a given column  (outliers seen in boxplot can be separated out or selected by below method)
+from scipy import stats # one should be removing null values before applying this technique
+mask = np.abs(stats.zscore(data[“sepal_length”])) <=3 # primarily sepal_length is the column and we are excluding outliers
+data[mask] # required answer or dataset
