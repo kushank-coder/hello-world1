@@ -143,6 +143,9 @@ ridg.fit(X, y)
 prediction  = ridg.predict(X_test)
 r2_score(Y_test,prediction)
 
+model = LassoRegression(iterations=1000, learning_rate=0.01, l1_penalty=500) # Lasso REGRESSION (L1 regularization) 
+
+
 #Logistic Regression
 logmodel = LogisticRegression()                    #Change C (opposite of regularization) and maxiter to increase the iterations
 logmodel.fit(X_train,y_train)
