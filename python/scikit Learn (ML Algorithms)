@@ -149,6 +149,10 @@ model = LassoRegression(iterations=1000, learning_rate=0.01, l1_penalty=500) # L
 #Logistic Regression
 from sklearn.linear_model import LogisticRegression
 logmodel = LogisticRegression()                    #Change C (opposite of regularization) and maxiter to increase the iterations
+
+logmodel = LogisticRegression(penalty=None,multi_class='ovr', solver='liblinear') #for multi class classification (one vs all 
+                                                                                    method)    liblinear is support library
+
 logmodel.fit(X_train,y_train)
 
             Training accuracy
