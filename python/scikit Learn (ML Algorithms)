@@ -147,6 +147,7 @@ model = LassoRegression(iterations=1000, learning_rate=0.01, l1_penalty=500) # L
 
 
 #Logistic Regression
+from sklearn.linear_model import LogisticRegression
 logmodel = LogisticRegression()                    #Change C (opposite of regularization) and maxiter to increase the iterations
 logmodel.fit(X_train,y_train)
 
