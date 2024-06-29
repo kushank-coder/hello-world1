@@ -153,7 +153,7 @@ logmodel = LogisticRegression()                    #Change C (opposite of regula
 
 logmodel = LogisticRegression(penalty=None,multi_class='ovr', solver='liblinear') #for multi class classification (one vs all 
                                                                                     method)    liblinear is support library
-logmodel = LogisticRegression(multi_class='multinomial') #for multi class classification using softmax function)
+logmodel = LogisticRegression(multi_class='multinomial') #for multi class classification using softmax function just like it happens in neural networks (there are 3 columns for multiclass (3 classes) )
 
 logmodel.fit(X_train,y_train)
 
