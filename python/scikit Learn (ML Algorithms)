@@ -123,6 +123,10 @@ print(classification_report(y_test,predictions))
 from sklearn.metrics import accuracy_score
 accuracy_score(y_test,predictions)
 
+#roc_auc score
+from sklearn.metrics import roc_auc_score # apply this on model to get AUC of ROC
+
+
 
 #confusion_matrix
 from sklearn.metrics import confusion_matrix
