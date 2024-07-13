@@ -205,7 +205,12 @@ logmodel.fit(X_train,y_train)
 
 
 
-# Decision Trees
+# Decision Trees                
+(
+Note: 1)feature scaling not required in decison trees because principal is information gain and no comparison of one variable wrt another variable
+2) Gains Ratio
+)
+
 from sklearn.tree import DecisionTreeClassifier
 dtree = DecisionTreeClassifier()
 dtree.fit(X_train,y_train)
