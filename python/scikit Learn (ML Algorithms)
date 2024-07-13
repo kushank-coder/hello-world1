@@ -130,7 +130,7 @@ from sklearn.metrics import roc_auc_score # apply this on model to get AUC of RO
 
 #confusion_matrix
 from sklearn.metrics import confusion_matrix
-print(confusion_matrix(y_test,predictions))
+print(confusion_matrix(y_test,predictions).T)   #Just take .T IE TRANPOSE to convert the matrix in your confusion matrix (in sklearn it is a little different how the confucious matrix is made)
 
 
 #Linear Regression
