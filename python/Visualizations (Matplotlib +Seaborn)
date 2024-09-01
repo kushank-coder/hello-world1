@@ -209,5 +209,27 @@ sns.heatmap(data.isnull(),yticklabels=False,cbar=False,cmap='viridis')
 
 
 
+## Multiple Plots simultaneously
+# Set up the plotting layout
 
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize = (10,10))
+fig.autofmt_xdate(rotation = 45)
+
+# Actual max temperature measurement
+ax1.plot(df['actual'])
+ax1.set_xlabel('Date'); ax1.set_ylabel('Temperature'); ax1.set_title('Max Temp')
+
+# Temperature from 1 day ago
+ax2.plot(df['temp_1'])
+ax2.set_xlabel('Date'); ax2.set_ylabel('Temperature'); ax2.set_title('Previous Max Temp')
+
+# Temperature from 2 days ago
+ax3.plot(df['temp_2'])
+ax3.set_xlabel('Date'); ax3.set_ylabel('Temperature'); ax3.set_title('Two Days Prior Max Temp')
+
+# Friend Estimate
+ax4.plot(df['friend'])
+ax4.set_xlabel('Date'); ax4.set_ylabel('Temperature'); ax4.set_title('Friend Estimate')
+
+# This plot can be improved by grouping x-axis values in terms of month.
 
