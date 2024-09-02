@@ -1,0 +1,281 @@
+0.8) Converting to Pandas
+
+df = Dataset.toPandas()
+
+ 
+
+0.9) creating a temporary view of a variable or spark dataframe (by default spark dataframe is utilized)
+
+data.createOrReplaceTempView("TOC_list_required")
+
+ 
+
+0.95) Appending the 2 datasets in pyspark
+
+globals()[f"cclm_portfolio_migr13"].union(globals()[f"cclm_portfolio_migr12"])
+
+ 
+
+0.9556) update or replace a particular value in a column
+
+globals()["baseline"].withColumn("managed_toc", when(col("managed_toc") == "3210583548", "3220690259").otherwise(col("managed_toc")))
+
+ 
+
+0.96) drop command
+
+runSQL(f""" drop table if exists {output}.ALL_MER_W_TOC_CV_DUAL """,engine = spark)
+
+runSQL(f"""
+
+create table  {output}.ALL_MER_W_TOC_CV_DUAL as
+
+ 
+
+ 
+
+0.97) converting a string to date format (in sql format)
+
+ 
+
+cast(to_date(from_unixtime(unix_timestamp(COLUMN_NAME, 'dd-MM-yyyy'))) as date)
+
+ 
+
+ 
+
+def q(string):
+
+    return spark.sql(string)
+
+ 
+
+1.4) #NOT IN SubQUERY
+
+df1 = runSQL(f''' select distinct se_no from analysis_mar23_vs_apr23_kb.apr23_alif ''',engine=spark).toPandas() #Jo Nikalna hai
+
+df2 = runSQL(f''' select * from analysis_mar23_vs_apr23_kb.mar23_alif ''',engine=spark).toPandas() #Jisme se nikalna hai
+
+se_no_list = df1['se_no'].values.tolist()
+
+df3 = df2[~(df2['se_no'].isin(se_no_list))]
+
+df3 = spark.createDataFrame(df3)
+
+df3.createOrReplaceTempView("Extra_in_Mar23")
+
+ 
+
+ 
+
+1.4) changing Data Type of a column
+
+from pyspark.sql.types import StringType
+
+data = data.withColumn("managed_toc",data["managed_toc"].cast(StringType()))
+
+ 
+
+1.5) Update a complete column
+
+data = data.withColumn("portfolio_type","CCLM")
+
+ 
+
+ 
+
+1.51) for creating a table which can be referenced in the below code (but will not be a permanent table)
+
+globals()[f"cclm_baseline_reprting_mnth"] = runSQL(f""" select * from  cclm_baseline_reprting_mnth""",engine= spark)
+
+ 
+
+1.52) Drop Table Command
+
+runSQL(f""" drop table if exists {output}.prev_{Cur_Mth} """,engine = spark)
+
+ 
+
+1.53) Renaming a column
+
+globals()["data_2"] = globals()["data_2"].withColumnRenamed("cclm_manager_v2", "cclm_manager")
+
+ 
+
+2) from pyspark.sql import *   
+
+   data = spark.read.csv(r"PySpark/TestFiles.csv", inferSchema = True, header = True)  #read csv
+
+ 
+
+   data.createOrReplaceTempView("Unmanaged_toc_list")                                  #to use the dataset in the queries
+
+ 
+
+2.2) shape of a spark dataframe
+
+    
+
+     shape(df)
+
+ 
+
+2.3) data type of columns of a spark dataframe
+
+    
+
+     df.dtypes
+
+ 
+
+2.35) count distinct / unique entries in a column
+
+ 
+
+df.select(countDistinct("col1", "col2", "col3"))
+
+ 
+
+2.36) drop duplicates in spark dataframe
+
+ 
+
+df = df.dropDuplicates(["se"])
+
+ 
+
+ 
+
+2.4) add an additional column or overwrite a column
+
+from pyspark.sql.functions import lit
+
+data= data.withColumn("portfolio_type",lit("CCLM"))
+
+ 
+
+2.5) proc freq
+
+globals()[f"cclm_portfolio_migr1"].groupby('portfolio_new').count().sort('Count').show()
+
+ 
+
+2.6) sum of a column
+
+data.agg({'column_name': 'sum'})
+
+ 
+
+ 
+
+3) b = spark.createDataFrame(a)                                                                                                               #there is temporary dataset to convert temporary dataset into spark dataframe
+
+ 
+
+4) b.show()                                                                                                                                          #similar to head of a dataframe
+
+ 
+
+5) df.select("ADS").show(truncate = False)                                                                                #selecting ads column from the spark dataframe df
+
+ 
+
+6) i) df[df.BusinessUnit.isin("Glbl Services Group", "Technology")].show()                               #filtering in spark  (all columns are selected by using isin function)
+
+  ii) df.filter(df["BusinessUnit"]=="Technology").show()                                                                         #there is some data type difference
+
+ 
+
+7) making a column based on a filter (no of columns could be created dynamically as well)
+
+df.select("ADS", "Role", df.Role.endswith("Engineer")).withColumnRenamed("endswith(Role, Engineer)", "new_columns")    #renaming a column
+
+ 
+
+7.5) like function in pyspark
+
+   
+
+     df.select("ADS", "Role",df.Role.like("% Staff %")).show(10,truncate=False)                #use .like operator to build an excess column
+
+ 
+
+ 
+
+ 
+
+SQL COMMANDS IN PYSPARK
+
+ 
+
+7.7) creating a temporary table via MLS
+
+              df.registerTempTable("f2")
+
+              spark.sql("""WRITE YOUR SQL Query Here""").show()
+
+ 
+
+8) proc contents
+
+spark.sql("DESC FORMATTED table_name").show()
+
+ 
+
+9) #creating the database in hive library as well
+
+ 
+
+spark.sql("""create database if not exists pbp_cclm_KB location 'maprfs:/axp/buanalytics/csgmssm/dev/kbans17/CCLM_PBP_Pull/pbp_cclm_KB'""") #create database
+
+ra = spark.sql("""show databases like 'pbp*'""")  #check database
+
+ra.show()
+
+ 
+
+10) get into a database or a folder
+
+             
+
+              spark.sql("use cstonedb3")
+
+ 
+
+11) list of tables in a database
+
+ 
+
+spark.sql("show tables").show(5)  #first run spark.sql("use database_name")
+
+ 
+
+12) Database exist /Not
+
+ 
+
+if spark._jsparkSession.catalog().databaseExists("cstonedb3"):
+
+    print("exist")
+
+else:
+
+    print("Not Exist")
+
+ 
+
+ 
+
+13) creating / deleting tables in a folder/ Database
+
+ 
+
+spark.sql("DROP TABLE IF EXISTS TestTables")
+
+spark.sql("""
+
+                             CREATE TABLE TestTables AS
+
+                             SELECT * FROM f2
+
+              """)
