@@ -13,19 +13,20 @@ import random                              # pseudo-random number generator
 		import re                                  # library for regular expression operations
 		import string                              # for string operations
 
-		from nltk.corpus import stopwords          # module for stop words that come with NLTK
 		from nltk.stem import PorterStemmer        # module for stemming
 		from nltk.tokenize import TweetTokenizer   # module for tokenizing strings
 
 
 		#find and replace (sub means substitute replace some letters/ strings/ hyperlinks)
-		tweet2 = re.sub(r'https?://[^\s\n\r]+', '', tweet2)  #removes hyperlinks
-		tweet2 = re.sub(r'#', '', tweet2)                    #removes hash
-        cleaned_text = re.sub(r'[^a-zA-Z\s]', '', text)                    #removes punctuation, numbers and special characters
+        cleaned_text = re.sub(r'[^a-zA-Z\s]', '', text)      #removes punctuation, numbers and special characters
+        tweet2 = re.sub(r'https?://[^\s\n\r]+', '', tweet2)  #removes hyperlinks
+        tweet2 = re.sub(r'#', '', tweet2)                    #removes hash
 
+        #removing stop_words from a list of stop words provided by nltk
 
-        text_without_dots = re.sub(r'\.{3,}$', '', text_without_links_v2) # remove trailing multiple dots (generally used by people)....
-        text_without_exclamation_end =  re.sub(r'!+$', '', text_without_dots)                    # removes trailing exclamation marks..
+        from nltk.corpus import stopwords          # module for stop words REMOVAL
+        stopwords.words('english')
+        ' '.join([word for word in TEXT_TO_BE_CLEANED.split() if word not in stop_words])    
 
 
 	3) Tokenize the Input text
