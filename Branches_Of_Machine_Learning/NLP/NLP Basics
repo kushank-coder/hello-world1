@@ -15,6 +15,7 @@ import random                              # pseudo-random number generator
 
 		from nltk.stem import PorterStemmer        # module for stemming
 		from nltk.tokenize import TweetTokenizer   # module for tokenizing strings
+        from nltk.stem import PorterStemmer, WordNetLemmatizer  # Stemming and Lemmatizer
 
 
 		#find and replace (sub means substitute replace some letters/ strings/ hyperlinks)
@@ -28,6 +29,9 @@ import random                              # pseudo-random number generator
         stopwords.words('english')
         ' '.join([word for word in TEXT_TO_BE_CLEANED.split() if word not in stop_words])    
 
+        #Lemmatization 
+        lemmatizer = WordNetLemmatizer()
+        ' '.join([lemmatizer.lemmatize(word) for word in TEXT.split()])
 
 	3) Tokenize the Input text
             # tokenization should be done by spacy (because it is a model that lets the proper tokenization (split etc does not tokenize that well))
