@@ -13,7 +13,6 @@ import random                              # pseudo-random number generator
 		import re                                  # library for regular expression operations
 		import string                              # for string operations
 
-		from nltk.stem import PorterStemmer        # module for stemming
 		from nltk.tokenize import TweetTokenizer   # module for tokenizing strings
         from nltk.stem import PorterStemmer, WordNetLemmatizer  # Stemming and Lemmatizer
 
@@ -25,12 +24,12 @@ import random                              # pseudo-random number generator
 
         #removing stop_words from a list of stop words provided by nltk
 
-        from nltk.corpus import stopwords          # module for stop words REMOVAL
+        from nltk.corpus import stopwords          # stopwords REMOVAL
         stopwords.words('english')
         ' '.join([word for word in TEXT_TO_BE_CLEANED.split() if word not in stop_words])    
 
         #Lemmatization 
-        lemmatizer = WordNetLemmatizer()
+        lemmatizer = WordNetLemmatizer()              # Lemmatization
         ' '.join([lemmatizer.lemmatize(word) for word in TEXT.split()])
 
 	3) Tokenize the Input text
