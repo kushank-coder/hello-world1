@@ -32,6 +32,8 @@ import random                              # pseudo-random number generator
         lemmatizer = WordNetLemmatizer()              # Lemmatization
         ' '.join([lemmatizer.lemmatize(word) for word in TEXT.split()])
 
+    2.1)  glove embedding 
+        glove_vectors = api.load("glove-wiki-gigaword-50")
 	3) Tokenize the Input text
             # tokenization should be done by spacy (because it is a model that lets the proper tokenization (split etc does not tokenize that well))
 
