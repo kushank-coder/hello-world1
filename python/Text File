@@ -1,6 +1,6 @@
 1) Opening and Reading a txt file
     
-     link=open('/content/dummy.txt','r')             # r = read mode (we can use w (write), r(read) or a(append)) #file is opened here (  dummy is not data)
+     link=open('/content/dummy.txt','r')             # r = read mode (we can use w (write), r(read) or a+(append)) #file is opened here 
      data = link.read()                              #all the data is stored in the data (the complete txt file) # file is read here
      print(link.name)                                 #gives the name with path
      print(link.mode)                                #tells the mode in which the file 
@@ -13,7 +13,7 @@
     
     
 3) Alternative method of reading a file 
-    with open('/content/demo.txt','r') as link:           #this works like a loop outside the loop the file automatically closes (we need not write another statement to close it
+    with open('/content/demo.txt','r') as link:           #this works like a loop outside the loop the file automatically closes
         print(link.read())
         print(link.name)
         print(link.mode)
@@ -28,7 +28,7 @@
 
 
 Writing in a text files
-  with open('/content/demo.txt','a') as link:                         #'a' will write to the end of the original file
+  with open('/content/demo.txt','a+') as link:                         #'a' will write to the end of the original file
     link.writelines(["\nhello\n","world"])                          #writes in the original file
     link.write("hello world")
     
@@ -37,6 +37,9 @@ Writing in a text files
  with open('/content/demo.txt','a') as link:
   with open('/content/demo2.txt','r') as link2:                   #this codde will read from demo2 and write in the file demo "loop" is a kind of syntax file open and close ke liye 
     link.writelines(link2.read())
+
+ 6) 
+     
 
 6) read write in image files
 
