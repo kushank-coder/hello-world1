@@ -1,3 +1,13 @@
+# BEFORE Fitting any model, always cross validate whether X indices are aligned with y indices (Vimp)
+print(X_Train.index.equals(y_train..index)) # if this is false (then 1st align X and y to give the final model fit
+
+##If False => 
+        X_Train.sort_index(inplace=True)
+        y_train.sort_index(inplace=True)
+
+## IF True -> Go ahead with fitting the model
+
+
 #Train test split of data
 
 from sklearn.model_selection import train_test_split
@@ -124,7 +134,29 @@ from sklearn.metrics import accuracy_score
 accuracy_score(y_test,predictions)
 
 #roc_auc score
-from sklearn.metrics import roc_auc_score # apply this on model to get AUC of ROC
+from sklearn.metrics import roc_curve, auc
+
+## ROC Curve AUC  
+y_pred_proba1 = model.predict_proba(X_Test_Combo)[:, 1] # model could be any scikit learn model
+fpr1, tpr1, _ = roc_curve(y_test, y_pred_proba1)
+roc_auc1 = auc(fpr1, tpr1)
+
+## Plotting multiple ROC Curves 
+
+plt.figure(figsize=(8, 6))
+
+plt.plot(fpr1, tpr1, color='orange', lw=2, label=f'Model 1 Logistic Regression(AUC = {roc_auc3:.2f})')  #Model 1
+plt.plot(fpr1, tpr1, color='orange', lw=2, label=f'Model 2 XG Boost(AUC = {roc_auc3:.2f})')  #Model 2
+...
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--') # Diagonal reference line
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate (1 - Specificity)')
+plt.ylabel('True Positive Rate (Sensitivity)')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend(loc="lower right")
+plt.grid(True)
+plt.show()
 
 
 
@@ -241,6 +273,8 @@ dtree.fit(X_train,y_train)
 
 from sklearn.ensemble import RandomForestClassifier
 rfc = RandomForestClassifier(n_estimators=100)
+        # BEFORE Fitting any model, always cross validate whether X indices are aligned with y indices
+            print(X_Train.index.equals(y_train..index))
 rfc.fit(X_train, y_train)
 
 
