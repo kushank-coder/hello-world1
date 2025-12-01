@@ -1,2 +1,14 @@
-Hi This is first agentic by Lang graph utilization
-123
+Packages to download:
+!pip install tenacity==9.0.0
+!pip install langchain==0.3.12
+!pip install langchain-openai==0.2.12
+!pip install langchain_community==0.3.12
+!pip install langgraph==0.2.59
+!pip install pysqlite3-binary==0.5.4
+!pip install langchain_chroma==0.1.4
+!pip install pandas==2.2.3
+!pip install pypdf==5.1.0
+!pip install nbformat==5.10.4
+
+
+
