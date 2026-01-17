@@ -1,0 +1,421 @@
+import pandas as pd
+
+import numpy as np
+
+import random
+
+ 
+
+# ==============================
+
+# 1. LOAD DATA
+
+# ==============================
+
+ 
+
+# Input and output file names
+
+INPUT_FILE = "Phone_East.xlsx"
+
+OUTPUT_FILE = "Phone_East_optimized.xlsx"
+
+ 
+
+# Read Excel
+
+df = pd.read_excel(INPUT_FILE)
+
+ 
+
+# Clean Treatment column name if it has trailing space
+
+df = df.rename(columns=lambda c: c.strip())
+
+ 
+
+# Standardize column names we'll use
+
+df = df.rename(columns={
+
+    "2023 R12 CV": "cv_2023",
+
+    "2024 R12 CV": "cv_2024",
+
+    "Treatment": "treatment",
+
+    "2025 TMID": "tmid_2025"
+
+})
+
+ 
+
+# ==============================
+
+# 2. BASIC SPLIT: FIXED vs TO BE ALLOCATED
+
+# ==============================
+
+ 
+
+fixed_mask = df["treatment"] == "Fixed TMIDs"
+
+alloc_mask = df["treatment"] == "To be allocated"
+
+ 
+
+fixed = df[fixed_mask].copy()
+
+to_alloc = df[alloc_mask].copy()
+
+ 
+
+# TMIDs come from fixed rows (your 10 TMIDs)
+
+tmids = sorted(fixed["tmid_2025"].dropna().unique())   #complete tmid list
+
+ 
+
+# ==============================
+
+# 3. INITIAL EQUAL DISTRIBUTION FOR "TO BE ALLOCATED"
+
+#    (simple round-robin to hit target counts)
+
+# ==============================
+
+ 
+
+total_rows = len(df)
+
+tmid_count = len(tmids)
+
+ 
+
+# Ideal equal count per TMID
+
+base_target = total_rows // tmid_count  # this will give quotient
+
+extra = total_rows % tmid_count # this will give remainder
+
+ 
+
+# Target total count per TMID (fixed + allocated)
+
+target_counts = {}
+
+for i, tmid in enumerate(tmids):
+
+    target_counts[tmid] = base_target + (1 if i < extra else 0)  # correspondence
+
+ 
+
+# Current fixed counts per TMID
+
+fixed_counts = (
+
+    fixed.groupby("tmid_2025")["TOC_SE"]
+
+    .count()
+
+    .reindex(tmids)
+
+    .fillna(0)
+
+    .astype(int)
+
+)
+
+ 
+
+# How many "slots" to fill for each TMID
+
+slots_per_tmid = {tmid: target_counts[tmid] - fixed_counts[tmid] for tmid in tmids}  # incremental accounts which needs to be distributed
+
+ 
+
+# Sort to-be-allocated rows (for some determinism)
+
+to_alloc_sorted = to_alloc.sort_values("cv_2024", ascending=False).copy()
+
+ 
+
+# Build an initial assignment by round-robin over TMIDs with remaining slots
+
+assignments = {}
+
+slot_tmids = []
+
+ 
+
+for tmid in tmids:
+
+    slot_tmids.extend([tmid] * slots_per_tmid[tmid])
+
+ 
+
+# Just in case lengths mismatch due to rounding
+
+slot_tmids = slot_tmids[:len(to_alloc_sorted)]
+
+ 
+
+for idx, tmid in zip(to_alloc_sorted.index, slot_tmids):
+
+    assignments[idx] = tmid
+
+ 
+
+# Apply initial assignments
+
+df.loc[to_alloc_sorted.index, "tmid_2025"] = to_alloc_sorted.index.map(assignments)
+
+ 
+
+# ==============================
+
+# 4. PRECOMPUTE FIXED AGGREGATES
+
+#    (TMID-level CV sums from fixed rows only)
+
+# ==============================
+
+ 
+
+fixed_agg = (
+
+    fixed.groupby("tmid_2025")
+
+    .agg(
+
+        cv24=("cv_2024", "sum"),
+
+        cv23=("cv_2023", "sum"),
+
+        cnt=("TOC_SE", "count")
+
+    )
+
+    .reindex(tmids)
+
+    .fillna(0)
+
+)
+
+ 
+
+# Data for the "To be allocated" part
+
+alloc_data = df.loc[alloc_mask, ["cv_2024", "cv_2023"]].copy()
+
+alloc_indices = list(alloc_data.index)
+
+ 
+
+# ==============================
+
+# 5. HELPER: COMPUTE VARIANCE OF TMID GROWTH RATES
+
+# ==============================
+
+ 
+
+def compute_var_from_assign(assign_series):
+
+    """
+
+    Given a Series mapping alloc_indices -> TMID,
+
+    compute TMID-level growth rate variance.
+
+    """
+
+    # Aggregate CVs from allocated rows per TMID
+
+    alloc_tmp = pd.DataFrame({
+
+        "TMID": assign_series,
+
+        "cv24": alloc_data["cv_2024"],
+
+        "cv23": alloc_data["cv_2023"],
+
+    })
+
+    alloc_agg = (
+
+        alloc_tmp.groupby("TMID")
+
+        .agg({"cv24": "sum", "cv23": "sum"})
+
+        .reindex(tmids)
+
+        .fillna(0)
+
+    )
+
+ 
+
+    # Total = fixed + allocated
+
+    cv24 = fixed_agg["cv24"] + alloc_agg["cv24"]
+
+    cv23 = fixed_agg["cv23"] + alloc_agg["cv23"]
+
+ 
+
+    growth = (cv24 / cv23).replace([np.inf, -np.inf], np.nan) - 1
+
+    return np.nanvar(growth), growth
+
+ 
+
+# ==============================
+
+# 6. HILL-CLIMBING OPTIMIZATION
+
+#    - swaps TMIDs between two alloc rows
+
+#    - preserves TMID counts exactly
+
+#    - keeps a swap only if it reduces growth rate variance
+
+# ==============================
+
+ 
+
+# Start from current assignment
+
+current_assign = df.loc[alloc_mask, "tmid_2025"].copy()
+
+ 
+
+var_start, gr_start = compute_var_from_assign(current_assign)
+
+print("Initial variance:", var_start)
+
+ 
+
+random.seed(0)
+
+ 
+
+best_assign = current_assign.copy()
+
+best_var, best_gr = var_start, gr_start
+
+indices_list = alloc_indices
+
+ 
+
+N_ITER = 20000  # you can tune this
+
+ 
+
+for it in range(N_ITER):
+
+    # pick two distinct alloc rows
+
+    i_idx, j_idx = random.sample(indices_list, 2)
+
+    t_i = best_assign.loc[i_idx]
+
+    t_j = best_assign.loc[j_idx]
+
+ 
+
+    if t_i == t_j:
+
+        continue  # swapping same TMID does nothing
+
+ 
+
+    # Try the swap
+
+    best_assign.loc[i_idx], best_assign.loc[j_idx] = t_j, t_i
+
+    new_var, new_gr = compute_var_from_assign(best_assign)
+
+ 
+
+    if new_var < best_var:
+
+        best_var, best_gr = new_var, new_gr
+
+        # keep swap
+
+    else:
+
+        # revert if it didn't help
+
+        best_assign.loc[i_idx], best_assign.loc[j_idx] = t_i, t_j
+
+ 
+
+print("Final variance:", best_var)
+
+print("Final TMID growth rates:")
+
+print(best_gr)
+
+ 
+
+# ==============================
+
+# 7. APPLY FINAL ASSIGNMENT & SAVE
+
+# ==============================
+
+ 
+
+df.loc[alloc_mask, "tmid_2025"] = best_assign
+
+ 
+
+# Recompute TMID-level summary (optional, just to inspect)
+
+final_agg = (
+
+    df.groupby("tmid_2025")
+
+    .agg(
+
+        cnt=("TOC_SE", "count"),
+
+        cv24=("cv_2024", "sum"),
+
+        cv23=("cv_2023", "sum")
+
+    )
+
+    .reindex(tmids)
+
+)
+
+final_agg["growth_rate"] = (final_agg["cv24"] / final_agg["cv23"]) - 1
+
+print("\nFinal TMID summary:")
+
+print(final_agg)
+
+ 
+
+# Save to Excel
+
+df_out = df.rename(columns={
+
+    "cv_2023": "2023 R12 CV",
+
+    "cv_2024": "2024 R12 CV",
+
+    "tmid_2025": "2025 TMID",
+
+    "treatment": "Treatment"
+
+})
+
+ 
+
+df_out.to_excel(OUTPUT_FILE, index=False)
+
+print(f"\nOptimized allocation written to: {OUTPUT_FILE}")
