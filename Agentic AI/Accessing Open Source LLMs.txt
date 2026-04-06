@@ -1,0 +1,54 @@
+1) From Hugging Face API (no need to download the model on system)
+
+# Enter the Hugging face api key
+from getpass import getpass
+
+hf_key = getpass("Enter your Hugging Face Access Token: ")  
+
+#configure the key in system
+import os
+os.environ["HF_TOKEN"] = hf_key
+
+# Use inference client method(Note for some hugging face model you might have gated access, u might need to apply #for access, but that is ok you get the access in a day types
+
+from huggingface_hub import InferenceClient
+
+model_name = "meta-llama/Llama-3.2-1B-Instruct"
+client = InferenceClient(model=model_name, api_key=hf_key)
+
+chat = [
+    { "role": "user", "content": "Explain what is Generative AI in 2 bullet points" },
+]
+
+response = client.chat_completion(chat, max_tokens=1000)
+print(response)
+
+
+
+2) Using Groq
+
+# Enter groq Key
+from getpass import getpass
+groq_key = getpass("Enter your Groq API Key: ")
+
+
+
+from groq import Groq
+groq_client = Groq(api_key=groq_key)
+
+# create a function to get the output
+def get_completion_chatgroq(prompt, model="meta-llama/llama-guard-4-12b"):
+    messages = [{"role": "user", "content": prompt}]
+    response = groq_client.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=0, # degree of randomness of the model's output
+    )
+    return response.choices[0].message.content
+
+
+
+prompt = 'Explain Generative AI in 2 bullet points'
+response = get_completion_chatgroq(prompt=prompt, model="meta-llama/llama-4-scout-17b-16e-instruct")
+
+print(response)
