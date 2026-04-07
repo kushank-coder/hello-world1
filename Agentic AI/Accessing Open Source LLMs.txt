@@ -83,8 +83,16 @@ model = AutoModelForCausalLM.from_pretrained(
 chat = [
     { "role": "user", "content": "Explain what is Generative AI in 2 bullet points" },
 ]
+
 prompt = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
 print(prompt)
+
+# Typical processing when one downloads Hugging Face model
+inputs = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt") #input coding in tokens
+outputs = model.generate(input_ids=inputs.to(model.device), max_new_tokens=1000) #putting in model
+print(tokenizer.decode(outputs[0])) # decoding the model output in text
+
+# Processing without encoding and decoding (Use pipeline operator)
 
 llama_pipe = transformers.pipeline(
     "text-generation",
@@ -100,7 +108,7 @@ chat = [
 ]
 
 response = llama_pipe(chat, max_new_tokens=1000)
-print(response)
+print(response) #input and output does not needs to be decoded or encoded, directly it happens
 
 print(response[0]["generated_text"][-1]['content'])
 
