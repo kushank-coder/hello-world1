@@ -66,7 +66,7 @@ import os
 os.environ["HF_TOKEN"] = hf_key
 
 
-3.3) Loadf the LLM Model locally 
+3.3) Load the LLM Model locally (from hugging face)
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import transformers
 import torch
@@ -103,3 +103,6 @@ response = llama_pipe(chat, max_new_tokens=1000)
 print(response)
 
 print(response[0]["generated_text"][-1]['content'])
+
+
+3.4) load the LLMs locally via Ollama
