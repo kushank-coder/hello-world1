@@ -9,7 +9,8 @@ hf_key = getpass("Enter your Hugging Face Access Token: ")
 import os
 os.environ["HF_TOKEN"] = hf_key
 
-# Use inference client method(Note for some hugging face model you might have gated access, u might need to apply #for access, but that is ok you get the access in a day types
+# Use inference client method(Note for some hugging face model you might have gated #access, u might need to apply 
+#for access, but that is ok you get the access in a day types
 
 from huggingface_hub import InferenceClient
 
@@ -23,6 +24,33 @@ chat = [
 response = client.chat_completion(chat, max_tokens=1000)
 print(response)
 
+
+#Using with langchain
+
+
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+model_id = "meta-llama/Llama-3.2-1B-Instruct"
+llm_api = HuggingFaceEndpoint(
+    repo_id=model_id,
+    task="text-generation",
+    max_new_tokens=1000,
+    do_sample=False,
+    temperature=0,
+)
+chat_llama = ChatHuggingFace(llm=llm_api) #langchain object
+
+from langchain_core.prompts import ChatPromptTemplate
+PROMPT = "Explain {topic} in 2 bullets"
+prompt = ChatPromptTemplate.from_template(PROMPT)
+
+chain = (
+         prompt
+           |
+         chat_llama
+)
+
+response = chain.invoke({"topic": "AI"}) #chain is langchain object
+print(response.content)
 
 
 2) Using Groq
@@ -53,9 +81,29 @@ response = get_completion_chatgroq(prompt=prompt, model="meta-llama/llama-4-scou
 
 print(response)
 
+#Using Langchain
+from langchain_groq import ChatGroq
+chat_llama = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    temperature=0,
+    max_tokens=1000,
+)
 
+from langchain_core.prompts import ChatPromptTemplate
+PROMPT = "Explain {topic} in 2 bullets"
+prompt = ChatPromptTemplate.from_template(PROMPT)
 
-3) By Download the hugging face model in local system #(NOTE USE ONLY GOOGLE COLLAB with (change runtime => GPU) #in this method)
+chain = (
+         prompt
+           |
+         chat_llama
+)
+
+response = chain.invoke({"topic": "AI"}) #langchain object
+print(response.content)
+
+3) By Download the hugging face model in local system 
+#(NOTE USE ONLY GOOGLE COLLAB with (change runtime => GPU) this method)
 
 3.1) Enter the Key
 from getpass import getpass
@@ -86,6 +134,14 @@ chat = [
 prompt = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
 print(prompt)
 
+#converting into tokens
+inputs = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt") 
+outputs = model.generate(input_ids=inputs.to(model.device), max_new_tokens=1000)
+#decoding output
+print(tokenizer.decode(outputs[0]))
+
+
+#pipeline operator (No need to decode or encode the text, it is automatic)
 llama_pipe = transformers.pipeline(
     "text-generation",
     model=model,
@@ -103,6 +159,25 @@ response = llama_pipe(chat, max_new_tokens=1000)
 print(response)
 
 print(response[0]["generated_text"][-1]['content'])
+
+#Using Langchain (use in google collab)
+
+from langchain_huggingface import ChatHuggingFace, HuggingFacePipeline
+model_id = "meta-llama/Llama-3.2-1B-Instruct"
+
+llm = HuggingFacePipeline.from_model_id(
+    model_id=model_id,
+    task="text-generation",
+    pipeline_kwargs=dict(
+        max_new_tokens=1000,
+        do_sample=False,
+        temperature=0,
+        return_full_text=False,
+    ),
+    device=0
+)
+llm.pipeline.tokenizer.pad_token = llm.pipeline.tokenizer.eos_token
+chat_llama = ChatHuggingFace(llm=llm)
 
 
 3.4) load the LLMs locally via Ollama
