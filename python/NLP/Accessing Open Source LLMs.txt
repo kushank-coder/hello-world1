@@ -181,3 +181,45 @@ chat_llama = ChatHuggingFace(llm=llm)
 
 
 3.4) load the LLMs locally via Ollama
+
+
+
+
+
+
+
+
+### Creating LCEL Chains in langchain
+#Step1) Create a langchain object connecting to the LLM
+
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+model_id = "meta-llama/Llama-3.2-1B-Instruct"
+llm_api = HuggingFaceEndpoint(
+    repo_id=model_id,
+    task="text-generation",
+    max_new_tokens=1000,
+    do_sample=False,
+    temperature=0,
+)
+chat_llama = ChatHuggingFace(llm=llm_api) #langchain object
+
+
+
+#Step2) Create a chain
+
+from langchain.prompts import ChatPromptTemplate
+
+# create a prompt template to accept user queries
+prompt_txt = "{query}"
+prompt_template = ChatPromptTemplate.from_template(prompt_txt)
+
+# the chain has been formatted for better readability
+# you could also write this as llmchain = prompt_template | chatgpt
+llmchain = (prompt_template
+              |
+           chat_llama)
+
+# Step3) invoke the chain
+response = llmchain.invoke({'query' : 'Explain Generative AI in 1 line'})
+print(response.content)
+
