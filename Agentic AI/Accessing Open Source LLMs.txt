@@ -1,5 +1,6 @@
 1) From Hugging Face API (no need to download the model on system)
 
+#Without langchain
 # Enter the Hugging face api key
 from getpass import getpass
 hf_key = getpass("Enter your Hugging Face Access Token: ")  
@@ -91,6 +92,7 @@ chat_llama = ChatGroq(
     max_tokens=1000,
 )
 
+#By LCEL (Langchain expression language)
 from langchain_core.prompts import ChatPromptTemplate
 PROMPT = "Explain {topic} in 2 bullets"
 prompt = ChatPromptTemplate.from_template(PROMPT)
@@ -144,7 +146,7 @@ outputs = model.generate(input_ids=inputs.to(model.device), max_new_tokens=1000)
 print(tokenizer.decode(outputs[0]))
 
 
-#pipeline operator (No need to decode or encode the text, it is automatic)
+#pipeline operator (No need to decode or encode the text, it is automatic...also use google collab)
 llama_pipe = transformers.pipeline(
     "text-generation",
     model=model,
@@ -185,3 +187,33 @@ chat_llama = ChatHuggingFace(llm=llm)
 
 
 3.4) load the LLMs locally via Ollama
+
+
+
+
+
+3.5) By OPEN API  (without using langchain)
+#Enter API Key
+
+from getpass import getpass
+openai_key = getpass("Enter your OpenAI API Key: ")
+
+
+#configure open ai key in environment
+from openai import OpenAI
+client = OpenAI(api_key=openai_key)
+
+#copy the below function
+def get_completion_chatgpt(prompt, model="gpt-4o-mini"):
+    messages = [{"role": "user", "content": prompt}]
+    response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message.content
+
+# call the function
+prompt = 'Explain Generative AI in 2 bullet points'
+response = get_completion_chatgpt(prompt=prompt)
+print(response)
