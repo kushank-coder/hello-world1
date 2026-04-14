@@ -109,11 +109,11 @@ print(response.content)
 3) By Download the hugging face model in local system 
 #(NOTE USE ONLY GOOGLE COLLAB with (change runtime => GPU) this method)
 
-3.1) Enter the Key
+# Enter the Key
 from getpass import getpass
 hf_key = getpass("Enter your Hugging Face Access Token: ")
 
-3.2) configure key
+# configure key
 import os
 os.environ["HF_TOKEN"] = hf_key
 
@@ -146,7 +146,7 @@ outputs = model.generate(input_ids=inputs.to(model.device), max_new_tokens=1000)
 print(tokenizer.decode(outputs[0]))
 
 
-#pipeline operator (No need to decode or encode the text, it is automatic...also use google collab)
+#Using pipeline operator (No need to decode or encode the text, it is automatic...also use google collab)
 llama_pipe = transformers.pipeline(
     "text-generation",
     model=model,
@@ -186,13 +186,16 @@ llm.pipeline.tokenizer.pad_token = llm.pipeline.tokenizer.eos_token
 chat_llama = ChatHuggingFace(llm=llm)
 
 
-3.4) load the LLMs locally via Ollama
+4) load the LLMs locally via Ollama
 
 
 
 
 
-3.5) By OPEN API  (without using langchain)
+5) By OPEN API (Commercial API) 
+
+(without using langchain)
+
 #Enter API Key
 
 from getpass import getpass
@@ -203,7 +206,7 @@ openai_key = getpass("Enter your OpenAI API Key: ")
 from openai import OpenAI
 client = OpenAI(api_key=openai_key)
 
-#copy the below function
+#run below
 def get_completion_chatgpt(prompt, model="gpt-4o-mini"):
     messages = [{"role": "user", "content": prompt}]
     response = client.chat.completions.create(
@@ -217,3 +220,33 @@ def get_completion_chatgpt(prompt, model="gpt-4o-mini"):
 prompt = 'Explain Generative AI in 2 bullet points'
 response = get_completion_chatgpt(prompt=prompt)
 print(response)
+
+
+(with langchain)
+
+#enter key
+from getpass import getpass
+openai_key = getpass("Enter your OpenAI API Key: ")
+
+#configure the system environment
+import os
+os.environ['OPENAI_API_KEY'] = openai_key	
+
+#run
+from langchain.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+# Parameter name change: 'model_name' is now 'model' in ChatOpenAI class
+chatgpt = ChatOpenAI(model='gpt-4o-mini', temperature=0)
+
+PROMPT = "Explain {topic} in 2 bullets"
+prompt = ChatPromptTemplate.from_template(PROMPT)
+
+chain = (
+         prompt
+           |
+         chatgpt
+)
+
+response = chain.invoke({"topic": "AI"})
+print(response.content)
