@@ -2,19 +2,20 @@
 
 # Enter the Hugging face api key
 from getpass import getpass
-
 hf_key = getpass("Enter your Hugging Face Access Token: ")  
 
 #configure the key in system
 import os
 os.environ["HF_TOKEN"] = hf_key
 
-# Use inference client method(Note for some hugging face model you might have gated #access, u might need to apply 
-#for access, but that is ok you get the access in a day types
+# Use inference client method
+(Note for some hugging face model you might have gated #access, u might need to apply 
+for access, but that is ok you get the access in a day types)
 
 from huggingface_hub import InferenceClient
 
-model_name = "meta-llama/Llama-3.2-1B-Instruct"
+model_name = "meta-llama/Llama-3.2-1B-Instruct" #model name as appearing on hugging face
+
 client = InferenceClient(model=model_name, api_key=hf_key)
 
 chat = [
@@ -29,6 +30,7 @@ print(response)
 
 
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+
 model_id = "meta-llama/Llama-3.2-1B-Instruct"
 llm_api = HuggingFaceEndpoint(
     repo_id=model_id,
@@ -114,7 +116,7 @@ import os
 os.environ["HF_TOKEN"] = hf_key
 
 
-3.3) Load the LLM Model locally (from hugging face)
+3.3) Load the LLM Model locally (from hugging face on google collab (select a gpu))
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import transformers
 import torch
@@ -133,6 +135,7 @@ chat = [
 ]
 prompt = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
 print(prompt)
+
 
 #converting into tokens
 inputs = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt") 
@@ -159,6 +162,7 @@ response = llama_pipe(chat, max_new_tokens=1000)
 print(response)
 
 print(response[0]["generated_text"][-1]['content'])
+
 
 #Using Langchain (use in google collab)
 
