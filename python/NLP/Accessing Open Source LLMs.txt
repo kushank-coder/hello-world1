@@ -1,19 +1,21 @@
 1) From Hugging Face API (no need to download the model on system)
 
-# Enter the Hugging face api key
+#Step1: Enter the Hugging face api key
 from getpass import getpass
 
 hf_key = getpass("Enter your Hugging Face Access Token: ")  
 
-#configure the key in system
+#Step2: configure the key in system
+
 import os
 os.environ["HF_TOKEN"] = hf_key
 
 # Use inference client method(Note for some hugging face model you might have gated #access, u might need to apply 
 #for access, but that is ok you get the access in a day types
 
-from huggingface_hub import InferenceClient
+Step 3 : Execute the below commands
 
+from huggingface_hub import InferenceClient
 model_name = "meta-llama/Llama-3.2-1B-Instruct"
 client = InferenceClient(model=model_name, api_key=hf_key)
 
@@ -25,7 +27,7 @@ response = client.chat_completion(chat, max_tokens=1000)
 print(response)
 
 
-#Using with langchain
+#Using with langchain + Hugging face (no gpu required)
 
 
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
@@ -55,16 +57,15 @@ print(response.content)
 
 2) Using Groq
 
-# Enter groq Key
+#Step1 Enter groq Key
 from getpass import getpass
 groq_key = getpass("Enter your Groq API Key: ")
-
 
 
 from groq import Groq
 groq_client = Groq(api_key=groq_key)
 
-# create a function to get the output
+#Step2 create a function to get the output (not necessary to create a function)
 def get_completion_chatgroq(prompt, model="meta-llama/llama-guard-4-12b"):
     messages = [{"role": "user", "content": prompt}]
     response = groq_client.chat.completions.create(
@@ -81,7 +82,7 @@ response = get_completion_chatgroq(prompt=prompt, model="meta-llama/llama-4-scou
 
 print(response)
 
-#Using Langchain
+#Using Langchain + groq
 from langchain_groq import ChatGroq
 chat_llama = ChatGroq(
     model="llama-3.3-70b-versatile",
@@ -105,16 +106,18 @@ print(response.content)
 3) By Download the hugging face model in local system 
 #(NOTE USE ONLY GOOGLE COLLAB with (change runtime => GPU) this method)
 
-3.1) Enter the Key
+3.1) Step1: Enter the Key
 from getpass import getpass
 hf_key = getpass("Enter your Hugging Face Access Token: ")
 
-3.2) configure key
+3.2) Step2:  configure key
 import os
 os.environ["HF_TOKEN"] = hf_key
 
 
-3.3) Load the LLM Model locally (from hugging face)
+3.3) Step3:  Load the LLM Model locally (from hugging face)
+#from transformers library, you will need to download the model locally
+
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import transformers
 import torch
@@ -160,7 +163,7 @@ print(response)
 
 print(response[0]["generated_text"][-1]['content'])
 
-#Using Langchain (use in google collab)
+#Using Langchain + google collab (gpu)
 
 from langchain_huggingface import ChatHuggingFace, HuggingFacePipeline
 model_id = "meta-llama/Llama-3.2-1B-Instruct"
@@ -180,16 +183,12 @@ llm.pipeline.tokenizer.pad_token = llm.pipeline.tokenizer.eos_token
 chat_llama = ChatHuggingFace(llm=llm)
 
 
-3.4) load the LLMs locally via Ollama
-
-
-
-
 
 
 
 
 ### Creating LCEL Chains in langchain
+
 #Step1) Create a langchain object connecting to the LLM
 
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
@@ -213,7 +212,6 @@ from langchain.prompts import ChatPromptTemplate
 prompt_txt = "{query}"
 prompt_template = ChatPromptTemplate.from_template(prompt_txt)
 
-# the chain has been formatted for better readability
 # you could also write this as llmchain = prompt_template | chatgpt
 llmchain = (prompt_template
               |
