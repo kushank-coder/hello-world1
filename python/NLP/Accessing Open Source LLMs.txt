@@ -221,3 +221,66 @@ llmchain = (prompt_template
 response = llmchain.invoke({'query' : 'Explain Generative AI in 1 line'})
 print(response.content)
 
+
+
+
+5) By chatgpt (Commercial API) 
+
+(without using langchain)
+
+#Enter API Key
+
+from getpass import getpass
+openai_key = getpass("Enter your OpenAI API Key: ")
+
+
+#configure open ai key in environment
+from openai import OpenAI
+client = OpenAI(api_key=openai_key)
+
+#run below
+def get_completion_chatgpt(prompt, model="gpt-4o-mini"):
+    messages = [{"role": "user", "content": prompt}]
+    response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message.content
+
+# call the function
+prompt = 'Explain Generative AI in 2 bullet points'
+response = get_completion_chatgpt(prompt=prompt)
+print(response)
+
+
+#Chatgpt + Langchain
+
+#enter key
+from getpass import getpass
+openai_key = getpass("Enter your OpenAI API Key: ")
+
+#configure the system environment
+import os
+os.environ['OPENAI_API_KEY'] = openai_key	
+
+#run
+from langchain.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+# Parameter name change: 'model_name' is now 'model' in ChatOpenAI class
+chatgpt = ChatOpenAI(model='gpt-4o-mini', temperature=0)
+
+PROMPT = "Explain {topic} in 2 bullets"
+prompt = ChatPromptTemplate.from_template(PROMPT)
+
+chain = (
+         prompt
+           |
+         chatgpt
+)
+
+response = chain.invoke({"topic": "AI"})
+print(response.content)
+
+
