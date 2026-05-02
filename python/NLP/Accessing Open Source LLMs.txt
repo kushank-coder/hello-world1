@@ -100,7 +100,7 @@ chain = (
          chat_llama
 )
 
-response = chain.invoke({"topic": "AI"}) #langchain object
+response = chain.invoke({"topic": "AI"}) #langchain object (invoke always needs a dictionary input, give it blank input if not there) 
 print(response.content)
 
 3) By Download the hugging face model in local system 
